@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:Gamble_On.ViewModels"
+             x:Class="Gamble_On.MainPage">
+    <ScrollView>
+        <VerticalStackLayout
+            Spacing="25"
+            Padding="30,0"
+            VerticalOptions="CenterAndExpand"
+            HorizontalOptions="FillAndExpand">
+
+            <!-- Logo or App Name can be placed here -->
+            <Label
+                Text="Gamble On"
+                FontSize="32"
+                HorizontalOptions="CenterAndExpand" />
+
+            <!-- Username Entry Field -->
+            <Entry 
+                Placeholder="Username"
+                Text="{Binding Username}"
+                HorizontalOptions="FillAndExpand" />
+
+            <!-- Password Entry Field -->
+            <Entry 
+                Placeholder="Password"
+                Text="{Binding Password}"
+                IsPassword="True"
+                HorizontalOptions="FillAndExpand" />
+
+            <!-- Login Button -->
+            <Button 
+                Text="Login"
+                Command="{Binding LoginCommand}"
+                HorizontalOptions="CenterAndExpand" />
+
+
+            <!-- Any additional UI components can be added here -->
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
