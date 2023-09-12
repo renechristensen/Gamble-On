@@ -11,8 +11,8 @@
     <VerticalStackLayout>
 
         <!-- DoubleTopBar Control -->
-        <controls:DoubleTopBar RufusCommand="{Binding NavigateRufusCommand}" 
-                               DrDkCommand="{Binding NavigateDrDkCommand}" />
+        <controls:DoubleTopBar RufusCommand="{Binding NavigateToRufusCommand}" 
+                               DrDkCommand="{Binding NavigateToDRCommand}" />
 
         <!-- Rest of the content -->
         <Label 
