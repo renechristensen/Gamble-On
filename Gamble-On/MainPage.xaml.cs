@@ -1,10 +1,10 @@
 ﻿namespace Gamble_On;
 using Gamble_On.ViewModels;
+using Gamble_On;
 
 public partial class MainPage : ContentPage
 {
-    private readonly DoNothingViewModel _viewModel;
-    public MainPage(DoNothingViewModel viewModel)
+    public MainPage(UserLoginViewModel viewModel)
     {
         InitializeComponent();
         BindingContext = viewModel; 

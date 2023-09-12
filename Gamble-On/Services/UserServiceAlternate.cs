@@ -7,13 +7,13 @@ using Newtonsoft.Json;
 
 namespace Gamble_On.Services
 {
-    public class UserService : IUserService
+    public class UserServiceAlternate : IUserService
     {
         private static readonly string BaseUrl = "https://localhost:7138/";
         // Declaring as static readonly is just an optimization to ensure it's only set once for all instances.
         // If your URL can change over time, adjust this accordingly.
 
-        public UserService()
+        public UserServiceAlternate()
         {
         }
 

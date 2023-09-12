@@ -4,11 +4,13 @@ using Polly;
 using Polly.Extensions.Http;
 using Gamble_On.Services;
 using Gamble_On.ViewModels;
+using Gamble_On.Views;
 
 namespace Gamble_On
 {
     public static class MauiProgram
     {
+        public static string baseUrl = "https://localhost:7138/";
         public static MauiApp CreateMauiApp()
         {
             var builder = MauiApp.CreateBuilder();
@@ -24,7 +26,6 @@ namespace Gamble_On
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
-
             // set static services 
             //ViewModelLocator.StaticServiceProvider = serviceCollection.BuildServiceProvider();
             return builder.Build();
@@ -32,34 +33,33 @@ namespace Gamble_On
 
         private static void ConfigureServices(IServiceCollection services)
         {
-            // Register services
-            //services.AddSingleton<IUserService, UserService>();
 
-            // add viewmodels here
-            //services.AddTransient<UserLoginViewModel>();
-            services.AddSingleton<DoNothingViewModel>();
-            
-            /*
             // Define the retry policy
             var retryPolicy = GetRetryPolicy();
 
             // HttpClientFactory for User service
-            services.AddHttpClient<IUserService, UserService>(client =>
+            services.AddHttpClient<IUserService, UserServiceAlternate>(client =>
             {
                 //Here we need to set our own url instead of the one for my local api
-                client.BaseAddress = new Uri("https://localhost:7138/");
+                client.BaseAddress = new Uri(baseUrl);
                 client.Timeout = TimeSpan.FromSeconds(30); // Set the timeout for the HttpClient
             })
             .SetHandlerLifetime(TimeSpan.FromMinutes(5))
             .AddPolicyHandler(retryPolicy);
-            */
+            // Register services
+            services.AddSingleton<IUserService, UserServiceOld>();
 
-            // add ViewModelLocator here
-            //services.AddSingleton<ViewModelLocator>();
+            // add viewmodels here
+            services.AddTransient<UserLoginViewModel>();
+            services.AddTransient<MainDashboardViewModel>();
+
+            //add pages
+            services.AddTransient<MainPage>();
+            services.AddTransient<Dashboard>();
         }
 
 
-        /*
+        
         // add in polly to help configure http client factory
         private static IAsyncPolicy<HttpResponseMessage> GetRetryPolicy()
         {
@@ -68,6 +68,6 @@ namespace Gamble_On
                 .OrResult(msg => msg.StatusCode == System.Net.HttpStatusCode.NotFound)
                 .WaitAndRetryAsync(3, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)));
         }
-        */
+        
     }
 }

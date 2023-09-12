@@ -1,7 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:vm="clr-namespace:Gamble_On.ViewModels"
+             xmlns:model="clr-namespace:Gamble_On.Models"
+             xmlns:viewmodel="clr-namespace:Gamble_On.ViewModels"
+             x:DataType="viewmodel:UserLoginViewModel"
              x:Class="Gamble_On.MainPage">
     <ScrollView>
         <VerticalStackLayout
@@ -19,7 +21,7 @@
             <!-- Username Entry Field -->
             <Entry 
                 Placeholder="Username"
-                Text="{Binding Username}"
+                 Text="{Binding Username}"
                 HorizontalOptions="FillAndExpand" />
 
             <!-- Password Entry Field -->

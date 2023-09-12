@@ -8,5 +8,9 @@ namespace Gamble_On.ViewModels
 {
     public class DoNothingViewModel
     {
+        DoNothingViewModel()
+        {
+
+        }
     }
 }

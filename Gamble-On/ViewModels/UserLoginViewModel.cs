@@ -1,6 +1,8 @@
 ﻿using Gamble_On.Services;
 using System.Windows.Input;
 using Gamble_On.Views;
+using Microsoft.Extensions.DependencyInjection;
+
 namespace Gamble_On.ViewModels
 {
     public class UserLoginViewModel : ViewModelBase
@@ -16,7 +18,6 @@ namespace Gamble_On.ViewModels
             _userService = userService;
             LoginCommand = new Command(async () => await OnLoginClicked());
         }
-
         // Get&Set properties
         public string Username
         {
@@ -34,12 +35,13 @@ namespace Gamble_On.ViewModels
         // This async function is run when someone clicks on the login page's login button
         private async Task OnLoginClicked()
         {
+            
             if (string.IsNullOrEmpty(Username) || string.IsNullOrEmpty(Password))
             {
                 await Application.Current.MainPage.DisplayAlert("Error", "Username or password cannot be empty", "OK");
                 return;
             }
-
+            
             try
             {
                 var user = await _userService.LoginAsync(Username, Password);
@@ -60,6 +62,7 @@ namespace Gamble_On.ViewModels
                 // Handle other exceptions here like network errors, timeouts, etc.
                 await Application.Current.MainPage.DisplayAlert("Error", "An error occurred while logging in.", "OK");
             }
+            
         }
     }
 }
