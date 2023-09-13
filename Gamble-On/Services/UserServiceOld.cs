@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,6 +17,7 @@ namespace Gamble_On.Services
             _httpClient = httpClient;
         }
 
+        // specific to user
         public async Task<User> LoginAsync(string username, string password)
         {
             var loginEndpoint = "login"; // No need to prefix with BaseUrl, it's set during HttpClient configuration
@@ -34,6 +36,8 @@ namespace Gamble_On.Services
             {
                 // Attempt to send the POST request
                 response = await _httpClient.PostAsync(loginEndpoint, message);
+                var content = await response.Content.ReadAsStringAsync();
+                Debug.WriteLine(content);
             }
             catch (HttpRequestException e)
             {
@@ -48,15 +52,30 @@ namespace Gamble_On.Services
                     throw new Exception("Request timed out", e);
             }
 
-            if (response.IsSuccessStatusCode)
+            if (response.IsSuccessStatusCode) // 2000
             {
                 var jsonResponse = await response.Content.ReadAsStringAsync();
                 var user = JsonConvert.DeserializeObject<User>(jsonResponse);
                 return user;
             }
-            else
-            {
-                throw new Exception("Login failed");
+            else {
+                switch (response.StatusCode)
+                {
+                    case System.Net.HttpStatusCode.BadRequest: // 400
+                        throw new Exception("Bad Request");                           
+                        break;
+
+                    case System.Net.HttpStatusCode.Unauthorized: // 401
+                        throw new Exception("You are not authorized");                                        
+                        break;
+
+                    //... other cases
+
+                    default:
+                        throw new Exception("Unhandled error: " + response.StatusCode);
+                        break;
+                }
+
             }
         }
     }

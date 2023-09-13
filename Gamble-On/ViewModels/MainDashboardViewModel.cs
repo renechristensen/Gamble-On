@@ -27,7 +27,6 @@ namespace Gamble_On.ViewModels
         private void NavigateToRufus()
         {
             // Navigation logic to Rufus
-            // For example: open a browser or navigate to a Rufus-related page
         }
 
         private async void NavigateToDR()
@@ -43,8 +42,5 @@ namespace Gamble_On.ViewModels
                 }
             
         }
-
-        // You can add methods here to fetch and handle other data for the dashboard
-        // For instance, if you want to display user statistics, latest bets, available games, etc.
     }
 }

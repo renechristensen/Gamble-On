@@ -10,7 +10,7 @@ namespace Gamble_On
 {
     public static class MauiProgram
     {
-        public static string baseUrl = "https://localhost:7138/";
+        public static string baseUrl = "https://localhost:7138/api/User/";
         public static MauiApp CreateMauiApp()
         {
             var builder = MauiApp.CreateBuilder();
@@ -38,7 +38,7 @@ namespace Gamble_On
             var retryPolicy = GetRetryPolicy();
 
             // HttpClientFactory for User service
-            services.AddHttpClient<IUserService, UserServiceAlternate>(client =>
+            services.AddHttpClient<IUserService, UserServiceOld>(client =>
             {
                 //Here we need to set our own url instead of the one for my local api
                 client.BaseAddress = new Uri(baseUrl);
@@ -47,7 +47,7 @@ namespace Gamble_On
             .SetHandlerLifetime(TimeSpan.FromMinutes(5))
             .AddPolicyHandler(retryPolicy);
             // Register services
-            services.AddSingleton<IUserService, UserServiceOld>();
+            //services.AddSingleton<IUserService, UserServiceOld>();
 
             // add viewmodels here
             services.AddTransient<UserLoginViewModel>();
