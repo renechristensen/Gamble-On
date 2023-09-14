@@ -32,6 +32,12 @@ namespace Gamble_On.Models
         [JsonPropertyName("addressId")]
         public int addressId { get; set; }
         [JsonPropertyName("Token")]
-        public string Token { get; set; } 
+        public string Token { get; set; }
+
+        [JsonPropertyName("address")]
+        public Address Address { get; set; }
+
+        [JsonPropertyName("userType")]
+        public UserType UserType { get; set; }
     }
 }

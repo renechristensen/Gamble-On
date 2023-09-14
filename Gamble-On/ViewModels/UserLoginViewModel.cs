@@ -8,7 +8,7 @@ namespace Gamble_On.ViewModels
     public class UserLoginViewModel : ViewModelBase
     {
         private string _password;
-        private string _username;
+        private string _email;
         private readonly IUserService _userService;
 
         public ICommand LoginCommand { get; }
@@ -19,10 +19,10 @@ namespace Gamble_On.ViewModels
             LoginCommand = new Command(async () => await OnLoginClicked());
         }
         // Get&Set properties
-        public string Username
+        public string email
         {
-            get { return _username; }
-            set { Set(ref _username, value); }
+            get { return _email; }
+            set { Set(ref _email, value); }
         }
         public string Password
         {
@@ -36,33 +36,43 @@ namespace Gamble_On.ViewModels
         private async Task OnLoginClicked()
         {
             
-            if (string.IsNullOrEmpty(Username) || string.IsNullOrEmpty(Password))
+            if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(Password))
             {
-                await Application.Current.MainPage.DisplayAlert("Error", "Username or password cannot be empty", "OK");
+                await Application.Current.MainPage.DisplayAlert("Error", "user email or password cannot be empty", "OK");
                 return;
             }
             
             try
             {
-                var user = await _userService.LoginAsync(Username, Password);
+                var user = await _userService.LoginAsync(email, Password);
 
-                if (user != null && !string.IsNullOrEmpty(user.Token))
+                if (user != null)
                 {
                     // Save the token or user details if necessary
-                    // Navigate to another page, for example, the main dashboard or home page
-                    await Application.Current.MainPage.Navigation.PushAsync(new Dashboard());
+                    if (!string.IsNullOrEmpty(user.Token))
+                    {
+                        await SecureStorage.SetAsync("auth_token", user.Token);
+                    }
+                    await Shell.Current.GoToAsync("//Dashboard");
+                    // navigate to dashboard
                 }
                 else
                 {
-                    await Application.Current.MainPage.DisplayAlert("Login Failed", "Invalid username or password.", "OK");
+                    if (!string.IsNullOrEmpty(user.Token))
+                    {
+                        await Application.Current.MainPage.DisplayAlert("Login Failed", "Token was not set.", "OK");
+                    }
+                    else
+                    {
+                        await Application.Current.MainPage.DisplayAlert("Login Failed", "Invalid user email or password.", "OK");
+                    }
                 }
             }
             catch (Exception ex)
             {
                 // Handle other exceptions here like network errors, timeouts, etc.
-                await Application.Current.MainPage.DisplayAlert("Error", "An error occurred while logging in.", "OK");
+                await Application.Current.MainPage.DisplayAlert("Error", "An error occurred while logging in: " + ex.Message, "OK");
             }
-            
         }
     }
 }

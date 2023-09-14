@@ -8,27 +8,26 @@ using Newtonsoft.Json;
 
 namespace Gamble_On.Services
 {
-    public class UserServiceOld : IUserService
+    public class UserService : IUserService
     {
         private readonly HttpClient _httpClient;
 
-        public UserServiceOld(HttpClient httpClient)
+        public UserService(HttpClient httpClient)
         {
             _httpClient = httpClient;
         }
 
-        // specific to user
-        public async Task<User> LoginAsync(string username, string password)
+        public async Task<User> LoginAsync(string email, string password)
         {
-            var loginEndpoint = "login"; // No need to prefix with BaseUrl, it's set during HttpClient configuration
+            var loginEndpoint = "/User/UserLogin"; // No need to prefix with BaseUrl, it's set during HttpClient configuration
 
             var jsonPayload = JsonConvert.SerializeObject(new
             {
-                Username = username,
-                Password = password
+                email = email,
+                password = password
             });
 
-            StringContent message = new StringContent(jsonPayload, Encoding.UTF8, "application/json");
+            StringContent message = new(jsonPayload, Encoding.UTF8, "application/json");
 
             HttpResponseMessage response;
 
@@ -59,26 +58,16 @@ namespace Gamble_On.Services
                 return user;
             }
             else {
-                switch (response.StatusCode)
+                throw response.StatusCode switch
                 {
-                    case System.Net.HttpStatusCode.BadRequest: // 400
-                        throw new Exception("Bad Request");                           
-                        break;
-
-                    case System.Net.HttpStatusCode.Unauthorized: // 401
-                        throw new Exception("You are not authorized");                                        
-                        break;
-
+                    // 400
+                    System.Net.HttpStatusCode.BadRequest => new Exception("Bad Request"),
+                    // 401
+                    System.Net.HttpStatusCode.Unauthorized => new Exception("You are not authorized"),
                     //... other cases
-
-                    default:
-                        throw new Exception("Unhandled error: " + response.StatusCode);
-                        break;
-                }
-
+                    _ => new Exception("Unhandled error: " + response.StatusCode),
+                };
             }
         }
     }
 }
-
-

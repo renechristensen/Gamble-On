@@ -1,4 +1,5 @@
-﻿using System.Windows.Input;
+﻿// not in use
+using System.Windows.Input;
 using Microsoft.Maui.Controls;  // For Command
 
 namespace Gamble_On.ViewModels
@@ -35,7 +36,7 @@ namespace Gamble_On.ViewModels
                 {
                     await Launcher.OpenAsync(new Uri("https://www.dr.dk/"));
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     // Handle any exceptions that might occur while launching the URL
                     await Application.Current.MainPage.DisplayAlert("Error", "The page is not available right now, try again later", "OK");

@@ -10,7 +10,9 @@ namespace Gamble_On
 {
     public static class MauiProgram
     {
-        public static string baseUrl = "https://localhost:7138/api/User/";
+        public static string baseUrl = "https://6c7d-185-19-132-71.ngrok-free.app/";
+        // for test api
+        //public static string baseUrl = "https://localhost:7138/api/User/";
         public static MauiApp CreateMauiApp()
         {
             var builder = MauiApp.CreateBuilder();
@@ -38,7 +40,7 @@ namespace Gamble_On
             var retryPolicy = GetRetryPolicy();
 
             // HttpClientFactory for User service
-            services.AddHttpClient<IUserService, UserServiceOld>(client =>
+            services.AddHttpClient<IUserService, UserService>(client =>
             {
                 //Here we need to set our own url instead of the one for my local api
                 client.BaseAddress = new Uri(baseUrl);
