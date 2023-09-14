@@ -4,7 +4,7 @@
              xmlns:model="clr-namespace:Gamble_On.Models"
              xmlns:viewmodel="clr-namespace:Gamble_On.ViewModels"
              x:DataType="viewmodel:UserLoginViewModel"
-             x:Class="Gamble_On.MainPage">
+             x:Class="Gamble_On.LoginPage">
     <ScrollView>
         <VerticalStackLayout
             Spacing="25"

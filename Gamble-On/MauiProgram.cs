@@ -10,7 +10,7 @@ namespace Gamble_On
 {
     public static class MauiProgram
     {
-        public static string baseUrl = "https://6c7d-185-19-132-71.ngrok-free.app/";
+        public static string baseUrl = "https://deep-wealthy-roughy.ngrok-free.app";
         // for test api
         //public static string baseUrl = "https://localhost:7138/api/User/";
         public static MauiApp CreateMauiApp()
@@ -56,7 +56,7 @@ namespace Gamble_On
             services.AddTransient<MainDashboardViewModel>();
 
             //add pages
-            services.AddTransient<MainPage>();
+            services.AddTransient<LoginPage>();
             services.AddTransient<Dashboard>();
         }
 

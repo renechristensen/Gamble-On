@@ -17,7 +17,7 @@ namespace Gamble_On.Services
             _httpClient = httpClient;
         }
 
-        public async Task<User> LoginAsync(string email, string password)
+        public async Task<String> LoginAsync(string email, string password)
         {
             var loginEndpoint = "/User/UserLogin"; // No need to prefix with BaseUrl, it's set during HttpClient configuration
 
@@ -53,9 +53,10 @@ namespace Gamble_On.Services
 
             if (response.IsSuccessStatusCode) // 2000
             {
-                var jsonResponse = await response.Content.ReadAsStringAsync();
-                var user = JsonConvert.DeserializeObject<User>(jsonResponse);
-                return user;
+                var token = await response.Content.ReadAsStringAsync();
+                return token;
+                //var user = JsonConvert.DeserializeObject<User>(jsonResponse);
+                //return user;
             }
             else {
                 throw response.StatusCode switch

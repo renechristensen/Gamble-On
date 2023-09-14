@@ -12,8 +12,8 @@
     <!-- Login Page -->
     <ShellContent
         Title="Home"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
+        ContentTemplate="{DataTemplate local:LoginPage}"
+        Route="LoginPage" />
 
     <!-- Main TabBar (will navigate here after login) -->
     <TabBar>

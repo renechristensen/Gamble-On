@@ -44,28 +44,19 @@ namespace Gamble_On.ViewModels
             
             try
             {
-                var user = await _userService.LoginAsync(email, Password);
+                var token = await _userService.LoginAsync(email, Password); // returns token
 
-                if (user != null)
+                if (token != null)
                 {
                     // Save the token or user details if necessary
-                    if (!string.IsNullOrEmpty(user.Token))
-                    {
-                        await SecureStorage.SetAsync("auth_token", user.Token);
-                    }
+                    await SecureStorage.SetAsync("auth_token", token);
+                    
                     await Shell.Current.GoToAsync("//Dashboard");
                     // navigate to dashboard
                 }
                 else
                 {
-                    if (!string.IsNullOrEmpty(user.Token))
-                    {
-                        await Application.Current.MainPage.DisplayAlert("Login Failed", "Token was not set.", "OK");
-                    }
-                    else
-                    {
-                        await Application.Current.MainPage.DisplayAlert("Login Failed", "Invalid user email or password.", "OK");
-                    }
+                    await Application.Current.MainPage.DisplayAlert("Login Failed", "Invalid user email or password.", "OK");
                 }
             }
             catch (Exception ex)

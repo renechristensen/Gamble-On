@@ -4,7 +4,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Gamble_On.Models;
 using Newtonsoft.Json;
-
+/*
 namespace Gamble_On.Services
 {
     public class UserServiceAlternate : IUserService
@@ -76,3 +76,4 @@ namespace Gamble_On.Services
     }
 }
 
+*/
