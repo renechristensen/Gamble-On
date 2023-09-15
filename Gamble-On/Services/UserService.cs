@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,7 +12,7 @@ namespace Gamble_On.Services
     public class UserService : IUserService
     {
         private readonly HttpClient _httpClient;
-
+        private string RegisterEndpoint = "/User/CreateUser";
         public UserService(HttpClient httpClient)
         {
             _httpClient = httpClient;
@@ -51,10 +52,10 @@ namespace Gamble_On.Services
                     throw new Exception("Request timed out", e);
             }
 
-            if (response.IsSuccessStatusCode) // 2000
+            if (response.IsSuccessStatusCode) // 200
             {
-                var token = await response.Content.ReadAsStringAsync();
-                return token;
+                var responseString = await response.Content.ReadAsStringAsync();
+                return responseString;
                 //var user = JsonConvert.DeserializeObject<User>(jsonResponse);
                 //return user;
             }
@@ -65,9 +66,35 @@ namespace Gamble_On.Services
                     System.Net.HttpStatusCode.BadRequest => new Exception("Bad Request"),
                     // 401
                     System.Net.HttpStatusCode.Unauthorized => new Exception("You are not authorized"),
+                    // 423 home made
+                    (HttpStatusCode)423 => new Exception("Your account is inactive. Please contact support."),
                     //... other cases
                     _ => new Exception("Unhandled error: " + response.StatusCode),
                 };
+            }
+        }
+        public async Task<bool> RegisterUserAsync(User userToRegister)
+        {
+            var jsonPayload = JsonConvert.SerializeObject(userToRegister);
+            StringContent message = new(jsonPayload, Encoding.UTF8, "application/json");
+
+            try
+            {
+                HttpResponseMessage response = await _httpClient.PostAsync(RegisterEndpoint, message);
+                if (response.IsSuccessStatusCode)
+                {
+                    return true;
+                }
+                else
+                {
+                    // Handle different response codes here, or simply return false to indicate registration failure
+                    return false;
+                }
+            }
+            catch (Exception)
+            {
+                // Handle exceptions: either throw them, log them, or return false
+                return false;
             }
         }
     }

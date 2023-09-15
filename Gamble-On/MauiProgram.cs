@@ -54,10 +54,11 @@ namespace Gamble_On
             // add viewmodels here
             services.AddTransient<UserLoginViewModel>();
             services.AddTransient<MainDashboardViewModel>();
-
+            services.AddTransient<UserRegisterViewModel>();
             //add pages
             services.AddTransient<LoginPage>();
             services.AddTransient<Dashboard>();
+            services.AddTransient<RegisterPage>();
         }
 
 

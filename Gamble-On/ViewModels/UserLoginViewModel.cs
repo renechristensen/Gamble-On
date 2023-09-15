@@ -2,6 +2,9 @@
 using System.Windows.Input;
 using Gamble_On.Views;
 using Microsoft.Extensions.DependencyInjection;
+using Gamble_On.Models;
+using System.Text.Json.Serialization;
+using System.Text.Json;
 
 namespace Gamble_On.ViewModels
 {
@@ -44,8 +47,12 @@ namespace Gamble_On.ViewModels
             
             try
             {
-                var token = await _userService.LoginAsync(email, Password); // returns token
-
+                // returns a jsonstring that contains a user class and a token, For now we will just split it up and keep the token.
+                var jsonString = await _userService.LoginAsync(email, Password); // returns token
+                Root deserializedObject = JsonSerializer.Deserialize<Root>(jsonString);
+                string token = deserializedObject.Token;
+                User user = deserializedObject.User;
+                
                 if (token != null)
                 {
                     // Save the token or user details if necessary
@@ -65,5 +72,16 @@ namespace Gamble_On.ViewModels
                 await Application.Current.MainPage.DisplayAlert("Error", "An error occurred while logging in: " + ex.Message, "OK");
             }
         }
+
+        // this is a local class used to split an incoming jsonstring into a user class and a token string 
+        private class Root
+        {
+            [JsonPropertyName("login")]
+            public User User { get; set; }
+
+            [JsonPropertyName("token")]
+            public string Token { get; set; }
+        }
     }
+
 }

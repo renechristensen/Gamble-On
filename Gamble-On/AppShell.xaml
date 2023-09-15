@@ -8,12 +8,22 @@
     
     Shell.FlyoutBehavior="Disabled">
 
- 
-    <!-- Login Page -->
-    <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate local:LoginPage}"
-        Route="LoginPage" />
+    <!-- Create a starting tabbar that allows you to go from register to login and vice versa-->
+    <TabBar Title="LoginAndRegister">
+        <Tab Title="Login">
+            <ShellContent
+            Title="Home"
+            ContentTemplate="{DataTemplate local:LoginPage}"
+            Route="LoginPage" />
+        </Tab>
+        <Tab Title="Register">
+            <ShellContent
+            Title="RegisterPage"
+            ContentTemplate="{DataTemplate local2:RegisterPage}"
+            Route="RegisterPage" />
+        </Tab>
+    </TabBar>
+
 
     <!-- Main TabBar (will navigate here after login) -->
     <TabBar>
@@ -23,8 +33,11 @@
                 ContentTemplate="{DataTemplate local2:Dashboard}"
                 Route="Dashboard" />
         </Tab>
+        <Tab Title="User profile">
+            <ShellContent
+                Title="Profile"
+                ContentTemplate="{DataTemplate local2:ProfilePage}"
+                Route="Profile" />
+        </Tab>
     </TabBar>
-
-
-
 </Shell>

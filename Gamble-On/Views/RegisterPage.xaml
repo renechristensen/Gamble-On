@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:model="clr-namespace:Gamble_On.Models"
+             xmlns:viewmodel="clr-namespace:Gamble_On.ViewModels"
+             x:DataType="viewmodel:UserRegisterViewModel"
+             x:Class="Gamble_On.Views.RegisterPage"
+             Title="RegisterPage">
+    
+    <VerticalStackLayout Padding="20">
+
+        <Label Text="First Name:" />
+        <Entry Text="{Binding FirstName}" />
+
+        <Label Text="Last Name:" />
+        <Entry Text="{Binding LastName}" />
+
+        <Label Text="Username:" />
+        <Entry Text="{Binding Username}" />
+
+        <Label Text="Email:" />
+        <Entry Text="{Binding Email}" />
+
+        <Label Text="Password:" />
+        <Entry Text="{Binding Password}" IsPassword="True" />
+
+        <Label Text="Phone Number:" />
+        <Entry Text="{Binding PhoneNumber}" Keyboard="Numeric" />
+
+        <Label Text="Address:" />
+        <Entry Text="{Binding Address}" />
+
+        <Label Text="Postal Code:" />
+        <Entry Text="{Binding PostalCode}" Keyboard="Numeric" />
+
+        <Label Text="User Type:" />
+        <Entry Text="{Binding UserType}" />
+
+        <Button Text="Register" Command="{Binding RegisterCommand}" Margin="0,20,0,0" />
+
+    </VerticalStackLayout>
+</ContentPage>

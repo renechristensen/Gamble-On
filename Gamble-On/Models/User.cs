@@ -37,7 +37,7 @@ namespace Gamble_On.Models
         [JsonPropertyName("address")]
         public Address Address { get; set; }
 
-        [JsonPropertyName("userType")]
-        public UserType UserType { get; set; }
+        [JsonPropertyName("userType1")]
+        public string UserType { get; set; }
     }
 }
