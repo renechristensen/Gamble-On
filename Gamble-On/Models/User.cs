@@ -11,6 +11,9 @@ namespace Gamble_On.Models
     {
         [JsonPropertyName("id")]
         public int id { get; set; }
+        [JsonPropertyName("dateOfBirth")]
+        public DateTime dateOfBirth { get; set; }
+
         [JsonPropertyName("firstName")]
         public string firstName { get; set; }
         [JsonPropertyName("lastName")]

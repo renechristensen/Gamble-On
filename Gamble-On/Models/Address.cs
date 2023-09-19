@@ -12,10 +12,13 @@ namespace Gamble_On.Models
     {
         [JsonPropertyName("id")]
         public int id { get; set; }
+
         [JsonPropertyName("postalCode")]
         public int postalCode { get; set; }
-        [JsonPropertyName("address")]
-        public string address { get; set; }
+
+        [JsonPropertyName("address1")]
+        public string address1 { get; set; }
     }
 }
+
 

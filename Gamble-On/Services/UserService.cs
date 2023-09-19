@@ -73,6 +73,7 @@ namespace Gamble_On.Services
                 };
             }
         }
+
         public async Task<bool> RegisterUserAsync(User userToRegister)
         {
             var jsonPayload = JsonConvert.SerializeObject(userToRegister);
@@ -81,19 +82,19 @@ namespace Gamble_On.Services
             try
             {
                 HttpResponseMessage response = await _httpClient.PostAsync(RegisterEndpoint, message);
+                string errorContent = await response.Content.ReadAsStringAsync();
+                Console.WriteLine(errorContent);
                 if (response.IsSuccessStatusCode)
                 {
                     return true;
                 }
                 else
                 {
-                    // Handle different response codes here, or simply return false to indicate registration failure
                     return false;
                 }
             }
             catch (Exception)
             {
-                // Handle exceptions: either throw them, log them, or return false
                 return false;
             }
         }

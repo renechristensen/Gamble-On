@@ -6,37 +6,63 @@
              x:DataType="viewmodel:UserRegisterViewModel"
              x:Class="Gamble_On.Views.RegisterPage"
              Title="RegisterPage">
-    
+    <!--
+    <Shell.TitleView>
+        <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+            <Label Text="Registrering af brugere" VerticalOptions="CenterAndExpand" />
+        </StackLayout>
+    </Shell.TitleView>
+    -->
+    <ScrollView>
     <VerticalStackLayout Padding="20">
 
-        <Label Text="First Name:" />
-        <Entry Text="{Binding FirstName}" />
+            <HorizontalStackLayout HorizontalOptions="Center" Margin="0,10,0,0">
+                <Label Text="First Name:" WidthRequest="100" />
+                <Entry x:Name="FirstNameEntry" Text="{Binding FirstName}"  WidthRequest="200"></Entry>
+            </HorizontalStackLayout>
 
-        <Label Text="Last Name:" />
-        <Entry Text="{Binding LastName}" />
+            <HorizontalStackLayout HorizontalOptions="Center" Margin="0,10,0,0">
+                <Label Text="Last Name:" WidthRequest="100" />
+                <Entry Text="{Binding LastName}" WidthRequest="200" />
+            </HorizontalStackLayout>
 
-        <Label Text="Username:" />
-        <Entry Text="{Binding Username}" />
+            <HorizontalStackLayout HorizontalOptions="Center" Margin="0,10,0,0">
+                <Label x:Name="UsernameLabel" Text="Username:" WidthRequest="100" />
+                <Entry x:Name="UserNameEntry" Text="{Binding Username}" WidthRequest="200"></Entry>
+            </HorizontalStackLayout>
 
-        <Label Text="Email:" />
-        <Entry Text="{Binding Email}" />
 
-        <Label Text="Password:" />
-        <Entry Text="{Binding Password}" IsPassword="True" />
+            <HorizontalStackLayout HorizontalOptions="Center" Margin="0,10,0,0">
+                <Label Text="Email:" WidthRequest="100" />
+                <Entry Text="{Binding Email}" WidthRequest="200" />
+            </HorizontalStackLayout>
 
-        <Label Text="Phone Number:" />
-        <Entry Text="{Binding PhoneNumber}" Keyboard="Numeric" />
+            <HorizontalStackLayout HorizontalOptions="Center" Margin="0,10,0,0">
+                <Label Text="Password:" WidthRequest="100" />
+                <Entry Text="{Binding Password}" IsPassword="True" WidthRequest="200"/>
+            </HorizontalStackLayout>
 
-        <Label Text="Address:" />
-        <Entry Text="{Binding Address}" />
+            <HorizontalStackLayout HorizontalOptions="Center" Margin="0,10,0,0">
+                <Label Text="Phone Number:" WidthRequest="100"/>
+                <Entry Text="{Binding PhoneNumber}" Keyboard="Numeric" WidthRequest="200" />
+            </HorizontalStackLayout>
 
-        <Label Text="Postal Code:" />
-        <Entry Text="{Binding PostalCode}" Keyboard="Numeric" />
+            <HorizontalStackLayout HorizontalOptions="Center" Margin="0,10,0,0">
+                <Label Text="Address:" WidthRequest="100"/>
+                <Entry Text="{Binding Address1}" WidthRequest="200"/>
+            </HorizontalStackLayout>
 
-        <Label Text="User Type:" />
-        <Entry Text="{Binding UserType}" />
+            <HorizontalStackLayout HorizontalOptions="Center" Margin="0,10,0,0">
+                <Label Text="Date of Birth:" WidthRequest="100"/>
+                <DatePicker Date="{Binding DateOfBirth}" WidthRequest="200" />
+            </HorizontalStackLayout>
 
-        <Button Text="Register" Command="{Binding RegisterCommand}" Margin="0,20,0,0" />
+            <HorizontalStackLayout HorizontalOptions="Center" Margin="0,10,0,0">
+                <Label Text="Postal Code:" WidthRequest="100" />
+                <Entry Text="{Binding PostalCode}" Keyboard="Numeric" WidthRequest="200"  />
+            </HorizontalStackLayout>
 
-    </VerticalStackLayout>
+            <Button Text="Register" Command="{Binding RegisterCommand}" Margin="0,20,0,0" WidthRequest="200" HorizontalOptions="Center" />
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>
