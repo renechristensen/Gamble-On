@@ -15,6 +15,8 @@ namespace Gamble_On.Models
         public float amount { get; set; }
         [JsonPropertyName("active")]
         public bool active { get; set; }
+        [JsonPropertyName("userId")]
+        public int userId { get; set; }
     }
 }
 

@@ -98,5 +98,44 @@ namespace Gamble_On.Services
                 return false;
             }
         }
+
+        public async Task<User> GetUserByIdAsync(string userId)
+        {
+
+            var endpoint = $"/User/{userId}";
+
+            try
+            {
+                HttpResponseMessage response = await _httpClient.GetAsync(endpoint);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var jsonResponse = await response.Content.ReadAsStringAsync();
+                    var user = JsonConvert.DeserializeObject<User>(jsonResponse);
+                    return user;
+                }
+                else
+                {
+                    throw response.StatusCode switch
+                    {
+                        System.Net.HttpStatusCode.BadRequest => new Exception("Bad Request"),
+                        System.Net.HttpStatusCode.Unauthorized => new Exception("You are not authorized"),
+                        System.Net.HttpStatusCode.NotFound => new Exception("User not found"),
+                        _ => new Exception("Unhandled error: " + response.StatusCode),
+                    };
+                }
+            }
+            catch (HttpRequestException e)
+            {
+                throw new Exception("Network error occurred", e);
+            }
+            catch (TaskCanceledException e)
+            {
+                if (e.CancellationToken.IsCancellationRequested)
+                    throw new Exception("Request was cancelled", e);
+                else
+                    throw new Exception("Request timed out", e);
+            }
+        }
     }
 }

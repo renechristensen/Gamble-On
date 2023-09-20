@@ -5,6 +5,7 @@ using Polly.Extensions.Http;
 using Gamble_On.Services;
 using Gamble_On.ViewModels;
 using Gamble_On.Views;
+using Gamble_On.Views.Modals;
 
 namespace Gamble_On
 {
@@ -48,6 +49,16 @@ namespace Gamble_On
             })
             .SetHandlerLifetime(TimeSpan.FromMinutes(5))
             .AddPolicyHandler(retryPolicy);
+
+            // HttpClientFactory for Wallet service
+            services.AddHttpClient<IWalletService, WalletService>(client =>
+            {
+                client.BaseAddress = new Uri(baseUrl);
+                client.Timeout = TimeSpan.FromSeconds(30);
+            })
+            .SetHandlerLifetime(TimeSpan.FromMinutes(5))
+            .AddPolicyHandler(retryPolicy);
+            
             // Register services
             //services.AddSingleton<IUserService, UserServiceOld>();
 
@@ -55,10 +66,18 @@ namespace Gamble_On
             services.AddTransient<UserLoginViewModel>();
             services.AddTransient<MainDashboardViewModel>();
             services.AddTransient<UserRegisterViewModel>();
+            services.AddTransient<ProfilePageViewModel>();
+            services.AddTransient<WalletViewModel>();
+            services.AddTransient<DepositPopupViewModel>();
+            services.AddTransient<WithdrawPopupViewModel>();
             //add pages
             services.AddTransient<LoginPage>();
             services.AddTransient<Dashboard>();
             services.AddTransient<RegisterPage>();
+            services.AddTransient<ProfilePage>();
+            services.AddTransient<WalletPage>();
+            services.AddTransient<DepositPopupPage>();
+            services.AddTransient<WithdrawPopupPage>();
         }
 
 

@@ -39,5 +39,11 @@
                 ContentTemplate="{DataTemplate local2:ProfilePage}"
                 Route="Profile" />
         </Tab>
+        <Tab Title="Wallet">
+            <ShellContent
+                Title="Wallet"
+                ContentTemplate="{DataTemplate local2:WalletPage}"
+                Route="WalletPage" />
+        </Tab>
     </TabBar>
 </Shell>

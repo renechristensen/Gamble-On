@@ -57,7 +57,7 @@ namespace Gamble_On.ViewModels
                 {
                     // Save the token or user details if necessary
                     await SecureStorage.SetAsync("auth_token", token);
-                    
+                    await SecureStorage.SetAsync("user_id", user.id.ToString());
                     await Shell.Current.GoToAsync("//Dashboard");
                     // navigate to dashboard
                 }

@@ -1,0 +1,18 @@
+<!-- WalletPage.xaml -->
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:Gamble_On.Views.Controls"
+             xmlns:model="clr-namespace:Gamble_On.Models"
+             xmlns:viewmodel="clr-namespace:Gamble_On.ViewModels"
+             x:DataType="viewmodel:WalletViewModel"
+    x:Class="Gamble_On.Views.WalletPage"
+             Title="WalletPage">
+    <StackLayout VerticalOptions="Center" HorizontalOptions="Center">
+        <Label Text="Your Wallet Balance:" />
+        <Label Text="{Binding Amount}" FontSize="Large" />
+        <Button Text="Deposit" Command="{Binding ShowDepositPopupCommand}" />
+        <Button Text="Withdraw" Command="{Binding ShowWithdravelPopupCommand}" />
+        <Button Text="Transactions" Command="{Binding ShowTransactionsPopupCommand}" />
+        <Button Text="Losses and Winnings" Command="{Binding ShowEarningsAndWinningsPopupCommand}" />
+    </StackLayout>
+</ContentPage>

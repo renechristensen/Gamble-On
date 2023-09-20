@@ -1,12 +1,37 @@
-<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:model="clr-namespace:Gamble_On.Models"
+             xmlns:viewmodel="clr-namespace:Gamble_On.ViewModels"
+             x:DataType="viewmodel:ProfilePageViewModel"
              x:Class="Gamble_On.Views.ProfilePage"
              Title="ProfilePage">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+    <ScrollView>
+        <VerticalStackLayout Padding="20">
+
+            <Label Text="First Name" FontAttributes="Bold" />
+            <Label Text="{Binding FirstName}" Margin="0,0,0,15" />
+
+            <Label Text="Last Name" FontAttributes="Bold" />
+            <Label Text="{Binding LastName}" Margin="0,0,0,15" />
+
+            <Label Text="Username" FontAttributes="Bold" />
+            <Label Text="{Binding Username}" Margin="0,0,0,15" />
+
+            <Label Text="Email" FontAttributes="Bold" />
+            <Label Text="{Binding Email}" Margin="0,0,0,15" />
+
+            <Label Text="Address" FontAttributes="Bold" />
+            <Label Text="{Binding Address1}" Margin="0,0,0,15" />
+
+            <Label Text="Phone Number" FontAttributes="Bold" />
+            <Label Text="{Binding PhoneNumber}" Margin="0,0,0,15" />
+
+            <Label Text="Date of Birth" FontAttributes="Bold" />
+            <Label Text="{Binding DateOfBirth}" Margin="0,0,0,15" />
+
+            <Label Text="Postal Code" FontAttributes="Bold" />
+            <Label Text="{Binding PostalCode}" Margin="0,0,0,15" />
+
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>

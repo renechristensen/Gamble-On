@@ -11,6 +11,7 @@ namespace Gamble_On.Services
     {
         Task<String> LoginAsync(string username, string password);
         Task<bool>RegisterUserAsync(User newUser);
+        Task<User> GetUserByIdAsync(string userId);
 
     }
 }
