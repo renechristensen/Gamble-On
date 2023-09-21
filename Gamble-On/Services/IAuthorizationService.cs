@@ -8,6 +8,7 @@ namespace Gamble_On.Services
 {
     public interface IAuthorizationService
     {
-        Task SetAuthorizationHeader(HttpClient httpClient);
+        Task<string> GetAuthorizationTokenAsync();
     }
 }
+

@@ -36,6 +36,7 @@ namespace Gamble_On
 
         private static void ConfigureServices(IServiceCollection services)
         {
+            services.AddSingleton<IAuthorizationService, AuthorizationService>();
             // add httpclients for each service
             RegisterHttpClients(services);
             // add viewmodels
