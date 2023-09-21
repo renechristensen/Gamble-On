@@ -3,22 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Text.Json.Serialization;
-
+using Newtonsoft.Json;
 
 namespace Gamble_On.Models
 {
     public class Address
     {
-        [JsonPropertyName("id")]
+        [JsonProperty("id")]
         public int id { get; set; }
 
-        [JsonPropertyName("postalCode")]
+        [JsonProperty("postalCode")]
         public int postalCode { get; set; }
 
-        [JsonPropertyName("address1")]
+        [JsonProperty("address1")]
         public string address1 { get; set; }
     }
 }
-
-

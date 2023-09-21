@@ -1,29 +1,36 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using System;
-using System.Text.Json.Serialization;
-
 namespace Gamble_On.Models
 {
     public class BettingHistory
     {
-        [JsonPropertyName("id")]
+        [JsonProperty("id")]
         public int id { get; set; }
-        [JsonPropertyName("walletID")]
+
+        [JsonProperty("walletID")]
         public int walletID { get; set; }
-        [JsonPropertyName("bettingAmount")]
+
+        [JsonProperty("bettingAmount")]
         public float bettingAmount { get; set; }
-        [JsonPropertyName("playedGameId")]
+
+        [JsonProperty("playedGameId")]
         public int bettingGameId { get; set; }
-        [JsonPropertyName("createdTime")]
+
+        [JsonProperty("createdTime")]
         public DateTime createdTime { get; set; }
-        [JsonPropertyName("outcome")]
+
+        [JsonProperty("outcome")]
         public bool outcome { get; set; }
-        [JsonPropertyName("bettingResult")]
+
+        [JsonProperty("bettingResult")]
         public float bettingResult { get; set; }
+
+        [JsonProperty("bettingCharacterId")]
+        public int bettingCharacterId { get; set; }
     }
 }
