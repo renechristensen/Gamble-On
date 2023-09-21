@@ -4,60 +4,71 @@ using System.Windows.Input;
 using Microsoft.Maui.Controls;
 using System.Threading.Tasks;
 
-namespace Gamble_On.ViewModels;
-public class WithdrawPopupViewModel : ViewModelBase
+namespace Gamble_On.ViewModels
 {
-    private readonly IWalletService _walletService;
-    private float _withdrawAmount;
-
-    public ICommand CancelCommand { get; set; }
-    public ICommand ContinueCommand { get; set; }
-
-    public WithdrawPopupViewModel(IWalletService walletService)
+    public class WithdrawPopupViewModel : ViewModelBase
     {
-        _walletService = walletService;
-        CancelCommand = new Command(async () => await ClosePopup());
-        ContinueCommand = new Command(async () => await ProcessDeposit());
-    }
+        private readonly IWalletService _walletService;
+        private float _withdrawAmount;
 
-    public float WithdrawAmount
-    {
-        get => _withdrawAmount;
-        set => Set(ref _withdrawAmount, value);
-    }
+        public ICommand CancelCommand { get; }
+        public ICommand ContinueCommand { get; }
 
-    private async Task ClosePopup()
-    {
-        // Close the popup
-        await Shell.Current.Navigation.PopModalAsync();
-    }
-
-    private async Task ProcessDeposit()
-    {
-        // Handle the deposit logic here
-        if (_withdrawAmount > 0)
+        public WithdrawPopupViewModel(IWalletService walletService)
         {
-            var userIdStr = await SecureStorage.GetAsync("user_id");
-            if (int.TryParse(userIdStr, out int userId))
-            {
-                var success = await _walletService.WithdrawAsync(userId, _withdrawAmount);
-                if (success)
-                {
-                    // Notify the user that the withdrawel was successful
-                    MessagingCenter.Send(this, "WithdrawUpdated", _withdrawAmount);
+            _walletService = walletService ?? throw new ArgumentNullException(nameof(walletService));
+            CancelCommand = new Command(async () => await ClosePopup());
+            ContinueCommand = new Command(async () => await ProcessWithdrawal());
+        }
 
+        public float WithdrawAmount
+        {
+            get => _withdrawAmount;
+            set => Set(ref _withdrawAmount, value);
+        }
+
+        private async Task ClosePopup()
+        {
+            await Shell.Current.Navigation.PopModalAsync();
+        }
+
+        private async Task ProcessWithdrawal()
+        {
+            if (_withdrawAmount <= 0)
+            {
+                await Application.Current.MainPage.DisplayAlert("Error", "Withdrawal amount should be positive.", "OK");
+                return;
+            }
+
+            try
+            {
+                var userIdStr = await SecureStorage.GetAsync("user_id");
+                if (int.TryParse(userIdStr, out int userId))
+                {
+                    var success = await _walletService.WithdrawAsync(userId, _withdrawAmount);
+                    if (success)
+                    {
+                        MessagingCenter.Send(this, "WithdrawUpdated", _withdrawAmount);
+                        await Application.Current.MainPage.DisplayAlert("Success", "Withdrawal was successful.", "OK");
+                    }
+                    else
+                    {
+                        await Application.Current.MainPage.DisplayAlert("Error", "Withdrawal failed.", "OK");
+                    }
                 }
                 else
                 {
-                    // Notify the user about any errors
+                    await Application.Current.MainPage.DisplayAlert("Error", "User ID is missing or incorrect.", "OK");
                 }
             }
+            catch (Exception ex)
+            {
+                await Application.Current.MainPage.DisplayAlert("Error", "An error occurred while processing withdrawal: " + ex.Message, "OK");
+            }
+            finally
+            {
+                await ClosePopup();
+            }
         }
-        else
-        {
-            // Notify the user that the wkthdrawel amount should be positive
-        }
-
-        await ClosePopup();
     }
 }

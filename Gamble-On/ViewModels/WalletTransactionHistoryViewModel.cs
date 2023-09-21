@@ -2,8 +2,9 @@
 using Gamble_On.Services;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
-using Microsoft.Maui.Controls; // for Command
+using Microsoft.Maui.Controls;  // for Command
 using System.Threading.Tasks;  // for Task
+using System.Linq;  // for OrderBy
 
 namespace Gamble_On.ViewModels
 {
@@ -11,12 +12,13 @@ namespace Gamble_On.ViewModels
     {
         private readonly IWalletService _walletService;
         private ObservableCollection<Transaction> _transactions;
-        public ICommand ClosePopupCommand { get; set; }
+
+        public ICommand ClosePopupCommand { get; }
 
         public WalletTransactionHistoryViewModel(IWalletService walletService)
         {
             ClosePopupCommand = new Command(async () => await ClosePopup());
-            _walletService = walletService;
+            _walletService = walletService ?? throw new ArgumentNullException(nameof(walletService));
             LoadTransactions();
         }
 
@@ -41,19 +43,18 @@ namespace Gamble_On.ViewModels
                     var transactions = await _walletService.GetTransactionsByUserIdAsync(userId);
                     if (transactions != null)
                     {
-                        Transactions = new ObservableCollection<Transaction>(transactions);
+                        Transactions = new ObservableCollection<Transaction>(transactions.OrderBy(t => t.actionTime));
                     }
                 }
                 else
                 {
-                    // Handle situations where userID isn't available or is incorrect.
+                    await Application.Current.MainPage.DisplayAlert("Error", "User ID is not available or incorrect.", "OK");
                 }
             }
             catch (Exception ex)
             {
-                // Handle exceptions.
+                await Application.Current.MainPage.DisplayAlert("Error", "An error occurred while loading transactions: " + ex.Message, "OK");
             }
         }
     }
 }
-

@@ -1,64 +1,73 @@
 ﻿using Gamble_On.Services;
-using Gamble_On.ViewModels;
-using System.Windows.Input;
 using Microsoft.Maui.Controls;
+using System;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
-namespace Gamble_On.ViewModels;
-public class DepositPopupViewModel : ViewModelBase
+namespace Gamble_On.ViewModels
 {
-    private readonly IWalletService _walletService;
-    private float _depositAmount;
-
-    public ICommand CancelCommand { get; set; }
-    public ICommand ContinueCommand { get; set; }
-
-    public DepositPopupViewModel(IWalletService walletService)
+    public class DepositPopupViewModel : ViewModelBase
     {
-        _walletService = walletService;
-        CancelCommand = new Command(async () => await ClosePopup());
-        ContinueCommand = new Command(async () => await ProcessDeposit());
-    }
+        private readonly IWalletService _walletService;
+        private float _depositAmount;
 
-    public float DepositAmount
-    {
-        get => _depositAmount;
-        set => Set(ref _depositAmount, value);
-    }
+        public ICommand CancelCommand { get; }
+        public ICommand ContinueCommand { get; }
 
-    private async Task ClosePopup()
-    {
-        // Close the popup
-        await Shell.Current.Navigation.PopModalAsync();
-    }
-
-    private async Task ProcessDeposit()
-    {
-        // Handle the deposit logic here
-        if (_depositAmount > 0)
+        public float DepositAmount
         {
-            var userIdStr = await SecureStorage.GetAsync("user_id");
-            if (int.TryParse(userIdStr, out int userId))
-            {
-                var success = await _walletService.DepositAsync(userId, _depositAmount);
-                if (success)
-                {
-                    // Notify the user that the deposit was s
+            get => _depositAmount;
+            set => Set(ref _depositAmount, value);
+        }
 
-                    MessagingCenter.Send(this, "DepositUpdated", _depositAmount);
+        public DepositPopupViewModel(IWalletService walletService)
+        {
+            _walletService = walletService;
+            CancelCommand = new Command(async () => await ClosePopup());
+            ContinueCommand = new Command(async () => await ProcessDeposit());
+        }
+
+        private async Task ClosePopup()
+        {
+            await Shell.Current.Navigation.PopModalAsync();
+        }
+
+        private async Task ProcessDeposit()
+        {
+            if (_depositAmount > 0)
+            {
+                var userIdStr = await SecureStorage.GetAsync("user_id");
+                if (int.TryParse(userIdStr, out int userId))
+                {
+                    try
+                    {
+                        var success = await _walletService.DepositAsync(userId, _depositAmount);
+                        if (success)
+                        {
+                            MessagingCenter.Send(this, "DepositUpdated", _depositAmount);
+                            await Shell.Current.DisplayAlert("Success", "Deposit successfully processed.", "OK");
+                        }
+                        else
+                        {
+                            await Shell.Current.DisplayAlert("Failure", "Failed to process deposit.", "OK");
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        await Shell.Current.DisplayAlert("Error", $"An error occurred: {ex.Message}", "OK");
+                    }
+
+                    await ClosePopup();
                 }
                 else
                 {
-                    // Notify the user about any errors
+                    await Shell.Current.DisplayAlert("Error", "There has been an error with your login. Logging off", "OK");
                 }
             }
+            else
+            {
+                await Shell.Current.DisplayAlert("Error", "Deposit amount should be greater than zero.", "OK");
+            }
         }
-        else
-        {
-            // Notify the user that the deposit amount should be positive
-        }
-
-        await ClosePopup();
     }
 }
-

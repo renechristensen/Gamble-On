@@ -1,54 +1,35 @@
 ﻿using Gamble_On.Services;
 using System.Windows.Input;
+using Microsoft.Maui.Controls;
+using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection;
 using Gamble_On.Views.Modals;
 
 namespace Gamble_On.ViewModels
 {
-    public class WalletViewModel : ViewModelBase
+    public class WalletViewModel : ViewModelBase, IDisposable
     {
         private readonly IWalletService _walletService;
         private float _amount;
-        public ICommand ShowDepositPopupCommand { get; private set; }
-        public ICommand ShowWithdravelPopupCommand { get; private set; }
-        public ICommand ShowTransactionsPopupCommand { get; private set; }
-        public ICommand ShowWalletBettingHistoryPopupPopupCommand { get; private set; }
+
+        public ICommand ShowDepositPopupCommand { get; }
+        public ICommand ShowWithdravelPopupCommand { get; }
+        public ICommand ShowTransactionsPopupCommand { get; }
+        public ICommand ShowWalletBettingHistoryPopupPopupCommand { get; }
+
         public WalletViewModel(IWalletService walletService)
         {
-            _walletService = walletService;
-            ShowDepositPopupCommand = new Command(async () => await ExecuteShowDepositPopup());
-            ShowWithdravelPopupCommand = new Command(async () => await ExecuteShowWithdravelPopup());
-            ShowTransactionsPopupCommand = new Command(async () => await ExecuteShowWalletTransactionHistoryPopup());
-            ShowWalletBettingHistoryPopupPopupCommand = new Command(async () => await ExecuteShowWalletBettingHistoryPopup());
+            _walletService = walletService ?? throw new ArgumentNullException(nameof(walletService));
+
+            ShowDepositPopupCommand = new Command(async () => await ExecuteShowPopup<DepositPopupViewModel, DepositPopupPage>());
+            ShowWithdravelPopupCommand = new Command(async () => await ExecuteShowPopup<WithdrawPopupViewModel, WithdrawPopupPage>());
+            ShowTransactionsPopupCommand = new Command(async () => await ExecuteShowPopup<WalletTransactionHistoryViewModel, WalletTransactionHistory>());
+            ShowWalletBettingHistoryPopupPopupCommand = new Command(async () => await ExecuteShowPopup<WalletBettingHistoryViewModel, WalletBettingHistory>());
+
             MessagingCenter.Subscribe<DepositPopupViewModel, float>(this, "DepositUpdated", OnDepositUpdated);
             MessagingCenter.Subscribe<WithdrawPopupViewModel, float>(this, "WithdrawUpdated", OnWithdrawUpdated);
 
             LoadWalletData();
-        }
-
-        private async Task ExecuteShowDepositPopup()
-        {
-            var depositViewModel  = App.Current.MainPage.Handler.MauiContext.Services.GetService<DepositPopupViewModel>();
-            var depositPage = new DepositPopupPage(depositViewModel);
-            await Shell.Current.Navigation.PushModalAsync(depositPage);
-        }
-        private async Task ExecuteShowWithdravelPopup()
-        {
-            var withdrawViewModel = App.Current.MainPage.Handler.MauiContext.Services.GetService<WithdrawPopupViewModel>();
-            var withdrawPage = new WithdrawPopupPage(withdrawViewModel);
-            await Shell.Current.Navigation.PushModalAsync(withdrawPage);
-        }
-
-        private async Task ExecuteShowWalletBettingHistoryPopup()
-        {
-            var bettingHistoryViewModel = App.Current.MainPage.Handler.MauiContext.Services.GetService<WalletBettingHistoryViewModel>();
-            var bettingHistoryPage = new WalletBettingHistory(bettingHistoryViewModel);
-            await Shell.Current.Navigation.PushModalAsync(bettingHistoryPage);
-        }
-        private async Task ExecuteShowWalletTransactionHistoryPopup()
-        {
-            var transactionHistoryViewModel = App.Current.MainPage.Handler.MauiContext.Services.GetService<WalletTransactionHistoryViewModel>();
-            var transactionHistoryPage = new WalletTransactionHistory(transactionHistoryViewModel);
-            await Shell.Current.Navigation.PushModalAsync(transactionHistoryPage);
         }
 
         public float Amount
@@ -57,11 +38,17 @@ namespace Gamble_On.ViewModels
             set => Set(ref _amount, value);
         }
 
+        private async Task ExecuteShowPopup<TViewModel, TPage>()
+        {
+            var viewModel = App.Current.MainPage.Handler.MauiContext.Services.GetService<TViewModel>();
+            var page = Activator.CreateInstance(typeof(TPage), viewModel);
+            await Shell.Current.Navigation.PushModalAsync(page as Page);
+        }
+
         private async void LoadWalletData()
         {
             try
             {
-                // Retrieve the user ID stored after login from SecureStorage.
                 var userIdStr = await SecureStorage.GetAsync("user_id");
                 if (int.TryParse(userIdStr, out int userId) && userId > 0)
                 {
@@ -73,28 +60,29 @@ namespace Gamble_On.ViewModels
                 }
                 else
                 {
-                    // Handle situations where userID isn't available or is incorrect.
+                    await Application.Current.MainPage.DisplayAlert("Error", "User ID is not available or incorrect.", "OK");
                 }
             }
             catch (Exception ex)
             {
-                // Handle exceptions related to SecureStorage.
+                await Application.Current.MainPage.DisplayAlert("Error", "An error occurred while loading wallet data: " + ex.Message, "OK");
             }
         }
+
         private void OnDepositUpdated(DepositPopupViewModel sender, float depositAmount)
         {
             Amount += depositAmount;
         }
-        private void OnWithdrawUpdated(WithdrawPopupViewModel sender, float depositAmount)
+
+        private void OnWithdrawUpdated(WithdrawPopupViewModel sender, float withdrawAmount)
         {
-            Amount -= depositAmount;
+            Amount -= withdrawAmount;
         }
 
         public void Dispose()
         {
             MessagingCenter.Unsubscribe<DepositPopupViewModel, float>(this, "DepositUpdated");
             MessagingCenter.Unsubscribe<WithdrawPopupViewModel, float>(this, "WithdrawUpdated");
-
         }
     }
 }

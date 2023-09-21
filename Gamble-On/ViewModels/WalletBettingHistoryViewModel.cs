@@ -1,7 +1,11 @@
-﻿using Gamble_On.Models;
-using Gamble_On.Services;
+﻿using System;
 using System.Collections.ObjectModel;
+using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Input;
+using Gamble_On.Models;
+using Gamble_On.Services;
+using Microsoft.Maui.Controls;
 
 namespace Gamble_On.ViewModels
 {
@@ -9,12 +13,13 @@ namespace Gamble_On.ViewModels
     {
         private readonly IWalletService _walletService;
         private ObservableCollection<BettingHistory> _bettingHistories;
+
         public ICommand ClosePopupCommand { get; set; }
 
         public WalletBettingHistoryViewModel(IWalletService walletService)
         {
+            _walletService = walletService ?? throw new ArgumentNullException(nameof(walletService));
             ClosePopupCommand = new Command(async () => await ClosePopup());
-            _walletService = walletService;
             LoadBettingHistory();
         }
 
@@ -28,6 +33,7 @@ namespace Gamble_On.ViewModels
         {
             await Shell.Current.Navigation.PopModalAsync();
         }
+
         private async void LoadBettingHistory()
         {
             try
@@ -43,15 +49,13 @@ namespace Gamble_On.ViewModels
                 }
                 else
                 {
-                    // Handle situations where userID isn't available or is incorrect.
+                    await Application.Current.MainPage.DisplayAlert("Error", "User ID is missing or incorrect.", "OK");
                 }
             }
             catch (Exception ex)
             {
-                // Handle exceptions.
+                await Application.Current.MainPage.DisplayAlert("Error", $"An error occurred while loading betting history: {ex.Message}", "OK");
             }
         }
     }
 }
-
-

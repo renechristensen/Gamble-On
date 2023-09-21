@@ -1,8 +1,10 @@
 ﻿using Gamble_On.Services;
+using Microsoft.Maui.Controls;
+using System;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using Gamble_On.Models;
-using System.Diagnostics;
-using System.Text.RegularExpressions;
 
 namespace Gamble_On.ViewModels
 {
@@ -16,25 +18,17 @@ namespace Gamble_On.ViewModels
         private int _phoneNumber;
         private string _address;
         private int _postalCode;
-        private string _userType;
         private DateTime _dateOfBirth;
         private readonly IUserService _userService;
 
         public ICommand RegisterCommand { get; }
+
         public UserRegisterViewModel(IUserService userService)
         {
             _userService = userService ?? throw new ArgumentNullException(nameof(userService));
             RegisterCommand = new Command(async () => await OnRegisterClicked());
         }
 
-
-       
-
-        public DateTime DateOfBirth
-        {
-            get => _dateOfBirth;
-            set => Set(ref _dateOfBirth, value);
-        }
         public string FirstName
         {
             get => _firstName;
@@ -83,14 +77,14 @@ namespace Gamble_On.ViewModels
             set => Set(ref _postalCode, value);
         }
 
-        public string UserType
+        public DateTime DateOfBirth
         {
-            get => _userType;
-            set => Set(ref _userType, value);
+            get => _dateOfBirth;
+            set => Set(ref _dateOfBirth, value);
         }
+
         private async Task OnRegisterClicked()
         {
-            // First Name, Last Name, Username, Email, Address Validation
             if (string.IsNullOrWhiteSpace(FirstName) ||
                 string.IsNullOrWhiteSpace(LastName) ||
                 string.IsNullOrWhiteSpace(Username) ||
@@ -101,7 +95,6 @@ namespace Gamble_On.ViewModels
                 return;
             }
 
-            // Password Validation
             var hasNumber = new Regex(@"[0-9]+");
             var hasUpperChar = new Regex(@"[A-Z]+");
             var hasMinimum8Chars = new Regex(@".{8,}");
@@ -112,25 +105,23 @@ namespace Gamble_On.ViewModels
                   hasMinimum8Chars.IsMatch(Password) &&
                   hasLowerChar.IsMatch(Password)))
             {
-                await Application.Current.MainPage.DisplayAlert("Validation Error", "Password should be minimum of 8 characters, contain at least one uppercase letter, one lowercase letter, and one number.", "OK");
+                await Application.Current.MainPage.DisplayAlert("Validation Error", "Password should be a minimum of 8 characters, contain at least one uppercase letter, one lowercase letter, and one number.", "OK");
                 return;
             }
 
-            // Email Validation
-            var emailPattern = @"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$"; // Basic regex pattern for email validation.
+            var emailPattern = @"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$";
             if (!Regex.IsMatch(Email, emailPattern))
             {
                 await Application.Current.MainPage.DisplayAlert("Validation Error", "Please provide a valid email address.", "OK");
                 return;
             }
 
-            // Phone Number Validation
             if (PhoneNumber.ToString().Length < 8)
             {
                 await Application.Current.MainPage.DisplayAlert("Validation Error", "Phone number should be at least 8 digits.", "OK");
                 return;
             }
-            Debug.WriteLine("Lets debug");
+
             var newUser = new User
             {
                 firstName = FirstName,

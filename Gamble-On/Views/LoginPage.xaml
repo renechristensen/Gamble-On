@@ -20,7 +20,7 @@
             <!-- Username Entry Field -->
             <Entry 
                 Placeholder="Email"
-                 Text="{Binding email}"
+                 Text="{Binding Email}"
                 HorizontalOptions="FillAndExpand" />
 
             <!-- Password Entry Field -->

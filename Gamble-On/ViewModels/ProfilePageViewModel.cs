@@ -1,12 +1,15 @@
-﻿using System;
+﻿using Microsoft.Maui.Controls;
 using Gamble_On.Models;
 using Gamble_On.Services;
+using System;
+using System.Threading.Tasks;
 
 namespace Gamble_On.ViewModels
 {
     public class ProfilePageViewModel : ViewModelBase
     {
         private readonly IUserService _userService;
+
         private string _firstName;
         private string _lastName;
         private string _username;
@@ -89,14 +92,20 @@ namespace Gamble_On.ViewModels
                         Address1 = user.Address?.address1;
                         PostalCode = user.Address?.postalCode.ToString();
                     }
+                    else
+                    {
+                        await Shell.Current.DisplayAlert("Error", "User data could not be loaded.", "OK");
+                    }
+                }
+                else
+                {
+                    await Shell.Current.DisplayAlert("Error", "Invalid User ID.", "OK");
                 }
             }
             catch (Exception ex)
             {
-                // Handle errors here
-                Console.WriteLine(ex.Message);
+                await Shell.Current.DisplayAlert("Error", $"An error occurred while loading the profile: {ex.Message}", "OK");
             }
         }
     }
 }
-
