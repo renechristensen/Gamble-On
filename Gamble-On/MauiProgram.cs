@@ -36,64 +36,74 @@ namespace Gamble_On
 
         private static void ConfigureServices(IServiceCollection services)
         {
-
-            // Define the retry policy
+            // add httpclients for each service
+            RegisterHttpClients(services);
+            // add viewmodels
+            RegisterViewModels(services);
+            //add pages
+            RegisterPages(services);
+        }
+        private static void RegisterHttpClients(IServiceCollection services)
+        {
             var retryPolicy = GetRetryPolicy();
 
-            // HttpClientFactory for User service
-            services.AddHttpClient<IUserService, UserService>(client =>
-            {
-                //Here we need to set our own url instead of the one for my local api
-                client.BaseAddress = new Uri(baseUrl);
-                client.Timeout = TimeSpan.FromSeconds(30); // Set the timeout for the HttpClient
-            })
-            .SetHandlerLifetime(TimeSpan.FromMinutes(5))
-            .AddPolicyHandler(retryPolicy);
-
-            // HttpClientFactory for Wallet service
-            services.AddHttpClient<IWalletService, WalletService>(client =>
+            var httpClientConfig = new Action<HttpClient>(client =>
             {
                 client.BaseAddress = new Uri(baseUrl);
                 client.Timeout = TimeSpan.FromSeconds(30);
-            })
-            .SetHandlerLifetime(TimeSpan.FromMinutes(5))
-            .AddPolicyHandler(retryPolicy);
+            });
 
-            services.AddHttpClient<IAddressService, AddressService>(client =>
+            services.AddHttpClient<IUserService, UserService>(httpClientConfig)
+                    .SetHandlerLifetime(TimeSpan.FromMinutes(5))
+                    .AddPolicyHandler(retryPolicy);
+
+            services.AddHttpClient<IWalletService, WalletService>(httpClientConfig)
+                    .SetHandlerLifetime(TimeSpan.FromMinutes(5))
+                    .AddPolicyHandler(retryPolicy);
+
+            services.AddHttpClient<IAddressService, AddressService>(httpClientConfig)
+                    .SetHandlerLifetime(TimeSpan.FromMinutes(5))
+                    .AddPolicyHandler(retryPolicy);
+        }
+        private static void RegisterViewModels(IServiceCollection services)
+        {
+            var viewModels = new List<Type>
             {
-                client.BaseAddress = new Uri(baseUrl);
-                client.Timeout = TimeSpan.FromSeconds(30);
-            })
-            .SetHandlerLifetime(TimeSpan.FromMinutes(5))
-            .AddPolicyHandler(retryPolicy);
+                typeof(UserLoginViewModel),
+                typeof(MainDashboardViewModel),
+                typeof(UserRegisterViewModel),
+                typeof(ProfilePageViewModel),
+                typeof(WalletViewModel),
+                typeof(DepositPopupViewModel),
+                typeof(WithdrawPopupViewModel),
+                typeof(WalletBettingHistoryViewModel),
+                typeof(WalletTransactionHistoryViewModel)
+            };
 
-            // Register services
-            //services.AddSingleton<IUserService, UserServiceOld>();
+            viewModels.ForEach(viewModelType => services.AddTransient(viewModelType));
+        }
 
-            // add viewmodels here
-            services.AddTransient<UserLoginViewModel>();
-            services.AddTransient<MainDashboardViewModel>();
-            services.AddTransient<UserRegisterViewModel>();
-            services.AddTransient<ProfilePageViewModel>();
-            services.AddTransient<WalletViewModel>();
-            services.AddTransient<DepositPopupViewModel>();
-            services.AddTransient<WithdrawPopupViewModel>();
-            services.AddTransient<WalletBettingHistoryViewModel>();
-            services.AddTransient<WalletTransactionHistoryViewModel>();
-            //add pages
-            services.AddTransient<LoginPage>();
-            services.AddTransient<Dashboard>();
-            services.AddTransient<RegisterPage>();
-            services.AddTransient<ProfilePage>();
-            services.AddTransient<WalletPage>();
-            services.AddTransient<DepositPopupPage>();
-            services.AddTransient<WithdrawPopupPage>();
-            services.AddTransient<WalletBettingHistory>();
-            services.AddTransient<WalletTransactionHistory>();
+        private static void RegisterPages(IServiceCollection services)
+        {
+            var pages = new List<Type>
+            {
+                typeof(LoginPage),
+                typeof(Dashboard),
+                typeof(RegisterPage),
+                typeof(ProfilePage),
+                typeof(WalletPage),
+                typeof(DepositPopupPage),
+                typeof(WithdrawPopupPage),
+                typeof(WalletBettingHistory),
+                typeof(WalletTransactionHistory)
+            };
+
+            pages.ForEach(pageType => services.AddTransient(pageType));
         }
 
 
-        
+
+
         // add in polly to help configure http client factory
         private static IAsyncPolicy<HttpResponseMessage> GetRetryPolicy()
         {
