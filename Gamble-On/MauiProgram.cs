@@ -58,7 +58,15 @@ namespace Gamble_On
             })
             .SetHandlerLifetime(TimeSpan.FromMinutes(5))
             .AddPolicyHandler(retryPolicy);
-            
+
+            services.AddHttpClient<IAddressService, AddressService>(client =>
+            {
+                client.BaseAddress = new Uri(baseUrl);
+                client.Timeout = TimeSpan.FromSeconds(30);
+            })
+            .SetHandlerLifetime(TimeSpan.FromMinutes(5))
+            .AddPolicyHandler(retryPolicy);
+
             // Register services
             //services.AddSingleton<IUserService, UserServiceOld>();
 
@@ -70,6 +78,8 @@ namespace Gamble_On
             services.AddTransient<WalletViewModel>();
             services.AddTransient<DepositPopupViewModel>();
             services.AddTransient<WithdrawPopupViewModel>();
+            services.AddTransient<WalletBettingHistoryViewModel>();
+            services.AddTransient<WalletTransactionHistoryViewModel>();
             //add pages
             services.AddTransient<LoginPage>();
             services.AddTransient<Dashboard>();
@@ -78,6 +88,8 @@ namespace Gamble_On
             services.AddTransient<WalletPage>();
             services.AddTransient<DepositPopupPage>();
             services.AddTransient<WithdrawPopupPage>();
+            services.AddTransient<WalletBettingHistory>();
+            services.AddTransient<WalletTransactionHistory>();
         }
 
 

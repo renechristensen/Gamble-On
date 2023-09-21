@@ -20,9 +20,6 @@ namespace Gamble_On.ViewModels
         private DateTime _dateOfBirth;
         private readonly IUserService _userService;
 
-
-
-
         public ICommand RegisterCommand { get; }
         public UserRegisterViewModel(IUserService userService)
         {
@@ -148,19 +145,18 @@ namespace Gamble_On.ViewModels
                     address1 = Address1,
                     postalCode = PostalCode
                 }
-
             };
 
             try
             {
-                var success = await _userService.RegisterUserAsync(newUser);
-                if (success)
+                var responseMessage = await _userService.RegisterUserAsync(newUser);
+                if (responseMessage == "true")
                 {
                     await Shell.Current.GoToAsync("//LoginPage");
                 }
                 else
                 {
-                    await Application.Current.MainPage.DisplayAlert("Registration Failed", "Please try again.", "OK");
+                    await Application.Current.MainPage.DisplayAlert("Registration Failed", responseMessage, "OK");
                 }
             }
             catch (Exception ex)

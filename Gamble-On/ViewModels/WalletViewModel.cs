@@ -11,12 +11,14 @@ namespace Gamble_On.ViewModels
         public ICommand ShowDepositPopupCommand { get; private set; }
         public ICommand ShowWithdravelPopupCommand { get; private set; }
         public ICommand ShowTransactionsPopupCommand { get; private set; }
-        public ICommand ShowEarningsAndWinningsPopupCommand { get; private set; }
+        public ICommand ShowWalletBettingHistoryPopupPopupCommand { get; private set; }
         public WalletViewModel(IWalletService walletService)
         {
             _walletService = walletService;
             ShowDepositPopupCommand = new Command(async () => await ExecuteShowDepositPopup());
             ShowWithdravelPopupCommand = new Command(async () => await ExecuteShowWithdravelPopup());
+            ShowTransactionsPopupCommand = new Command(async () => await ExecuteShowWalletTransactionHistoryPopup());
+            ShowWalletBettingHistoryPopupPopupCommand = new Command(async () => await ExecuteShowWalletBettingHistoryPopup());
             MessagingCenter.Subscribe<DepositPopupViewModel, float>(this, "DepositUpdated", OnDepositUpdated);
             MessagingCenter.Subscribe<WithdrawPopupViewModel, float>(this, "WithdrawUpdated", OnWithdrawUpdated);
 
@@ -34,6 +36,19 @@ namespace Gamble_On.ViewModels
             var withdrawViewModel = App.Current.MainPage.Handler.MauiContext.Services.GetService<WithdrawPopupViewModel>();
             var withdrawPage = new WithdrawPopupPage(withdrawViewModel);
             await Shell.Current.Navigation.PushModalAsync(withdrawPage);
+        }
+
+        private async Task ExecuteShowWalletBettingHistoryPopup()
+        {
+            var bettingHistoryViewModel = App.Current.MainPage.Handler.MauiContext.Services.GetService<WalletBettingHistoryViewModel>();
+            var bettingHistoryPage = new WalletBettingHistory(bettingHistoryViewModel);
+            await Shell.Current.Navigation.PushModalAsync(bettingHistoryPage);
+        }
+        private async Task ExecuteShowWalletTransactionHistoryPopup()
+        {
+            var transactionHistoryViewModel = App.Current.MainPage.Handler.MauiContext.Services.GetService<WalletTransactionHistoryViewModel>();
+            var transactionHistoryPage = new WalletTransactionHistory(transactionHistoryViewModel);
+            await Shell.Current.Navigation.PushModalAsync(transactionHistoryPage);
         }
 
         public float Amount

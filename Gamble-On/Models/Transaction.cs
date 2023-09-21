@@ -5,18 +5,20 @@ using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
+using Newtonsoft.Json;
+using System;
+
 namespace Gamble_On.Models
 {
     public class Transaction
     {
-        [JsonPropertyName("id")]
+        [JsonProperty("id")]
         public int id { get; set; }
-        [JsonPropertyName("walletId")]
+        [JsonProperty("walletId")]
         public int walletId { get; set; }
-        [JsonPropertyName("amount")]
-        public int amount { get; set; }
-        [JsonPropertyName("actionTime")]
+        [JsonProperty("amount")]
+        public float amount { get; set; }
+        [JsonProperty("actionTime")]
         public DateTime actionTime { get; set; }
     }
 }
-

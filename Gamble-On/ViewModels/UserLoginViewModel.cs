@@ -83,5 +83,4 @@ namespace Gamble_On.ViewModels
             public string Token { get; set; }
         }
     }
-
 }

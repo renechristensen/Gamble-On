@@ -19,4 +19,3 @@ namespace Gamble_On.Models
         public int userId { get; set; }
     }
 }
-

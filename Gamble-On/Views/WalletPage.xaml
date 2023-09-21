@@ -13,6 +13,6 @@
         <Button Text="Deposit" Command="{Binding ShowDepositPopupCommand}" />
         <Button Text="Withdraw" Command="{Binding ShowWithdravelPopupCommand}" />
         <Button Text="Transactions" Command="{Binding ShowTransactionsPopupCommand}" />
-        <Button Text="Losses and Winnings" Command="{Binding ShowEarningsAndWinningsPopupCommand}" />
+        <Button Text="Losses and Winnings" Command="{Binding ShowWalletBettingHistoryPopupPopupCommand}" />
     </StackLayout>
 </ContentPage>

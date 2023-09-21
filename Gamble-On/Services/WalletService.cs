@@ -5,6 +5,8 @@ using System.Diagnostics;
 using Debug = System.Diagnostics.Debug;
 using System.Net.Http;
 using System.Text;
+using System.Collections.Generic;
+
 namespace Gamble_On.Services
 {
     public class WalletService : IWalletService
@@ -121,8 +123,75 @@ namespace Gamble_On.Services
             }
             return false;
         }
+        
+        // Get Betting histories
+        public async Task<List<BettingHistory>> GetBettingHistoryByUserIdAsync(int userId)
+        {
+            var endpoint = $"/BettingHistory/UserId/{userId}";
+            try
+            {
+                var response = await _httpClient.GetAsync(endpoint);
+                if (response.IsSuccessStatusCode)
+                {
+                    var jsonResponse = await response.Content.ReadAsStringAsync();
+                    List<BettingHistory> bettingHistories = new();
+                    try
+                    {
+                        bettingHistories = JsonConvert.DeserializeObject<List<BettingHistory>>(jsonResponse);
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.WriteLine(ex.Message); 
+                    }
+                    return bettingHistories;
+                }
+                else
+                {
+                    // Log or handle the error response here
+                    return new List<BettingHistory>(); // Return an empty list or throw an exception
+                }
+            }
+            catch (HttpRequestException e)
+            {
+                // Handle specific network exceptions here if needed
+                throw new Exception("Network error occurred", e);
+            }
+        }
 
+        // Get Transactions
+        public async Task<List<Transaction>> GetTransactionsByUserIdAsync(int userId)
+        {
+            var endpoint = $"/Transaction/UserId/{userId}";
+            try
+            {
+                var response = await _httpClient.GetAsync(endpoint);
+                if (response.IsSuccessStatusCode)
+                {
+                    var jsonResponse = await response.Content.ReadAsStringAsync();
+                    Debug.WriteLine("JSON Response: " + jsonResponse);
+                    List<Transaction> transactions = new();
+                    try
+                    {
+                        transactions = JsonConvert.DeserializeObject<List<Transaction>>(jsonResponse);
+                    }
+                    catch(Exception e)
+                    {
+                        Debug.WriteLine("Error during deserialization: " + e.Message);
+                    }
+                   
+                    return transactions;
+                }
+                else
+                {
+                    throw new Exception("Error with Deserialize");
+                }
+            }
+            catch (HttpRequestException e)
+            {
+                // Handle specific network exceptions here if needed
+                throw new Exception("Network error occurred", e);
+            }
+        }
 
     }
 }
-

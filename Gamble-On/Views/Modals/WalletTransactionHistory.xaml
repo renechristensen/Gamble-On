@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:model="clr-namespace:Gamble_On.Models"
+             xmlns:viewmodel="clr-namespace:Gamble_On.ViewModels"
+             x:DataType="viewmodel:WalletTransactionHistoryViewModel"
+             x:Class="Gamble_On.Views.Modals.WalletTransactionHistory"
+             Title="WalletTransactionHistoryPage">
+
+    <VerticalStackLayout>
+        <!-- Title at the top -->
+        <Label Text="Transaction History" 
+               FontSize="Large" 
+               FontAttributes="Bold" 
+               HorizontalOptions="CenterAndExpand"/>
+
+        <!-- Existing CollectionView -->
+        <CollectionView x:Name="collectionView" ItemsSource="{Binding Transactions}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="model:Transaction">
+                    <StackLayout Orientation="Vertical" Padding="10">
+                        <Label Text="{Binding amount, StringFormat='Amount: {0}'}" FontAttributes="Bold"/>
+                        <Label Text="{Binding actionTime, StringFormat='{0:dd/MM/yyyy HH:mm}'}"/>
+                    </StackLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <!-- Return Button -->
+        <Button Text="Return" 
+                Command="{Binding ClosePopupCommand}" 
+                HorizontalOptions="Center"/>
+    </VerticalStackLayout>
+</ContentPage>

@@ -74,7 +74,7 @@ namespace Gamble_On.Services
             }
         }
 
-        public async Task<bool> RegisterUserAsync(User userToRegister)
+        public async Task<string> RegisterUserAsync(User userToRegister)
         {
             var jsonPayload = JsonConvert.SerializeObject(userToRegister);
             StringContent message = new(jsonPayload, Encoding.UTF8, "application/json");
@@ -86,16 +86,16 @@ namespace Gamble_On.Services
                 Console.WriteLine(errorContent);
                 if (response.IsSuccessStatusCode)
                 {
-                    return true;
+                    return "true";
                 }
                 else
                 {
-                    return false;
+                    return errorContent;
                 }
             }
             catch (Exception)
             {
-                return false;
+                return "false";
             }
         }
 

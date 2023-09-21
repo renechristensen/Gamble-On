@@ -12,5 +12,7 @@ namespace Gamble_On.Services
         Task<Wallet> GetWalletByUserIdAsync(int userId);
         Task<bool> DepositAsync(int userId, float amount);
         Task<bool> WithdrawAsync(int userId, float amount);
+        Task<List<BettingHistory>> GetBettingHistoryByUserIdAsync(int userId);
+        Task<List<Transaction>> GetTransactionsByUserIdAsync(int userId);
     }
 }

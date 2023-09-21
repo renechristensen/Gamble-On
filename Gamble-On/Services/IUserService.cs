@@ -10,7 +10,7 @@ namespace Gamble_On.Services
     public interface IUserService
     {
         Task<String> LoginAsync(string username, string password);
-        Task<bool>RegisterUserAsync(User newUser);
+        Task<string>RegisterUserAsync(User newUser);
         Task<User> GetUserByIdAsync(string userId);
 
     }

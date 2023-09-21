@@ -6,9 +6,9 @@ using Gamble_On;
 
 public partial class Dashboard : ContentPage
 {
-	public Dashboard()
+	public Dashboard(MainDashboardViewModel viewModel)
 	{
 		InitializeComponent();
-  
+		BindingContext = viewModel;
     }
 }

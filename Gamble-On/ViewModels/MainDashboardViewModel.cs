@@ -1,47 +1,53 @@
-﻿// not in use
+﻿using Gamble_On.Services;
+using System.Collections.ObjectModel;
+using Gamble_On.Models;
+using System.Threading.Tasks;
 using System.Windows.Input;
-using Microsoft.Maui.Controls;  // For Command
+using Microsoft.Maui.Controls;
 
 namespace Gamble_On.ViewModels
 {
-    public class MainDashboardViewModel : ViewModelBase  // Assuming you have a ViewModelBase for common functionalities
+    public class MainDashboardViewModel : ViewModelBase
     {
-        // Navigation commands for the double bar
-        public ICommand NavigateToRufusCommand { get; private set; }
-        public ICommand NavigateToDRCommand { get; private set; }
+        /*
+         * This exists for testing with the address service. Its used while working with authentication
+         * 
+        private readonly IAddressService _addressService;
+        public ObservableCollection<Address> Addresses { get; set; }
 
-        // Other properties and commands for the dashboard can go here
-        // For example, user details, statistics, bets, games, etc.
-
-        public MainDashboardViewModel()
+        public MainDashboardViewModel(IAddressService addressService)
         {
-            // Initialize commands
-            InitializeCommands();
+            _addressService = addressService;
+            Addresses = new ObservableCollection<Address>();
+
+            // Use the same pattern as in WalletViewModel
+            LoadAddresses();
         }
 
-        private void InitializeCommands()
+        private async void LoadAddresses()
         {
-            NavigateToRufusCommand = new Command(NavigateToRufus);
-            NavigateToDRCommand = new Command(NavigateToDR);
-        }
-
-        private void NavigateToRufus()
-        {
-            // Navigation logic to Rufus
-        }
-
-        private async void NavigateToDR()
-        {
-                try
+            try
+            {
+                var addresses = await _addressService.GetAllAddressesAsync();
+                if (addresses != null)
                 {
-                    await Launcher.OpenAsync(new Uri("https://www.dr.dk/"));
+                    foreach (var address in addresses)
+                    {
+                        Addresses.Add(address);
+                    }
                 }
-                catch (Exception)
+                else
                 {
-                    // Handle any exceptions that might occur while launching the URL
-                    await Application.Current.MainPage.DisplayAlert("Error", "The page is not available right now, try again later", "OK");
+                    // Handle situations where addresses aren't available or something went wrong.
                 }
-            
+            }
+            catch (Exception ex)
+            {
+                // Handle exceptions.
+            }
         }
+        */
     }
 }
+
+

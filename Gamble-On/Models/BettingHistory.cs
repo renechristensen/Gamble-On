@@ -18,7 +18,7 @@ namespace Gamble_On.Models
         [JsonPropertyName("bettingAmount")]
         public float bettingAmount { get; set; }
         [JsonPropertyName("playedGameId")]
-        public int playedGameId { get; set; }
+        public int bettingGameId { get; set; }
         [JsonPropertyName("createdTime")]
         public DateTime createdTime { get; set; }
         [JsonPropertyName("outcome")]
@@ -27,4 +27,3 @@ namespace Gamble_On.Models
         public float bettingResult { get; set; }
     }
 }
-
