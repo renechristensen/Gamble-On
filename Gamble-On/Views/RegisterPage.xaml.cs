@@ -7,8 +7,6 @@ using Gamble_On.Models;
 
 using Gamble_On.ViewModels;
 
-
-
 namespace Gamble_On.Views;
 
 public partial class RegisterPage : ContentPage

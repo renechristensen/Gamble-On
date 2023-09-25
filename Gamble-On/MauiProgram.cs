@@ -6,7 +6,6 @@ using Gamble_On.Services;
 using Gamble_On.ViewModels;
 using Gamble_On.Views;
 using Gamble_On.Views.Modals;
-
 namespace Gamble_On
 {
     public static class MauiProgram
@@ -17,7 +16,6 @@ namespace Gamble_On
         public static MauiApp CreateMauiApp()
         {
             var builder = MauiApp.CreateBuilder();
-
 
             // Configure Services
             ConfigureServices(builder.Services);
@@ -33,7 +31,6 @@ namespace Gamble_On
             //ViewModelLocator.StaticServiceProvider = serviceCollection.BuildServiceProvider();
             return builder.Build();
         }
-
         private static void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton<IAuthorizationService, AuthorizationService>();
@@ -65,6 +62,10 @@ namespace Gamble_On
             services.AddHttpClient<IAddressService, AddressService>(httpClientConfig)
                     .SetHandlerLifetime(TimeSpan.FromMinutes(5))
                     .AddPolicyHandler(retryPolicy);
+
+            services.AddHttpClient<IGameService, GameService>(httpClientConfig)
+                    .SetHandlerLifetime(TimeSpan.FromMinutes(5))
+                    .AddPolicyHandler(retryPolicy);
         }
         private static void RegisterViewModels(IServiceCollection services)
         {
@@ -78,7 +79,8 @@ namespace Gamble_On
                 typeof(DepositPopupViewModel),
                 typeof(WithdrawPopupViewModel),
                 typeof(WalletBettingHistoryViewModel),
-                typeof(WalletTransactionHistoryViewModel)
+                typeof(WalletTransactionHistoryViewModel),
+                typeof(CurrentBettingsForGameViewModel)
             };
 
             viewModels.ForEach(viewModelType => services.AddTransient(viewModelType));
@@ -96,7 +98,8 @@ namespace Gamble_On
                 typeof(DepositPopupPage),
                 typeof(WithdrawPopupPage),
                 typeof(WalletBettingHistory),
-                typeof(WalletTransactionHistory)
+                typeof(WalletTransactionHistory),
+                typeof(CurrentBettingsForGamePage)
             };
 
             pages.ForEach(pageType => services.AddTransient(pageType));

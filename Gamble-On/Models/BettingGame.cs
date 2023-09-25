@@ -1,25 +1,28 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Gamble_On.Models
 {
     public class BettingGame
     {
         [JsonProperty("id")]
-        public int id { get; set; }
+        public int Id { get; set; }
 
-        [JsonProperty("gameID")]
-        public int gameID { get; set; }
+        [JsonProperty("gameId")]
+        public int GameId { get; set; }
 
         [JsonProperty("plannedTime")]
-        public DateTime plannedTime { get; set; }
+        public DateTime PlannedTime { get; set; }
+
         [JsonProperty("winnerId")]
-        public int winnerId { get; set; }
+        public int? WinnerId { get; set; } // Made it nullable to handle null values
+
         [JsonProperty("beingPlayed")]
-        public bool beingPlayed { get; set; }
-    }
+        public bool BeingPlayed { get; set; }
+
+        [JsonProperty("game")]
+        public Game Game { get; set; }
+
+     }
 }

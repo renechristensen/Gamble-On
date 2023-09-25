@@ -6,17 +6,21 @@
              x:DataType="viewmodel:MainDashboardViewModel"
              x:Class="Gamble_On.Views.Dashboard"
              Title="Dashboard">
-
-    <!-- This exists for testing purposes only 
-    <CollectionView x:Name="collectionView" ItemsSource="{Binding Addresses}">
-        <CollectionView.ItemTemplate>
-            <DataTemplate x:DataType="model:Address">
-                <StackLayout Orientation="Vertical" Padding="10">
-                    <Label Text="{Binding address1}" FontAttributes="Bold"/>
-                    <Label Text="{Binding postalCode, StringFormat='Postal Code: {0}'}"/>
-                </StackLayout>
+    <ListView ItemsSource="{Binding DisplayedGames}" x:Name="ThisPage">
+        <ListView.ItemTemplate>
+            <DataTemplate x:DataType="model:BettingGame">
+                <ViewCell>
+                    <StackLayout Orientation="Vertical" Padding="10">
+                        <!-- Header with Image and Title -->
+                        <StackLayout>
+                            <Image Source="{Binding Game.gameImage}" HeightRequest="160" WidthRequest="160"/>
+                            <Label Text="{Binding Game.name}" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" Margin="10,0"/>
+                            <Label x:Name="DescriptionLabel" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand"  Text="{Binding Game.desc}" Margin="10,0" />
+                            <Button WidthRequest="350" Text="{Binding Game.name, StringFormat='View ongoing {0} Games'}" Command="{Binding BindingContext.OpenBettingGamesModalCommand, Source={x:Reference ThisPage}}" CommandParameter="{Binding Game.id}" />
+                        </StackLayout>
+                    </StackLayout>
+                </ViewCell>
             </DataTemplate>
-        </CollectionView.ItemTemplate>
-    </CollectionView>
-    -->
+        </ListView.ItemTemplate>
+    </ListView>
 </ContentPage>

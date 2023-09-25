@@ -1,0 +1,27 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:model="clr-namespace:Gamble_On.Models"
+             xmlns:viewmodel="clr-namespace:Gamble_On.ViewModels"
+             x:DataType="viewmodel:CurrentBettingsForGameViewModel"
+             x:Class="Gamble_On.Views.Modals.CurrentBettingsForGamePage"
+             Title="Current Betting Games">
+
+    <StackLayout>
+        <Button Text="Return" Command="{Binding ReturnCommand}" />
+
+        <ListView ItemsSource="{Binding BettingGamesForGameId}">
+            <!-- Define the appearance of each item in the list -->
+            <ListView.ItemTemplate>
+                <DataTemplate x:DataType="model:BettingGame">
+                    <ViewCell>
+                        <StackLayout Orientation="Vertical" Padding="10">
+                            <Label Text="{Binding Game.name}" />
+                            <Label Text="at"></Label>
+                            <Label Text="{Binding PlannedTime }"></Label>
+                        </StackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </StackLayout>
+</ContentPage>
