@@ -27,13 +27,13 @@
 
     <!-- Main TabBar (will navigate here after login) -->
     <TabBar>
-        <Tab Title="Dashboard">
+        <Tab Title="Games">
             <ShellContent
-                Title="Dashboard"
+                Title="Games"
                 ContentTemplate="{DataTemplate local2:Dashboard}"
                 Route="Dashboard" />
         </Tab>
-        <Tab Title="User profile">
+        <Tab Title="Profile">
             <ShellContent
                 Title="Profile"
                 ContentTemplate="{DataTemplate local2:ProfilePage}"
