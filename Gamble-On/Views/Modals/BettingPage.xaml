@@ -1,0 +1,31 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:model="clr-namespace:Gamble_On.Models"
+             xmlns:viewmodel="clr-namespace:Gamble_On.ViewModels"
+             xmlns:helpers="clr-namespace:Gamble_On.Helpers"
+             x:DataType="viewmodel:BettingViewModel"
+             x:Class="Gamble_On.Views.Modals.BettingPage"
+             Title="Make bets on characters"
+             x:Name="CharacterBetting">
+
+    <StackLayout>
+        <Button Text="Return" Command="{Binding ReturnCommand}" />
+
+        <ListView x:Name="listView" ItemsSource="{Binding CharactersForGame}">
+            <ListView.Behaviors>
+                <helpers:ItemSelectedToCommandBehavior Command="{Binding Source={x:Reference listView}, Path=BindingContext.ConfirmBetCommand}" />
+            </ListView.Behaviors>
+
+            <ListView.ItemTemplate>
+                <DataTemplate x:DataType="model:Character">
+                    <ViewCell>
+                        <StackLayout Orientation="Horizontal" Padding="10">
+                            <Label Text="{Binding name}" />
+                            <Label Text="{Binding odds, StringFormat='Odds: {0:F2}'}" />
+                        </StackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </StackLayout>
+</ContentPage>

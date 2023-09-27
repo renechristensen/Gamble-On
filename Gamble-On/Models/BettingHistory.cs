@@ -18,17 +18,17 @@ namespace Gamble_On.Models
         [JsonProperty("bettingAmount")]
         public float bettingAmount { get; set; }
 
-        [JsonProperty("playedGameId")]
+        [JsonProperty("bettingGameId")]
         public int bettingGameId { get; set; }
 
         [JsonProperty("createdTime")]
         public DateTime createdTime { get; set; }
 
         [JsonProperty("outcome")]
-        public bool outcome { get; set; }
+        public bool? outcome { get; set; }
 
         [JsonProperty("bettingResult")]
-        public float bettingResult { get; set; }
+        public float? bettingResult { get; set; }
 
         [JsonProperty("bettingCharacterId")]
         public int bettingCharacterId { get; set; }

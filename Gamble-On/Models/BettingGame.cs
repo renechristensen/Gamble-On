@@ -23,6 +23,5 @@ namespace Gamble_On.Models
 
         [JsonProperty("game")]
         public Game Game { get; set; }
-
      }
 }

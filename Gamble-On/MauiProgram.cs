@@ -66,6 +66,10 @@ namespace Gamble_On
             services.AddHttpClient<IGameService, GameService>(httpClientConfig)
                     .SetHandlerLifetime(TimeSpan.FromMinutes(5))
                     .AddPolicyHandler(retryPolicy);
+
+            services.AddHttpClient<IBettingService, BettingService>(httpClientConfig)
+                    .SetHandlerLifetime(TimeSpan.FromMinutes(5))
+                    .AddPolicyHandler(retryPolicy);
         }
         private static void RegisterViewModels(IServiceCollection services)
         {
@@ -80,7 +84,8 @@ namespace Gamble_On
                 typeof(WithdrawPopupViewModel),
                 typeof(WalletBettingHistoryViewModel),
                 typeof(WalletTransactionHistoryViewModel),
-                typeof(CurrentBettingsForGameViewModel)
+                typeof(CurrentBettingsForGameViewModel),
+                typeof(BettingViewModel)
             };
 
             viewModels.ForEach(viewModelType => services.AddTransient(viewModelType));
@@ -99,7 +104,8 @@ namespace Gamble_On
                 typeof(WithdrawPopupPage),
                 typeof(WalletBettingHistory),
                 typeof(WalletTransactionHistory),
-                typeof(CurrentBettingsForGamePage)
+                typeof(CurrentBettingsForGamePage),
+                typeof(BettingPage)
             };
 
             pages.ForEach(pageType => services.AddTransient(pageType));

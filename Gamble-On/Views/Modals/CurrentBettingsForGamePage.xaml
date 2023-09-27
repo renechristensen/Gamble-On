@@ -4,7 +4,8 @@
              xmlns:viewmodel="clr-namespace:Gamble_On.ViewModels"
              x:DataType="viewmodel:CurrentBettingsForGameViewModel"
              x:Class="Gamble_On.Views.Modals.CurrentBettingsForGamePage"
-             Title="Current Betting Games">
+             Title="Current Betting Games"
+             x:Name="ThisPage">
 
     <StackLayout>
         <Button Text="Return" Command="{Binding ReturnCommand}" />
@@ -14,10 +15,13 @@
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="model:BettingGame">
                     <ViewCell>
-                        <StackLayout Orientation="Vertical" Padding="10">
+                        <StackLayout Orientation="Horizontal" Padding="10">
                             <Label Text="{Binding Game.name}" />
-                            <Label Text="at"></Label>
+                            <Label Text=" at "></Label>
                             <Label Text="{Binding PlannedTime }"></Label>
+                            <Button Text="Place a Bet" 
+                                    Command="{Binding BindingContext.NavigateToBettingPageCommand, Source={x:Reference ThisPage}}" 
+                                    CommandParameter="{Binding Id}" />
                         </StackLayout>
                     </ViewCell>
                 </DataTemplate>

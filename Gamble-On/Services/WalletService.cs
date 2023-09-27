@@ -1,9 +1,10 @@
-﻿using System;
+﻿using Gamble_On.Models;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using Gamble_On.Models;
-using Newtonsoft.Json;
 
 namespace Gamble_On.Services
 {
@@ -29,46 +30,35 @@ namespace Gamble_On.Services
 
         public async Task<bool> DepositAsync(int userId, float amount)
         {
-            Wallet wallet = await GetWalletByUserIdAsync(userId);
-
-            if (wallet == null)
-                return false;
-
-            wallet.amount += amount;
-            var walletUpdateEndpoint = $"/Wallet/{wallet.id}";
-            var jsonPayload = JsonConvert.SerializeObject(wallet);
-            StringContent content = new(jsonPayload, Encoding.UTF8, "application/json");
-
-            var response = await ExecuteHttpRequestAsync(() => _httpClient.PutAsync(walletUpdateEndpoint, content));
-
-            if (response.IsSuccessStatusCode)
-            {
-                return true;
-            }
-
-            return false;
+            return await PostTransactionAsync(userId, Math.Abs(amount)); // Ensure amount is positive
         }
 
         public async Task<bool> WithdrawAsync(int userId, float amount)
+        {
+            return await PostTransactionAsync(userId, -Math.Abs(amount)); // Ensure amount is negative
+        }
+
+        private async Task<bool> PostTransactionAsync(int userId, float amount)
         {
             Wallet wallet = await GetWalletByUserIdAsync(userId);
 
             if (wallet == null)
                 return false;
 
-            wallet.amount -= amount;
-            var walletUpdateEndpoint = $"/Wallet/{wallet.id}";
-            var jsonPayload = JsonConvert.SerializeObject(wallet);
+            var transactionEndpoint = $"/Transaction";
+            var transaction = new Transaction
+            {
+                walletId = wallet.id,
+                amount = amount,
+                actionTime = DateTime.Now
+            };
+
+            var jsonPayload = JsonConvert.SerializeObject(transaction);
             StringContent content = new(jsonPayload, Encoding.UTF8, "application/json");
 
-            var response = await ExecuteHttpRequestAsync(() => _httpClient.PutAsync(walletUpdateEndpoint, content));
+            var response = await ExecuteHttpRequestAsync(() => _httpClient.PostAsync(transactionEndpoint, content));
 
-            if (response.IsSuccessStatusCode)
-            {
-                return true;
-            }
-
-            return false;
+            return response.IsSuccessStatusCode;
         }
 
         public async Task<List<BettingHistory>> GetBettingHistoryByUserIdAsync(int userId)

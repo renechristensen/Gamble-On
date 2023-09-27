@@ -81,24 +81,14 @@ namespace Gamble_On.ViewModels
 
         private async Task ExecuteShowPopup<TViewModel, TPage>(int gameId)
         {
-            object viewModel = null;
-            if (typeof(TViewModel) == typeof(CurrentBettingsForGameViewModel))
-            {
-                viewModel = new CurrentBettingsForGameViewModel(_gameService, gameId);
-            }
-            else
-            {
-                viewModel = App.Current.MainPage.Handler.MauiContext.Services.GetService<TViewModel>();
-            }
-            if (viewModel is CurrentBettingsForGameViewModel bettingsForGameViewModel)
-            {
-                bettingsForGameViewModel.GameId = gameId;
-            }
+            var viewModel = App.Current.MainPage.Handler.MauiContext.Services.GetService<TViewModel>();
+            MessagingCenter.Send(this, "OpenCurrentBettingsForGame", gameId);
             var page = Activator.CreateInstance(typeof(TPage), viewModel);
             await Shell.Current.Navigation.PushModalAsync(page as Page);
         }
     }
 }
+
 
 
 

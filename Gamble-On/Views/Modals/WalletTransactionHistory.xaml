@@ -7,6 +7,7 @@
              x:Class="Gamble_On.Views.Modals.WalletTransactionHistory"
              Title="WalletTransactionHistoryPage">
 
+    <ScrollView>
     <VerticalStackLayout>
         <!-- Title at the top -->
         <Label Text="Transaction History" 
@@ -31,4 +32,5 @@
                 Command="{Binding ClosePopupCommand}" 
                 HorizontalOptions="Center"/>
     </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>

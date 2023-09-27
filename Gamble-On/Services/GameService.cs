@@ -5,7 +5,7 @@ namespace Gamble_On.Services
 {
     public class GameService : BaseService, IGameService
     {
-        // This URL is relative to the base address set in the HttpClient
+        // Existing constant
         private const string Endpoint = "/BettingGame/GetCurrentBettingGames";
 
         public GameService(HttpClient httpClient, IAuthorizationService authorizationService)
@@ -34,6 +34,29 @@ namespace Gamble_On.Services
                 throw new Exception($"HTTP Error: {response.StatusCode} - {response.ReasonPhrase}");
             }
         }
+        /*
+        public async Task<BettingGame> GetGameByIdAsync(int gameId)
+        {
+            var response = await ExecuteHttpRequestAsync(() => _httpClient.GetAsync($"/BettingGame/{gameId}"));
+
+            if (response.IsSuccessStatusCode)
+            {
+                var json = await response.Content.ReadAsStringAsync();
+
+                try
+                {
+                    return JsonConvert.DeserializeObject<BettingGame>(json);
+                }
+                catch (JsonException)
+                {
+                    throw new Exception("Failed to deserialize the response from the server.");
+                }
+            }
+            else
+            {
+                throw new Exception($"HTTP Error: {response.StatusCode} - {response.ReasonPhrase}");
+            }
+        }*/
     }
 }
 
