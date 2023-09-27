@@ -6,6 +6,8 @@ using Gamble_On.Services;
 using Gamble_On.ViewModels;
 using Gamble_On.Views;
 using Gamble_On.Views.Modals;
+using CommunityToolkit.Maui;
+
 namespace Gamble_On
 {
     public static class MauiProgram
@@ -22,6 +24,7 @@ namespace Gamble_On
 
             builder
                 .UseMauiApp<App>()
+                .UseMauiCommunityToolkit()
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");

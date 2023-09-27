@@ -4,10 +4,11 @@ using Microsoft.Maui.Controls;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Gamble_On.Views.Modals;
+using CommunityToolkit.Mvvm.Input;
 
 namespace Gamble_On.ViewModels
 {
-    public class WalletViewModel : ViewModelBase, IDisposable
+    public partial class WalletViewModel : ViewModelBase
     {
         private readonly IWalletService _walletService;
         private float _amount;
@@ -25,10 +26,6 @@ namespace Gamble_On.ViewModels
             ShowWithdravelPopupCommand = new Command(async () => await ExecuteShowPopup<WithdrawPopupViewModel, WithdrawPopupPage>());
             ShowTransactionsPopupCommand = new Command(async () => await ExecuteShowPopup<WalletTransactionHistoryViewModel, WalletTransactionHistory>());
             ShowWalletBettingHistoryPopupPopupCommand = new Command(async () => await ExecuteShowPopup<WalletBettingHistoryViewModel, WalletBettingHistory>());
-
-            MessagingCenter.Subscribe<DepositPopupViewModel, float>(this, "DepositUpdated", OnDepositUpdated);
-            MessagingCenter.Subscribe<WithdrawPopupViewModel, float>(this, "WithdrawUpdated", OnWithdrawUpdated);
-
             LoadWalletData();
         }
 
@@ -69,20 +66,18 @@ namespace Gamble_On.ViewModels
             }
         }
 
-        private void OnDepositUpdated(DepositPopupViewModel sender, float depositAmount)
+        [RelayCommand]
+        void Appearing()
         {
-            Amount += depositAmount;
-        }
+            try
+            {
 
-        private void OnWithdrawUpdated(WithdrawPopupViewModel sender, float withdrawAmount)
-        {
-            Amount -= withdrawAmount;
-        }
-
-        public void Dispose()
-        {
-            MessagingCenter.Unsubscribe<DepositPopupViewModel, float>(this, "DepositUpdated");
-            MessagingCenter.Unsubscribe<WithdrawPopupViewModel, float>(this, "WithdrawUpdated");
+                LoadWalletData();
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine(ex.ToString());
+            }
         }
     }
 }

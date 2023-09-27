@@ -3,10 +3,11 @@ using Gamble_On.Models;
 using Gamble_On.Services;
 using System;
 using System.Threading.Tasks;
+using CommunityToolkit.Mvvm.Input;
 
 namespace Gamble_On.ViewModels
 {
-    public class ProfilePageViewModel : ViewModelBase
+    public partial class ProfilePageViewModel : ViewModelBase
     {
         private readonly IUserService _userService;
 
@@ -105,6 +106,20 @@ namespace Gamble_On.ViewModels
             catch (Exception ex)
             {
                 await Shell.Current.DisplayAlert("Error", $"An error occurred while loading the profile: {ex.Message}", "OK");
+            }
+        }
+
+        [RelayCommand]
+        void Appearing()
+        {
+            try
+            {
+
+                LoadUserProfile();
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine(ex.ToString());
             }
         }
     }

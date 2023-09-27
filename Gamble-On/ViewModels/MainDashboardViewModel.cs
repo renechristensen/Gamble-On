@@ -8,10 +8,11 @@ using Microsoft.Extensions.DependencyInjection;
 using Gamble_On.Views;
 using System;
 using Gamble_On.Views.Modals;
+using CommunityToolkit.Mvvm.Input;
 
 namespace Gamble_On.ViewModels
 {
-    public class MainDashboardViewModel : ViewModelBase
+    public partial class MainDashboardViewModel : ViewModelBase
     {
         private readonly IGameService _gameService;
 
@@ -85,6 +86,19 @@ namespace Gamble_On.ViewModels
             MessagingCenter.Send(this, "OpenCurrentBettingsForGame", gameId);
             var page = Activator.CreateInstance(typeof(TPage), viewModel);
             await Shell.Current.Navigation.PushModalAsync(page as Page);
+        }
+        [RelayCommand]
+        void Appearing()
+        {
+            try
+            {
+
+                LoadGames();
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine(ex.ToString());
+            }
         }
     }
 }

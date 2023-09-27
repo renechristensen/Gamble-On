@@ -48,7 +48,6 @@ namespace Gamble_On.ViewModels
                     var success = await _walletService.WithdrawAsync(userId, _withdrawAmount);
                     if (success)
                     {
-                        MessagingCenter.Send(this, "WithdrawUpdated", _withdrawAmount);
                         await Application.Current.MainPage.DisplayAlert("Success", "Withdrawal was successful.", "OK");
                     }
                     else

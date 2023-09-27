@@ -44,7 +44,6 @@ namespace Gamble_On.ViewModels
                         var success = await _walletService.DepositAsync(userId, _depositAmount);
                         if (success)
                         {
-                            MessagingCenter.Send(this, "DepositUpdated", _depositAmount);
                             await Shell.Current.DisplayAlert("Success", "Deposit successfully processed.", "OK");
                         }
                         else

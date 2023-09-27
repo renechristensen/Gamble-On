@@ -3,10 +3,14 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:controls="clr-namespace:Gamble_On.Views.Controls"
              xmlns:model="clr-namespace:Gamble_On.Models"
+             xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:viewmodel="clr-namespace:Gamble_On.ViewModels"
              x:DataType="viewmodel:WalletViewModel"
     x:Class="Gamble_On.Views.WalletPage"
              Title="WalletPage">
+    <ContentPage.Behaviors>
+        <mct:EventToCommandBehavior Command="{Binding AppearingCommand}" EventName="Appearing" />
+    </ContentPage.Behaviors>
     <StackLayout VerticalOptions="Center" HorizontalOptions="Center">
         <Label Text="Your Wallet Balance:" />
         <Label Text="{Binding Amount}" FontSize="Large" />
