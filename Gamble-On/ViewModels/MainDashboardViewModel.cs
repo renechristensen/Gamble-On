@@ -27,7 +27,6 @@ namespace Gamble_On.ViewModels
             _gameService = gameService ?? throw new ArgumentNullException(nameof(gameService));
             ToggleExpandCommand = new Command<Game>(ToggleExpand);
             OpenBettingGamesModalCommand = new Command<int>(async (gameId) => await ExecuteShowPopup<CurrentBettingsForGameViewModel, CurrentBettingsForGamePage>(gameId));
-            LoadGames();
         }
 
         private void ToggleExpand(Game game)
