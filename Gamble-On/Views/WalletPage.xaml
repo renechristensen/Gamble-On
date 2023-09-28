@@ -7,7 +7,7 @@
              xmlns:viewmodel="clr-namespace:Gamble_On.ViewModels"
              x:DataType="viewmodel:WalletViewModel"
     x:Class="Gamble_On.Views.WalletPage"
-             Title="WalletPage">
+             Title="Saldo oversigt">
     <ContentPage.Behaviors>
         <mct:EventToCommandBehavior Command="{Binding AppearingCommand}" EventName="Appearing" />
     </ContentPage.Behaviors>

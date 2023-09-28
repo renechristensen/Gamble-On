@@ -19,9 +19,28 @@
                             <Label Text="{Binding Game.name}" />
                             <Label Text=" at "></Label>
                             <Label Text="{Binding PlannedTime }"></Label>
-                            <Button Text="Place a Bet" 
+                            <Button Text="Choose time" 
                                     Command="{Binding BindingContext.NavigateToBettingPageCommand, Source={x:Reference ThisPage}}" 
-                                    CommandParameter="{Binding Id}" />
+                                    CommandParameter="{Binding Id}" >
+                                <Button.Triggers>
+                                    <DataTrigger TargetType="Button"
+                                        Binding="{Binding BeingPlayed}" 
+                                        Value="True">
+                                        <Setter Property="IsVisible" Value="False"/>
+                                    </DataTrigger>
+                                </Button.Triggers>
+                            </Button>
+                            <Button Text="View game">
+
+                                <Button.Triggers>
+                                    <DataTrigger TargetType="Button"
+                                        Binding="{Binding BeingPlayed}" 
+                                        Value="False">
+                                        <Setter Property="IsVisible" Value="False"/>
+                                    </DataTrigger>
+                                </Button.Triggers>
+                            </Button>
+                            
                         </StackLayout>
                     </ViewCell>
                 </DataTemplate>

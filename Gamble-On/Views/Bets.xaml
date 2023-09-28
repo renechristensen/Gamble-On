@@ -6,7 +6,7 @@
              xmlns:model="clr-namespace:Gamble_On.Models"
              x:DataType="viewmodel:BetsViewModel"
              x:Class="Gamble_On.Views.Bets"
-             Title="Bets">
+             Title="Satsnings oversigt">
 
     <ContentPage.Behaviors>
         <mct:EventToCommandBehavior Command="{Binding LoadDataCommand}" EventName="Appearing" />

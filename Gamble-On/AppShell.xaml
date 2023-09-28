@@ -10,9 +10,9 @@
 
     <!-- Create a starting tabbar that allows you to go from register to login and vice versa-->
     <TabBar Title="LoginAndRegister">
-        <Tab Title="Login">
+        <Tab Title="Log ind">
             <ShellContent
-            Title="Login"
+            Title="Log ind"
             ContentTemplate="{DataTemplate local:LoginPage}"
             Route="LoginPage" />
         </Tab>
@@ -33,7 +33,7 @@
                 ContentTemplate="{DataTemplate local2:Dashboard}"
                 Route="Dashboard" />
         </Tab>
-        <Tab Title="Mine satsninger">
+        <Tab Title="Sats">
             <ShellContent
                 Title="Satsninger"
                 ContentTemplate="{DataTemplate local2:Bets}"/>

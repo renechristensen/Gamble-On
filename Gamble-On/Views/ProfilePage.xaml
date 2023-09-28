@@ -5,7 +5,7 @@
              xmlns:viewmodel="clr-namespace:Gamble_On.ViewModels"
              x:DataType="viewmodel:ProfilePageViewModel"
              x:Class="Gamble_On.Views.ProfilePage"
-             Title="ProfilePage">
+             Title="Profil">
     <ContentPage.Behaviors>
         <mct:EventToCommandBehavior Command="{Binding AppearingCommand}" EventName="Appearing" />
     </ContentPage.Behaviors>

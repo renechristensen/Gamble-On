@@ -5,7 +5,7 @@
              xmlns:viewmodel="clr-namespace:Gamble_On.ViewModels"
              x:DataType="viewmodel:UserRegisterViewModel"
              x:Class="Gamble_On.Views.RegisterPage"
-             Title="RegisterPage">
+             Title="Registrerings side">
     <!--
     <Shell.TitleView>
         <StackLayout Orientation="Horizontal" HorizontalOptions="Center">

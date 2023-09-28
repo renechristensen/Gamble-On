@@ -4,41 +4,27 @@
              xmlns:model="clr-namespace:Gamble_On.Models"
              xmlns:viewmodel="clr-namespace:Gamble_On.ViewModels"
              x:DataType="viewmodel:UserLoginViewModel"
-             x:Class="Gamble_On.LoginPage">
+             x:Class="Gamble_On.LoginPage"
+             Title="Log ind">
     <ScrollView>
-        <VerticalStackLayout
-            Spacing="25"
-            Padding="30,0"
-            VerticalOptions="CenterAndExpand"
-            HorizontalOptions="FillAndExpand">
-            <!-- Logo or App Name can be placed here -->
-            <Label
-                Text="Gamble On"
-                FontSize="32"
-                HorizontalOptions="CenterAndExpand" />
+        <Grid RowDefinitions="Auto,*">
+            <Image Grid.Row="0" Source="default_image.png" Aspect="Fill" HeightRequest="210" Margin="0,-45,0,0"/>
+            <Frame Grid.Row="1" CornerRadius="31" TranslationY="-23" BorderColor="Transparent" VerticalOptions="FillAndExpand">
+                <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto" Padding="20" RowSpacing="5">
+                    <Label Grid.Row="0" Text="Gamble On" FontSize="23" HorizontalTextAlignment="Center"/>
+                    <Label Grid.Row="1" Text="Er du klar til at vinde store penge?" Margin="0,0,0,18"  TextColor="#63909c" HorizontalTextAlignment="Center"/>
+                    <Label Grid.Row="2" Text="Email" FontSize="16" FontAttributes="Bold"/>
+                    <Border Grid.Row="3" StrokeShape="RoundRectangle 20,20,20,20">
+                        <Entry BackgroundColor="#c8dbda" Text="{Binding Email}" TextColor="#578794" HeightRequest="50"/>
+                    </Border>
 
-            <!-- Username Entry Field -->
-            <Entry 
-                Placeholder="Email"
-                 Text="{Binding Email}"
-                HorizontalOptions="FillAndExpand" />
-
-            <!-- Password Entry Field -->
-            <Entry 
-                Placeholder="Password"
-                Text="{Binding Password}"
-                IsPassword="True"
-                HorizontalOptions="FillAndExpand" />
-
-            <!-- Login Button -->
-            <Button 
-                Text="Login"
-                Command="{Binding LoginCommand}"
-                HorizontalOptions="CenterAndExpand" />
-
-
-            <!-- Any additional UI components can be added here -->
-
-        </VerticalStackLayout>
+                    <Label Grid.Row="4" Text="Password" FontSize="16" FontAttributes="Bold"/>
+                    <Border Grid.Row="5" StrokeShape="RoundRectangle 20,20,20,20">
+                        <Entry BackgroundColor="#c8dbda" Text="{Binding Password}" TextColor="#578794" IsPassword="True" HeightRequest="50"/>
+                    </Border>
+                    <Button Grid.Row="6" Text="Log ind" Command="{Binding LoginCommand}" FontAttributes="Bold" TextColor="White" Margin="0,20" HeightRequest="50" CornerRadius="10" BackgroundColor="#5e90c1"/>
+                </Grid>
+            </Frame>
+        </Grid>
     </ScrollView>
 </ContentPage>

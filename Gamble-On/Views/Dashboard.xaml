@@ -6,7 +6,7 @@
              xmlns:viewmodel="clr-namespace:Gamble_On.ViewModels"
              x:DataType="viewmodel:MainDashboardViewModel"
              x:Class="Gamble_On.Views.Dashboard"
-             Title="Dashboard">
+             Title="Spil oversigt">
     <ContentPage.Behaviors>
         <mct:EventToCommandBehavior Command="{Binding AppearingCommand}" EventName="Appearing" />
     </ContentPage.Behaviors>
