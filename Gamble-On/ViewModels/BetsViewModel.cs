@@ -18,7 +18,7 @@ namespace Gamble_On.ViewModels
         {
             _bettingService = bettingService ?? throw new ArgumentNullException(nameof(bettingService));
             LoadDataCommand = new RelayCommand(Appearing);
-            LoadData();
+            //LoadData();
         }
 
         public ObservableCollection<BettingHistory> BettingHistories
@@ -55,7 +55,7 @@ namespace Gamble_On.ViewModels
 
         private async void Appearing()
         {
-            //LoadData();
+            LoadData();
         }
     }
 }
