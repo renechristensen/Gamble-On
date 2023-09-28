@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:viewmodel="clr-namespace:Gamble_On.ViewModels"
+             xmlns:model="clr-namespace:Gamble_On.Models"
+             x:DataType="viewmodel:BetsViewModel"
+             x:Class="Gamble_On.Views.Bets"
+             Title="Bets">
+
+    <ContentPage.Behaviors>
+        <mct:EventToCommandBehavior Command="{Binding LoadDataCommand}" EventName="Appearing" />
+    </ContentPage.Behaviors>
+
+    <!-- For simplicity, a ListView is used to display betting history. You can customize further. -->
+    <ListView ItemsSource="{Binding BettingHistories}">
+        <ListView.ItemTemplate>
+            <DataTemplate x:DataType="model:BettingHistory">
+                <!-- Customize your cell template as per your needs. Here's a simple text cell for demonstration -->
+                <TextCell Text="{Binding bettingAmount}" Detail="{Binding createdTime}" />
+            </DataTemplate>
+        </ListView.ItemTemplate>
+    </ListView>
+</ContentPage>

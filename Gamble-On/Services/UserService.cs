@@ -26,7 +26,7 @@ namespace Gamble_On.Services
 
             StringContent message = new(jsonPayload, Encoding.UTF8, "application/json");
 
-            HttpResponseMessage response = await ExecuteHttpRequestAsync(() => _httpClient.PostAsync(LoginEndpoint, message));
+            HttpResponseMessage response = await ExecuteHttpRequestAsyncWithoutAuthorization(() => _httpClient.PostAsync(LoginEndpoint, message));
 
             if (response.IsSuccessStatusCode)
             {
@@ -43,7 +43,7 @@ namespace Gamble_On.Services
             var jsonPayload = JsonConvert.SerializeObject(userToRegister);
             StringContent message = new(jsonPayload, Encoding.UTF8, "application/json");
 
-            HttpResponseMessage response = await ExecuteHttpRequestAsync(() => _httpClient.PostAsync(RegisterEndpoint, message));
+            HttpResponseMessage response = await ExecuteHttpRequestAsyncWithoutAuthorization(() => _httpClient.PostAsync(RegisterEndpoint, message));
 
             if (response.IsSuccessStatusCode)
             {

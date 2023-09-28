@@ -19,7 +19,8 @@ namespace Gamble_On.Services
         {
             var endpoint = $"/BettingHistory/UserId/{userId}";
             var response = await ExecuteHttpRequestAsync(() => _httpClient.GetAsync(endpoint));
-
+            int number = 3;
+            Console.WriteLine(number);
             if (response.IsSuccessStatusCode)
             {
                 return JsonConvert.DeserializeObject<List<BettingHistory>>(await response.Content.ReadAsStringAsync());

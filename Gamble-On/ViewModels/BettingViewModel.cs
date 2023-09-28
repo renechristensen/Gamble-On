@@ -124,7 +124,7 @@ namespace Gamble_On.ViewModels
                         {
                             walletID = wallet.id,
                             bettingAmount = amount,
-                            bettingGameId = 123,
+                            bettingGameId = Id,
                             createdTime = DateTime.Now,
                             bettingCharacterId = selectedCharacter.id,
                             outcome = null,

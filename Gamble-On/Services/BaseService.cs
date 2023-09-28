@@ -32,4 +32,23 @@ public class BaseService
                 throw new Exception("Request timed out", e);
         }
     }
+
+    protected async Task<HttpResponseMessage> ExecuteHttpRequestAsyncWithoutAuthorization(Func<Task<HttpResponseMessage>> httpRequest)
+    {
+        try
+        {
+            return await httpRequest();
+        }
+        catch (HttpRequestException e)
+        {
+            throw new Exception("Network error occurred", e);
+        }
+        catch (TaskCanceledException e)
+        {
+            if (e.CancellationToken.IsCancellationRequested)
+                throw new Exception("Request was cancelled", e);
+            else
+                throw new Exception("Request timed out", e);
+        }
+    }
 }

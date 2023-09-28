@@ -88,7 +88,8 @@ namespace Gamble_On
                 typeof(WalletBettingHistoryViewModel),
                 typeof(WalletTransactionHistoryViewModel),
                 typeof(CurrentBettingsForGameViewModel),
-                typeof(BettingViewModel)
+                typeof(BettingViewModel),
+                typeof(BetsViewModel)
             };
 
             viewModels.ForEach(viewModelType => services.AddTransient(viewModelType));
@@ -108,7 +109,8 @@ namespace Gamble_On
                 typeof(WalletBettingHistory),
                 typeof(WalletTransactionHistory),
                 typeof(CurrentBettingsForGamePage),
-                typeof(BettingPage)
+                typeof(BettingPage),
+                typeof(Bets)
             };
 
             pages.ForEach(pageType => services.AddTransient(pageType));

@@ -12,36 +12,41 @@
     <TabBar Title="LoginAndRegister">
         <Tab Title="Login">
             <ShellContent
-            Title="Home"
+            Title="Login"
             ContentTemplate="{DataTemplate local:LoginPage}"
             Route="LoginPage" />
         </Tab>
-        <Tab Title="Register">
+        <Tab Title="Registrering">
             <ShellContent
-            Title="RegisterPage"
-            ContentTemplate="{DataTemplate local2:RegisterPage}"
-            Route="RegisterPage" />
+                Title="Registrer ny bruger"
+                ContentTemplate="{DataTemplate local2:RegisterPage}"
+                Route="RegisterPage" />
         </Tab>
     </TabBar>
 
 
     <!-- Main TabBar (will navigate here after login) -->
     <TabBar>
-        <Tab Title="Games">
+        <Tab Title="Spil">
             <ShellContent
-                Title="Games"
+                Title="Igangværende spil"
                 ContentTemplate="{DataTemplate local2:Dashboard}"
                 Route="Dashboard" />
         </Tab>
-        <Tab Title="Profile">
+        <Tab Title="Mine satsninger">
             <ShellContent
-                Title="Profile"
+                Title="Satsninger"
+                ContentTemplate="{DataTemplate local2:Bets}"/>
+        </Tab>
+        <Tab Title="Profil">
+            <ShellContent
+                Title="Profil"
                 ContentTemplate="{DataTemplate local2:ProfilePage}"
                 Route="Profile" />
         </Tab>
-        <Tab Title="Wallet">
+        <Tab Title="Saldo">
             <ShellContent
-                Title="Wallet"
+                Title="Saldo"
                 ContentTemplate="{DataTemplate local2:WalletPage}"
                 Route="WalletPage" />
         </Tab>
