@@ -11,6 +11,8 @@ namespace Gamble_On.Services
     {
         Task<bool> PostBettingHistoryAsync(BettingHistory bettingHistory);
         Task<List<BettingHistory>> GetBettingHistoryByUserIdAsync(int userId);
+        Task<List<BettingHistoryAlter>> GetBettingHistoryAlterByUserIdAsync(int userId);
+
 
     }
 }

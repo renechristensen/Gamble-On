@@ -14,7 +14,20 @@ namespace Gamble_On.Services
         {
         }
 
-        // use this to get bets. Refactor WalletService later as well as the viewmodels that need this function
+        // use this to get character name for bets page
+        public async Task<List<BettingHistoryAlter>> GetBettingHistoryAlterByUserIdAsync(int userId)
+        {
+            var endpoint = $"/BettingHistory/UserId/{userId}";
+            var response = await ExecuteHttpRequestAsync(() => _httpClient.GetAsync(endpoint));
+            int number = 3;
+            Console.WriteLine(number);
+            if (response.IsSuccessStatusCode)
+            {
+                return JsonConvert.DeserializeObject<List<BettingHistoryAlter>>(await response.Content.ReadAsStringAsync());
+            }
+
+            throw new Exception($"Failed to get betting history: {response.StatusCode}");
+        }
         public async Task<List<BettingHistory>> GetBettingHistoryByUserIdAsync(int userId)
         {
             var endpoint = $"/BettingHistory/UserId/{userId}";

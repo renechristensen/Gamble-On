@@ -34,29 +34,17 @@ namespace Gamble_On.Services
                 throw new Exception($"HTTP Error: {response.StatusCode} - {response.ReasonPhrase}");
             }
         }
-        /*
-        public async Task<BettingGame> GetGameByIdAsync(int gameId)
-        {
-            var response = await ExecuteHttpRequestAsync(() => _httpClient.GetAsync($"/BettingGame/{gameId}"));
 
+        public async Task<Character> GetCharacterByIdAsync(int characterId) {
+            var endpoint = $"/Character/{characterId}";
+            var response = await ExecuteHttpRequestAsync(() => _httpClient.GetAsync(endpoint));
             if (response.IsSuccessStatusCode)
             {
-                var json = await response.Content.ReadAsStringAsync();
+                return JsonConvert.DeserializeObject<Character>(await response.Content.ReadAsStringAsync());
+            }
 
-                try
-                {
-                    return JsonConvert.DeserializeObject<BettingGame>(json);
-                }
-                catch (JsonException)
-                {
-                    throw new Exception("Failed to deserialize the response from the server.");
-                }
-            }
-            else
-            {
-                throw new Exception($"HTTP Error: {response.StatusCode} - {response.ReasonPhrase}");
-            }
-        }*/
+            throw new Exception($"Failed to get Character: {response.StatusCode}");
+        }
     }
 }
 

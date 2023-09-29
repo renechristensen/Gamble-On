@@ -6,13 +6,16 @@ using System.Linq;
 using System;
 using CommunityToolkit.Mvvm.Input;
 using System.Windows.Input;
+using System.Runtime.CompilerServices;
 
 namespace Gamble_On.ViewModels
 {
     public partial class BetsViewModel : ViewModelBase
     {
         private readonly IBettingService _bettingService;
-        private ObservableCollection<BettingHistory> _bettingHistories;
+        private ObservableCollection<BettingHistoryAlter> _bettingHistories;
+        private ObservableCollection<BettingHistoryAlter> _completedBets;
+        private ObservableCollection<BettingHistoryAlter> _ongoingBets;
 
         public BetsViewModel(IBettingService bettingService)
         {
@@ -21,10 +24,21 @@ namespace Gamble_On.ViewModels
             //LoadData();
         }
 
-        public ObservableCollection<BettingHistory> BettingHistories
+        public ObservableCollection<BettingHistoryAlter> BettingHistories
         {
             get => _bettingHistories;
             set => Set(ref _bettingHistories, value);
+        }
+        public ObservableCollection<BettingHistoryAlter> CompletedBets
+        {
+            get => _completedBets;
+            set => Set(ref _completedBets, value);
+        }
+
+        public ObservableCollection<BettingHistoryAlter> OngoingBets
+        {
+            get => _ongoingBets;
+            set => Set(ref _ongoingBets, value);
         }
 
         public ICommand LoadDataCommand { get; }
@@ -36,10 +50,25 @@ namespace Gamble_On.ViewModels
                 var userIdStr = await SecureStorage.GetAsync("user_id");
                 if (int.TryParse(userIdStr, out int userId) && userId > 0)
                 {
-                    var bettingHistories = await _bettingService.GetBettingHistoryByUserIdAsync(userId);
+                    var bettingHistories = await _bettingService.GetBettingHistoryAlterByUserIdAsync(userId);
                     if (bettingHistories != null)
                     {
-                        BettingHistories = new ObservableCollection<BettingHistory>(bettingHistories);
+                        BettingHistories = new ObservableCollection<BettingHistoryAlter>(bettingHistories);
+                        OngoingBets = new ObservableCollection<BettingHistoryAlter>();
+                        CompletedBets = new ObservableCollection<BettingHistoryAlter>();
+
+                        foreach (BettingHistoryAlter bet in BettingHistories)
+                        {
+                            // game has not been held
+                            if (bet.outcome == null)
+                            {
+                                OngoingBets.Add(bet);
+                            }
+                            else
+                            {
+                                CompletedBets.Add(bet);
+                            }
+                        }
                     }
                 }
                 else

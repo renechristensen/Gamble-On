@@ -38,7 +38,7 @@
                         <Image Grid.Row="1" Source="{Binding Game.gameImage}"  Aspect="AspectFit"  HorizontalOptions="Center" Margin="25, 10"/>
                         <Label Grid.Row="2" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand"  Text="Spil informationer" FontSize="Medium" Margin="0,0" />
                         <Label Grid.Row="3" x:Name="DescriptionLabel" VerticalOptions="CenterAndExpand"  Text="{Binding Game.desc}" Margin="28,10, 28, 25" />
-                        <Button Grid.Row="4" Text="{Binding Game.name, StringFormat='Spil og vind paa {0} '}" Command="{Binding BindingContext.OpenBettingGamesModalCommand, Source={x:Reference ThisPage}}" CommandParameter="{Binding Game.id}" Margin="25, 0, 25, 10" />
+                        <Button Grid.Row="4" MinimumHeightRequest="60" Text="{Binding Game.name, StringFormat='Spil og vind paa {0} '}" Command="{Binding BindingContext.OpenBettingGamesModalCommand, Source={x:Reference ThisPage}}" CommandParameter="{Binding Game.id}" Margin="25, 0, 25, 10" />
                     </Grid>
                 </Frame>
             </DataTemplate>
