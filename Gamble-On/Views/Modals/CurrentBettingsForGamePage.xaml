@@ -6,7 +6,7 @@
              x:Class="Gamble_On.Views.Modals.CurrentBettingsForGamePage"
              Title="Current Betting Games"
              x:Name="ThisPage">
-    <StackLayout VerticalOptions="FillAndExpand">
+    <StackLayout VerticalOptions="FillAndExpand" BackgroundColor="#c8dbda">
         <Frame BackgroundColor="#5e90c1" HorizontalOptions="Fill" Padding="0" CornerRadius="0" HeightRequest="60" Margin="-2,-2,-2,-2">
             <Label Text="Igangvaarende spil" TextColor="White" VerticalOptions="CenterAndExpand" FontSize="Large" Margin="10" />
         </Frame>
@@ -15,7 +15,7 @@
                 <DataTemplate x:DataType="model:BettingGame">
                     <Frame BorderColor="#C3B1E1" 
                            CornerRadius="10" 
-                           BackgroundColor="#c8dbda" 
+                           BackgroundColor="#84bfd1" 
                            Padding="8" 
                            Margin="4">
                         <Grid>

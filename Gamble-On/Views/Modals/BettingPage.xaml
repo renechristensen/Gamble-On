@@ -8,7 +8,7 @@
              Title="Make bets on characters"
              x:Name="CharacterBetting">
 
-    <StackLayout>
+    <StackLayout Background="#c8dbda">
         <Button Text="Return" Command="{Binding ReturnCommand}" />
 
         <ListView x:Name="listView" ItemsSource="{Binding CharactersForGame}">

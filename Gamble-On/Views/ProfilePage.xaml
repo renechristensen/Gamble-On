@@ -6,61 +6,71 @@
              x:DataType="viewmodel:ProfilePageViewModel"
              x:Class="Gamble_On.Views.ProfilePage"
              Title="Profil">
+
     <ContentPage.Behaviors>
         <mct:EventToCommandBehavior Command="{Binding AppearingCommand}" EventName="Appearing" />
     </ContentPage.Behaviors>
 
-    <ScrollView VerticalScrollBarVisibility="Never" HorizontalScrollBarVisibility="Never" BackgroundColor="#84bfd1">
-        <Grid Padding="20,15" ColumnSpacing="20">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
+    <ScrollView VerticalScrollBarVisibility="Never" HorizontalScrollBarVisibility="Never" BackgroundColor="#c8dbda">
+        <Frame BorderColor="#C3B1E1" 
+               CornerRadius="10" 
+               BackgroundColor="#84bfd1" 
+               Padding="8" 
+               Margin="4"
+               HorizontalOptions="Center"
+               VerticalOptions="StartAndExpand">
+            <Grid Padding="20,15" ColumnSpacing="20">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
 
-            <!-- First Name -->
-            <Label Grid.Row="0" Grid.Column="0" Text="First Name" FontAttributes="Bold" />
-            <Label Grid.Row="0" Grid.Column="1" Text="{Binding FirstName}" Margin="0,0,0,15" />
+                <!-- First Name -->
+                <Label Grid.Row="0" Grid.Column="0" Text="First Name" FontAttributes="Bold" />
+                <Label Grid.Row="0" Grid.Column="1" Text="{Binding FirstName}" Margin="0,0,0,15" />
 
-            <!-- Last Name -->
-            <Label Grid.Row="1" Grid.Column="0" Text="Last Name" FontAttributes="Bold" />
-            <Label Grid.Row="1" Grid.Column="1" Text="{Binding LastName}" Margin="0,0,0,15" />
+                <!-- Last Name -->
+                <Label Grid.Row="1" Grid.Column="0" Text="Last Name" FontAttributes="Bold" />
+                <Label Grid.Row="1" Grid.Column="1" Text="{Binding LastName}" Margin="0,0,0,15" />
 
-            <!-- Username -->
-            <Label Grid.Row="2" Grid.Column="0" Text="Username" FontAttributes="Bold" />
-            <Label Grid.Row="2" Grid.Column="1" Text="{Binding Username}" Margin="0,0,0,15" />
+                <!-- Username -->
+                <Label Grid.Row="2" Grid.Column="0" Text="Username" FontAttributes="Bold" />
+                <Label Grid.Row="2" Grid.Column="1" Text="{Binding Username}" Margin="0,0,0,15" />
 
-            <!-- Email -->
-            <Label Grid.Row="3" Grid.Column="0" Text="Email" FontAttributes="Bold" />
-            <Label Grid.Row="3" Grid.Column="1" Text="{Binding Email}" Margin="0,0,0,15" />
+                <!-- Email -->
+                <Label Grid.Row="3" Grid.Column="0" Text="Email" FontAttributes="Bold" />
+                <Label Grid.Row="3" Grid.Column="1" Text="{Binding Email}" Margin="0,0,0,15" />
 
-            <!-- Address -->
-            <Label Grid.Row="4" Grid.Column="0" Text="Address" FontAttributes="Bold" />
-            <Label Grid.Row="4" Grid.Column="1" Text="{Binding Address1}" Margin="0,0,0,15" />
+                <!-- Address -->
+                <Label Grid.Row="4" Grid.Column="0" Text="Address" FontAttributes="Bold" />
+                <Label Grid.Row="4" Grid.Column="1" Text="{Binding Address1}" Margin="0,0,0,15" />
 
-            <!-- Phone Number -->
-            <Label Grid.Row="5" Grid.Column="0" Text="Phone Number" FontAttributes="Bold" />
-            <Label Grid.Row="5" Grid.Column="1" Text="{Binding PhoneNumber}" Margin="0,0,0,15" />
+                <!-- Phone Number -->
+                <Label Grid.Row="5" Grid.Column="0" Text="Phone Number" FontAttributes="Bold" />
+                <Label Grid.Row="5" Grid.Column="1" Text="{Binding PhoneNumber}" Margin="0,0,0,15" />
 
-            <!-- Date of Birth -->
-            <Label Grid.Row="6" Grid.Column="0" Text="Date of Birth" FontAttributes="Bold" />
-            <Label Grid.Row="6" Grid.Column="1" Text="{Binding DateOfBirth}" Margin="0,0,0,15" />
+                <!-- Date of Birth -->
+                <Label Grid.Row="6" Grid.Column="0" Text="Date of Birth" FontAttributes="Bold" />
+                <Label Grid.Row="6" Grid.Column="1" Text="{Binding DateOfBirth}" Margin="0,0,0,15" />
 
-            <!-- Postal Code -->
-            <Label Grid.Row="7" Grid.Column="0" Text="Postal Code" FontAttributes="Bold" />
-            <Label Grid.Row="7" Grid.Column="1" Text="{Binding PostalCode}" Margin="0,0,0,15" />
+                <!-- Postal Code -->
+                <Label Grid.Row="7" Grid.Column="0" Text="Postal Code" FontAttributes="Bold" />
+                <Label Grid.Row="7" Grid.Column="1" Text="{Binding PostalCode}" Margin="0,0,0,15" />
 
-            <Button Grid.Row="8" Text="Lav Aandringer"></Button>
-        </Grid>
+                <Button Grid.Row="8" Text="Lav Aandringer"></Button>
+
+            </Grid>
+        </Frame>
     </ScrollView>
 </ContentPage>

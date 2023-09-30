@@ -13,12 +13,12 @@
     </ContentPage.Behaviors>
 
 
-    <CollectionView ItemsSource="{Binding DisplayedGames}">
+    <CollectionView ItemsSource="{Binding DisplayedGames}" BackgroundColor="#c8dbda">
         <CollectionView.ItemTemplate>
             <DataTemplate x:DataType="model:BettingGame">
                 <Frame BorderColor="#C3B1E1" 
            CornerRadius="10" 
-           BackgroundColor="#c8dbda" 
+           BackgroundColor="#84bfd1" 
            Padding="8" 
            Margin="4">
                     <Grid>
