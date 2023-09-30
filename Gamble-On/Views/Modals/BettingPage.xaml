@@ -2,30 +2,64 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:model="clr-namespace:Gamble_On.Models"
              xmlns:viewmodel="clr-namespace:Gamble_On.ViewModels"
-             xmlns:helpers="clr-namespace:Gamble_On.Helpers"
              x:DataType="viewmodel:BettingViewModel"
              x:Class="Gamble_On.Views.Modals.BettingPage"
              Title="Make bets on characters"
              x:Name="CharacterBetting">
 
-    <StackLayout Background="#c8dbda">
-        <Button Text="Return" Command="{Binding ReturnCommand}" />
+    <StackLayout VerticalOptions="FillAndExpand" BackgroundColor="#c8dbda">
+        <Frame BackgroundColor="#5e90c1" HorizontalOptions="Fill" Padding="0" CornerRadius="0" HeightRequest="60" Margin="-2,-2,-2,-2">
+            <Label Text="Sats paa en karakter" TextColor="White" VerticalOptions="CenterAndExpand" FontSize="Large" Margin="10" />
+        </Frame>
 
-        <ListView x:Name="listView" ItemsSource="{Binding CharactersForGame}">
-            <ListView.Behaviors>
-                <helpers:ItemSelectedToCommandBehavior Command="{Binding Source={x:Reference listView}, Path=BindingContext.ConfirmBetCommand}" />
-            </ListView.Behaviors>
+        <Frame BorderColor="#C3B1E1"
+               CornerRadius="10"
+               BackgroundColor="#84bfd1"
+               Padding="8"
+               Margin="4">
+            <StackLayout>
+                <Image Source="default_image" HeightRequest="145"/>
+                <CollectionView x:Name="CollectionView" 
+                                ItemsSource="{Binding CharactersForGame}"
+                                ItemsLayout="VerticalGrid, 1">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="model:Character">
+                            <StackLayout Padding="10">
+                                <!-- Character Name and Odds -->
+                                <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                                    <Label HorizontalOptions="Center">
+                                        <Label.Text>
+                                            <MultiBinding StringFormat="{}{0} - Odds: {1:F2}">
+                                                <Binding Path="name" />
+                                                <Binding Path="odds" />
+                                            </MultiBinding>
+                                        </Label.Text>
+                                    </Label>
+                                </StackLayout>
+                            </StackLayout>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
 
-            <ListView.ItemTemplate>
-                <DataTemplate x:DataType="model:Character">
-                    <ViewCell>
-                        <StackLayout Orientation="Horizontal" Padding="10">
-                            <Label Text="{Binding name}" />
-                            <Label Text="{Binding odds, StringFormat='Odds: {0:F2}'}" />
-                        </StackLayout>
-                    </ViewCell>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+                <CollectionView x:Name="CollectionView2" 
+                                ItemsSource="{Binding CharactersForGame}"
+                                ItemsLayout="VerticalGrid, 2">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="model:Character">
+                            <StackLayout Padding="10">
+                                <!-- Bet Button -->
+                                <Button WidthRequest="150"
+                                        Text="{Binding name}"
+                                        Command="{Binding Path=BindingContext.ConfirmBetCommand, Source={x:Reference CharacterBetting}}"
+                                        CommandParameter="{Binding .}" 
+                                        HorizontalOptions="Center" Margin="0,10,0,0"/>
+                            </StackLayout>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </StackLayout>
+        </Frame>
+
+        <Button Text="Return" Command="{Binding ReturnCommand}" VerticalOptions="EndAndExpand"/>
     </StackLayout>
 </ContentPage>
