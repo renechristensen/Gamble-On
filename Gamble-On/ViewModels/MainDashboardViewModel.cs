@@ -90,6 +90,7 @@ namespace Gamble_On.ViewModels
             return false;
         }
 
+        
         private async Task ExecuteShowPopup<TViewModel, TPage>(int gameId)
         {
             var viewModel = App.Current.MainPage.Handler.MauiContext.Services.GetService<TViewModel>();
@@ -97,6 +98,7 @@ namespace Gamble_On.ViewModels
             var page = Activator.CreateInstance(typeof(TPage), viewModel);
             await Shell.Current.Navigation.PushModalAsync(page as Page);
         }
+
         [RelayCommand]
         void Appearing()
         {
