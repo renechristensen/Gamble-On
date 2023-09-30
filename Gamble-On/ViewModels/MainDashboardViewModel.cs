@@ -63,7 +63,18 @@ namespace Gamble_On.ViewModels
                     // If this game's ID hasn't been added to DisplayedGames yet, add it
                     if (addedGameIds.Add(bettingGame.GameId))
                     {
+                        bettingGame.GameCount++;
                         DisplayedGames.Add(bettingGame);
+                    }
+                    else
+                    {
+                        // find the game in displayedGames using GameId
+                        var existingGame = DisplayedGames.FirstOrDefault(game => game.GameId == bettingGame.GameId);
+                        if (existingGame != null)
+                        {
+                            // Add +1 to GameCount property of bettinggame
+                            existingGame.GameCount++;
+                        }
                     }
                 }
             }

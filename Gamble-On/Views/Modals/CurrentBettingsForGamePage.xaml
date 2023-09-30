@@ -40,7 +40,7 @@
                                     </DataTrigger>
                                 </Button.Triggers>
                             </Button>
-                            
+
                         </StackLayout>
                     </ViewCell>
                 </DataTemplate>

@@ -9,33 +9,58 @@
     <ContentPage.Behaviors>
         <mct:EventToCommandBehavior Command="{Binding AppearingCommand}" EventName="Appearing" />
     </ContentPage.Behaviors>
-    <ScrollView>
-        <VerticalStackLayout Padding="20">
 
-            <Label Text="First Name" FontAttributes="Bold" />
-            <Label Text="{Binding FirstName}" Margin="0,0,0,15" />
+    <ScrollView VerticalScrollBarVisibility="Never" HorizontalScrollBarVisibility="Never" BackgroundColor="#84bfd1">
+        <Grid Padding="20,15" ColumnSpacing="20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
 
-            <Label Text="Last Name" FontAttributes="Bold" />
-            <Label Text="{Binding LastName}" Margin="0,0,0,15" />
+            <!-- First Name -->
+            <Label Grid.Row="0" Grid.Column="0" Text="First Name" FontAttributes="Bold" />
+            <Label Grid.Row="0" Grid.Column="1" Text="{Binding FirstName}" Margin="0,0,0,15" />
 
-            <Label Text="Username" FontAttributes="Bold" />
-            <Label Text="{Binding Username}" Margin="0,0,0,15" />
+            <!-- Last Name -->
+            <Label Grid.Row="1" Grid.Column="0" Text="Last Name" FontAttributes="Bold" />
+            <Label Grid.Row="1" Grid.Column="1" Text="{Binding LastName}" Margin="0,0,0,15" />
 
-            <Label Text="Email" FontAttributes="Bold" />
-            <Label Text="{Binding Email}" Margin="0,0,0,15" />
+            <!-- Username -->
+            <Label Grid.Row="2" Grid.Column="0" Text="Username" FontAttributes="Bold" />
+            <Label Grid.Row="2" Grid.Column="1" Text="{Binding Username}" Margin="0,0,0,15" />
 
-            <Label Text="Address" FontAttributes="Bold" />
-            <Label Text="{Binding Address1}" Margin="0,0,0,15" />
+            <!-- Email -->
+            <Label Grid.Row="3" Grid.Column="0" Text="Email" FontAttributes="Bold" />
+            <Label Grid.Row="3" Grid.Column="1" Text="{Binding Email}" Margin="0,0,0,15" />
 
-            <Label Text="Phone Number" FontAttributes="Bold" />
-            <Label Text="{Binding PhoneNumber}" Margin="0,0,0,15" />
+            <!-- Address -->
+            <Label Grid.Row="4" Grid.Column="0" Text="Address" FontAttributes="Bold" />
+            <Label Grid.Row="4" Grid.Column="1" Text="{Binding Address1}" Margin="0,0,0,15" />
 
-            <Label Text="Date of Birth" FontAttributes="Bold" />
-            <Label Text="{Binding DateOfBirth}" Margin="0,0,0,15" />
+            <!-- Phone Number -->
+            <Label Grid.Row="5" Grid.Column="0" Text="Phone Number" FontAttributes="Bold" />
+            <Label Grid.Row="5" Grid.Column="1" Text="{Binding PhoneNumber}" Margin="0,0,0,15" />
 
-            <Label Text="Postal Code" FontAttributes="Bold" />
-            <Label Text="{Binding PostalCode}" Margin="0,0,0,15" />
+            <!-- Date of Birth -->
+            <Label Grid.Row="6" Grid.Column="0" Text="Date of Birth" FontAttributes="Bold" />
+            <Label Grid.Row="6" Grid.Column="1" Text="{Binding DateOfBirth}" Margin="0,0,0,15" />
 
-        </VerticalStackLayout>
+            <!-- Postal Code -->
+            <Label Grid.Row="7" Grid.Column="0" Text="Postal Code" FontAttributes="Bold" />
+            <Label Grid.Row="7" Grid.Column="1" Text="{Binding PostalCode}" Margin="0,0,0,15" />
+
+            <Button Grid.Row="8" Text="Lav Aandringer"></Button>
+        </Grid>
     </ScrollView>
 </ContentPage>

@@ -23,5 +23,7 @@ namespace Gamble_On.Models
 
         [JsonProperty("game")]
         public Game Game { get; set; }
+        [JsonIgnore]
+        public int GameCount { get; set; } = 0;
      }
 }

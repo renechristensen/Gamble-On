@@ -50,6 +50,7 @@
 
 	<ItemGroup>
 	  <None Remove="Resources\Images\default_image.png" />
+	  <None Remove="Resources\Images\default_profile_image.png" />
 	</ItemGroup>
 
 	<ItemGroup>

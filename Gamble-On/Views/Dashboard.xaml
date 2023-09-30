@@ -17,28 +17,28 @@
         <CollectionView.ItemTemplate>
             <DataTemplate x:DataType="model:BettingGame">
                 <Frame BorderColor="#C3B1E1" 
-                   CornerRadius="10" 
-                   BackgroundColor="#c8dbda" 
-                   Padding="10" 
-                   Margin="10">
+           CornerRadius="10" 
+           BackgroundColor="#c8dbda" 
+           Padding="8" 
+           Margin="4">
                     <Grid>
                         <Grid.RowDefinitions>
-                            <!-- Row for the Title/ Game Name -->
                             <RowDefinition Height="Auto" />
-                            <!-- Row for the Game Image -->
                             <RowDefinition Height="Auto" />
-                            <!-- Row for the Description title -->
                             <RowDefinition Height="Auto" />
-                            <!-- Row for the Description -->
                             <RowDefinition Height="Auto" />
-                            <!-- Row for the Button -->
+                            <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
-                        <Label Grid.Row="0" Text="{Binding Game.name}" HorizontalOptions="Center" Margin="0,0" FontSize="Large"/>
-                        <Image Grid.Row="1" Source="{Binding Game.gameImage}"  Aspect="AspectFit"  HorizontalOptions="Center" Margin="25, 10"/>
-                        <Label Grid.Row="2" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand"  Text="Spil informationer" FontSize="Medium" Margin="0,0" />
-                        <Label Grid.Row="3" x:Name="DescriptionLabel" VerticalOptions="CenterAndExpand"  Text="{Binding Game.desc}" Margin="28,10, 28, 25" />
-                        <Button Grid.Row="4" MinimumHeightRequest="60" Text="{Binding Game.name, StringFormat='Spil og vind paa {0} '}" Command="{Binding BindingContext.OpenBettingGamesModalCommand, Source={x:Reference ThisPage}}" CommandParameter="{Binding Game.id}" Margin="25, 0, 25, 10" />
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Row="0" Grid.ColumnSpan="2" Text="{Binding Game.name}" HorizontalOptions="Center" FontSize="Large" Margin="0,0,0,5"/>
+                        <Label Grid.Row="1" Grid.ColumnSpan="2" Text="{Binding Game.desc}" HorizontalOptions="Center" VerticalOptions="FillAndExpand" VerticalTextAlignment="Start" />
+                        <Image Grid.Row="3" Grid.Column="0" Grid.RowSpan="3" Source="{Binding Game.gameImage}" HeightRequest="140"  Aspect="AspectFill"/>
+                        <Label Grid.Row="4" Grid.Column="1" Text="{Binding GameCount, StringFormat='Aktive spil: {0}'}" Margin="10,0, 0, 0"></Label>
+                        <Button Grid.Row="5" Grid.Column="1" Text="{Binding Game.name, StringFormat='Vaalg spil '}" Command="{Binding BindingContext.OpenBettingGamesModalCommand, Source={x:Reference ThisPage}}" CommandParameter="{Binding Game.id}" Margin="10, 0" />
                     </Grid>
                 </Frame>
             </DataTemplate>
