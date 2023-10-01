@@ -7,30 +7,32 @@
              x:Class="Gamble_On.Views.Modals.WalletBettingHistory"
              Title="WalletBettingHistoryPage">
 
-    <VerticalStackLayout>
-        <!-- Title at the top -->
-        <Label Text="Winnings and Earnings" 
+    <ScrollView>
+        <VerticalStackLayout>
+            <!-- Title at the top -->
+            <Label Text="Winnings and Earnings" 
                FontSize="Large" 
                FontAttributes="Bold" 
                HorizontalOptions="CenterAndExpand"/>
 
-        <!-- Existing CollectionView -->
-        <CollectionView x:Name="collectionView" ItemsSource="{Binding BettingHistories}">
-            <CollectionView.ItemTemplate>
-                <DataTemplate x:DataType="model:BettingHistory">
-                    <StackLayout Orientation="Vertical" Padding="10">
-                        <Label Text="{Binding bettingAmount}" FontAttributes="Bold"/>
-                        <Label Text="{Binding createdTime, StringFormat='{0:dd/MM/yyyy HH:mm}'}"/>
-                        <Label Text="{Binding outcome, Converter={StaticResource BoolToOutcomeConverter}}"/>
-                        <Label Text="{Binding bettingResult, StringFormat='Result: {0}'}"/>
-                    </StackLayout>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
+            <!-- Existing CollectionView -->
+            <CollectionView x:Name="collectionView" ItemsSource="{Binding BettingHistories}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="model:BettingHistory">
+                        <StackLayout Orientation="Vertical" Padding="10">
+                            <Label Text="{Binding bettingAmount}" FontAttributes="Bold"/>
+                            <Label Text="{Binding createdTime, StringFormat='{0:dd/MM/yyyy HH:mm}'}"/>
+                            <Label Text="{Binding outcome, Converter={StaticResource BoolToOutcomeConverter}}"/>
+                            <Label Text="{Binding bettingResult, StringFormat='Result: {0}'}"/>
+                        </StackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
 
-        <!-- Return Button -->
-        <Button Text="Return" 
+            <!-- Return Button -->
+            <Button Text="Return" 
                 Command="{Binding ClosePopupCommand}" 
                 HorizontalOptions="Center"/>
-    </VerticalStackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>

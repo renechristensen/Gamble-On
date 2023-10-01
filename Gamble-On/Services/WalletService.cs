@@ -57,7 +57,7 @@ namespace Gamble_On.Services
             StringContent content = new(jsonPayload, Encoding.UTF8, "application/json");
 
             var response = await ExecuteHttpRequestAsync(() => _httpClient.PostAsync(transactionEndpoint, content));
-
+            var count = 3;
             return response.IsSuccessStatusCode;
         }
 

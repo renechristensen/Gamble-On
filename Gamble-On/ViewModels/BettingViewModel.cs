@@ -137,7 +137,14 @@ namespace Gamble_On.ViewModels
                         if (isSuccess)
                         {
                             await Shell.Current.DisplayAlert("Bet Placed", $"You bet {amount} on {selectedCharacter.name}!", "OK");
-                            MessagingCenter.Send(this, "ReloadWalletData");
+                            if (Shell.Current.Navigation.ModalStack.Count > 0)
+                            {
+                                await Shell.Current.Navigation.PopModalAsync();
+                            }
+                            if (Shell.Current.Navigation.ModalStack.Count > 0)
+                            {
+                                await Shell.Current.Navigation.PopModalAsync();
+                            }
                         }
                         else
                         {

@@ -12,8 +12,12 @@ namespace Gamble_On.ViewModels
     {
         private readonly IWalletService _walletService;
         private float _amount;
-
-        public ICommand ShowDepositPopupCommand { get; }
+        public float Amount
+        {
+            get => _amount;
+            set => Set(ref _amount, value);
+        }
+        public ICommand ShowDepositPromptCommand { get; }
         public ICommand ShowWithdravelPopupCommand { get; }
         public ICommand ShowTransactionsPopupCommand { get; }
         public ICommand ShowWalletBettingHistoryPopupPopupCommand { get; }
@@ -22,19 +26,63 @@ namespace Gamble_On.ViewModels
         {
             _walletService = walletService ?? throw new ArgumentNullException(nameof(walletService));
 
-            ShowDepositPopupCommand = new Command(async () => await ExecuteShowPopup<DepositPopupViewModel, DepositPopupPage>());
+
+            ShowDepositPromptCommand = new Command(async () => await ShowDepositPrompt());
+            //ShowDepositPopupCommand = new Command(async () => await ExecuteShowPopup<DepositPopupViewModel, DepositPopupPage>());
             ShowWithdravelPopupCommand = new Command(async () => await ExecuteShowPopup<WithdrawPopupViewModel, WithdrawPopupPage>());
             ShowTransactionsPopupCommand = new Command(async () => await ExecuteShowPopup<WalletTransactionHistoryViewModel, WalletTransactionHistory>());
             ShowWalletBettingHistoryPopupPopupCommand = new Command(async () => await ExecuteShowPopup<WalletBettingHistoryViewModel, WalletBettingHistory>());
             LoadWalletData();
         }
 
-        public float Amount
+
+        private async Task ShowDepositPrompt()
         {
-            get => _amount;
-            set => Set(ref _amount, value);
+            var result = await Shell.Current.DisplayPromptAsync(
+                title: "Deposit",
+                message: "How much would you like to deposit?",
+                placeholder: "Enter amount",
+                maxLength: 5, // Example length
+                keyboard: Keyboard.Numeric);
+
+            if (float.TryParse(result, out float depositAmount) && depositAmount > 0)
+            {
+                await ProcessDeposit(depositAmount);
+            }
+            else
+            {
+                await Shell.Current.DisplayAlert("Error", "Invalid amount entered. Please try again.", "OK");
+            }
         }
 
+        private async Task ProcessDeposit(float depositAmount)
+        {
+            var userIdStr = await SecureStorage.GetAsync("user_id");
+            if (int.TryParse(userIdStr, out int userId))
+            {
+                try
+                {
+                    var success = await _walletService.DepositAsync(userId, depositAmount);
+                    if (success)
+                    {
+                        LoadWalletData();
+                        await Shell.Current.DisplayAlert("Success", "Deposit successfully processed.", "OK");
+                    }
+                    else
+                    {
+                        await Shell.Current.DisplayAlert("Failure", "Failed to process deposit.", "OK");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    await Shell.Current.DisplayAlert("Error", $"An error occurred: {ex.Message}", "OK");
+                }
+            }
+            else
+            {
+                await Shell.Current.DisplayAlert("Error", "There has been an error with your login. Logging off", "OK");
+            }
+        }
         private async Task ExecuteShowPopup<TViewModel, TPage>()
         {
             var viewModel = App.Current.MainPage.Handler.MauiContext.Services.GetService<TViewModel>();

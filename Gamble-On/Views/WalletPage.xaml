@@ -1,22 +1,45 @@
-<!-- WalletPage.xaml -->
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:controls="clr-namespace:Gamble_On.Views.Controls"
              xmlns:model="clr-namespace:Gamble_On.Models"
-             xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:viewmodel="clr-namespace:Gamble_On.ViewModels"
              x:DataType="viewmodel:WalletViewModel"
-    x:Class="Gamble_On.Views.WalletPage"
+             xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             x:Class="Gamble_On.Views.WalletPage"
              Title="Saldo oversigt">
     <ContentPage.Behaviors>
         <mct:EventToCommandBehavior Command="{Binding AppearingCommand}" EventName="Appearing" />
     </ContentPage.Behaviors>
-    <StackLayout VerticalOptions="Center" HorizontalOptions="Center">
-        <Label Text="Your Wallet Balance:" />
-        <Label Text="{Binding Amount}" FontSize="Large" />
-        <Button Text="Deposit" Command="{Binding ShowDepositPopupCommand}" />
-        <Button Text="Withdraw" Command="{Binding ShowWithdravelPopupCommand}" />
-        <Button Text="Transactions" Command="{Binding ShowTransactionsPopupCommand}" />
-        <Button Text="Losses and Winnings" Command="{Binding ShowWalletBettingHistoryPopupPopupCommand}" />
+    <StackLayout VerticalOptions="FillAndExpand" BackgroundColor="#c8dbda">
+        <!-- Wallet Content Frame -->
+        <Frame BorderColor="#C3B1E1" 
+               CornerRadius="10" 
+               BackgroundColor="#84bfd1" 
+               Padding="8" 
+               Margin="4">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Wallet Saldo -->
+                <Label Grid.Row="0" Grid.ColumnSpan="2" Text="Your Wallet Balance:" HorizontalOptions="Center"/>
+                <Label Grid.Row="1" Grid.ColumnSpan="2" Text="{Binding Amount}" FontSize="Large" HorizontalOptions="Center"/>
+
+                <!-- Buttons -->
+                <Button Grid.Row="2" Grid.Column="0" Text="Deposit" Command="{Binding ShowDepositPromptCommand}" HorizontalOptions="Fill" Margin="10"/>
+                <Button Grid.Row="2" Grid.Column="1" Text="Withdraw" Command="{Binding ShowWithdravelPopupCommand}" HorizontalOptions="Fill" Margin="10"/>
+                <Button Grid.Row="3" Grid.Column="0" Text="Transactions" Command="{Binding ShowTransactionsPopupCommand}" HorizontalOptions="Fill" Margin="10"/>
+                <Button Grid.Row="3" Grid.Column="1" Text="Losses and Winnings" Command="{Binding ShowWalletBettingHistoryPopupPopupCommand}" HorizontalOptions="Fill" Margin="10"/>
+
+            </Grid>
+        </Frame>
     </StackLayout>
 </ContentPage>
