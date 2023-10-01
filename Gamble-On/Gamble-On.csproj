@@ -84,9 +84,6 @@
 	  <MauiXaml Update="Views\Modals\CurrentBettingsForGamePage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\Modals\DepositPopupPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
 	  <MauiXaml Update="Views\Modals\WalletBettingHistory.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
