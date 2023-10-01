@@ -8,29 +8,29 @@
              Title="WalletTransactionHistoryPage">
 
     <ScrollView>
-    <VerticalStackLayout>
-        <!-- Title at the top -->
-        <Label Text="Transaction History" 
+        <VerticalStackLayout>
+            <!-- Title at the top -->
+            <Label Text="Transaction History" 
                FontSize="Large" 
                FontAttributes="Bold" 
                HorizontalOptions="CenterAndExpand"/>
 
-        <!-- Existing CollectionView -->
-        <CollectionView x:Name="collectionView" ItemsSource="{Binding Transactions}">
-            <CollectionView.ItemTemplate>
-                <DataTemplate x:DataType="model:Transaction">
-                    <StackLayout Orientation="Vertical" Padding="10">
-                        <Label Text="{Binding amount, StringFormat='Amount: {0}'}" FontAttributes="Bold"/>
-                        <Label Text="{Binding actionTime, StringFormat='{0:dd/MM/yyyy HH:mm}'}"/>
-                    </StackLayout>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
+            <!-- Existing CollectionView -->
+            <CollectionView x:Name="collectionView" ItemsSource="{Binding Transactions}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="model:Transaction">
+                        <StackLayout Orientation="Vertical" Padding="10">
+                            <Label Text="{Binding amount, StringFormat='Amount: {0}'}" FontAttributes="Bold"/>
+                            <Label Text="{Binding actionTime, StringFormat='{0:dd/MM/yyyy HH:mm}'}"/>
+                        </StackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
 
-        <!-- Return Button -->
-        <Button Text="Return" 
+            <!-- Return Button -->
+            <Button Text="Return" 
                 Command="{Binding ClosePopupCommand}" 
                 HorizontalOptions="Center"/>
-    </VerticalStackLayout>
+        </VerticalStackLayout>
     </ScrollView>
 </ContentPage>
