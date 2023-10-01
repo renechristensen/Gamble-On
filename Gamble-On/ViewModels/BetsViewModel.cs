@@ -13,15 +13,43 @@ namespace Gamble_On.ViewModels
     public partial class BetsViewModel : ViewModelBase
     {
         private readonly IBettingService _bettingService;
+        private readonly IWalletService _walletService;
         private ObservableCollection<BettingHistoryAlter> _bettingHistories;
         private ObservableCollection<BettingHistoryAlter> _completedBets;
         private ObservableCollection<BettingHistoryAlter> _ongoingBets;
 
-        public BetsViewModel(IBettingService bettingService)
+        public ICommand RemoveBetCommand { get; set; }
+        public BetsViewModel(IBettingService bettingService, IWalletService walletService)
         {
             _bettingService = bettingService ?? throw new ArgumentNullException(nameof(bettingService));
+            _walletService = walletService ?? throw new ArgumentNullException(nameof(walletService));
             LoadDataCommand = new RelayCommand(Appearing);
+            RemoveBetCommand = new Command<BettingHistoryAlter>(async (bet) => await RemoveBetAsync(bet));
             //LoadData();
+        }
+        private async Task RemoveBetAsync(BettingHistoryAlter betToRemove)
+        {
+            try
+            {
+                var isRemoved = await _bettingService.RemoveBetAsync(betToRemove.id);
+                if (isRemoved)
+                {
+                    OngoingBets.Remove(betToRemove);  // Remove from local collection as well.
+
+                    // Deposit the betting amount back to user's wallet
+                    var userIdStr = await SecureStorage.GetAsync("user_id");
+                    if (int.TryParse(userIdStr, out int userId) && userId > 0)
+                    {
+                        await _walletService.DepositAsync(userId, betToRemove.bettingAmount);
+                    }
+
+                    await Shell.Current.DisplayAlert("Success", "Bet removed and tokens returned successfully.", "OK");
+                }
+            }
+            catch (Exception ex)
+            {
+                await Shell.Current.DisplayAlert("Error", $"An error occurred while removing the bet: {ex.Message}", "OK");
+            }
         }
 
         public ObservableCollection<BettingHistoryAlter> BettingHistories
@@ -88,4 +116,3 @@ namespace Gamble_On.ViewModels
         }
     }
 }
-

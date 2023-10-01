@@ -41,6 +41,16 @@ namespace Gamble_On.Services
 
             throw new Exception($"Failed to get betting history: {response.StatusCode}");
         }
+        public async Task<bool> RemoveBetAsync(int betId)
+        {
+            var endpoint = $"/BettingHistory/{betId}";
+            var response = await ExecuteHttpRequestAsync(() => _httpClient.DeleteAsync(endpoint));
+            if (response.IsSuccessStatusCode)
+            {
+                return true;
+            }
+            throw new Exception($"Failed to remove bet: {response.StatusCode}");
+        }
 
         public async Task<bool> PostBettingHistoryAsync(BettingHistory bettingHistory)
         {

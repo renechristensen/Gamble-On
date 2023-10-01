@@ -6,7 +6,8 @@
              xmlns:model="clr-namespace:Gamble_On.Models"
              x:DataType="viewmodel:BetsViewModel"
              x:Class="Gamble_On.Views.Bets"
-             Title="Satsnings oversigt">
+             Title="Satsnings oversigt"
+             x:Name="BetsPage">
 
     <ContentPage.Behaviors>
         <mct:EventToCommandBehavior Command="{Binding LoadDataCommand}" EventName="Appearing" />
@@ -34,7 +35,12 @@
                                 <Label Grid.Row="1" Text="{Binding createdTime, StringFormat='Spillet afholdes kl: {0:HH:mm} den {0:dd/MM/yyyy}'}" />
                                 <Label Grid.Row="2" Text="{Binding bettingAmount, StringFormat='Indsats: {0} tokens'}" />
                                 <Label Grid.Row="3" Text="{Binding bettingCharacter, StringFormat='Karakter: {0}'}"/>
-                                <Button Text="Fjern" HorizontalOptions="End" Grid.RowSpan="4" VerticalOptions="End"></Button>
+                                <Button Text="Fjern" Command="{Binding Path=BindingContext.RemoveBetCommand, Source={x:Reference BetsPage}}" 
+        CommandParameter="{Binding .}" 
+        HorizontalOptions="End" 
+        Grid.RowSpan="4" 
+        VerticalOptions="End"/>
+
                             </Grid>
                         </Frame>
                     </DataTemplate>
@@ -59,7 +65,7 @@
                                 <Label Grid.Row="0" Text="{Binding bettingGame.game.name, StringFormat='Spil: {0}'}"/>
                                 <Label Grid.Row="1" Text="{Binding createdTime, StringFormat='Spillet blev afholdt kl: {0:HH:mm} den {0:dd/MM/yyyy}'}" />
                                 <Label Grid.Row="2" Text="{Binding bettingCharacter, StringFormat='Karakter: {0}'}"/>
-                                <Label Grid.Row="3" Text="{Binding bettingAmount, StringFormat='Amount: {0}'}" />
+                                <Label Grid.Row="3" Text="{Binding bettingAmount, StringFormat='Indsats: {0}'}" />
                             </Grid>
                         </Frame>
                     </DataTemplate>
