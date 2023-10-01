@@ -14,12 +14,18 @@ namespace Gamble_On.ViewModels
         private ObservableCollection<Transaction> _transactions;
 
         public ICommand ClosePopupCommand { get; }
+        public ICommand LoadAllTransactionsCommand { get; }
 
         public WalletTransactionHistoryViewModel(IWalletService walletService)
         {
             ClosePopupCommand = new Command(async () => await ClosePopup());
             _walletService = walletService ?? throw new ArgumentNullException(nameof(walletService));
+            LoadAllTransactionsCommand = new Command(async () => await LoadAllTransactions());
             LoadTransactions();
+        }
+        private async Task LoadAllTransactions()
+        {
+            await LoadTransactions(false);
         }
 
         public ObservableCollection<Transaction> Transactions
@@ -33,7 +39,7 @@ namespace Gamble_On.ViewModels
             await Shell.Current.Navigation.PopModalAsync();
         }
 
-        private async void LoadTransactions()
+        private async Task LoadTransactions(bool initialLoad = true)
         {
             try
             {
@@ -43,7 +49,19 @@ namespace Gamble_On.ViewModels
                     var transactions = await _walletService.GetTransactionsByUserIdAsync(userId);
                     if (transactions != null)
                     {
-                        Transactions = new ObservableCollection<Transaction>(transactions.OrderBy(t => t.actionTime));
+                        foreach (var transaction in transactions)
+                        {
+                            transaction.description = transaction.amount < 0 ? "Udbetaling" : "Indbetaling";
+                        }
+
+                        if (initialLoad)
+                        {
+                            Transactions = new ObservableCollection<Transaction>(transactions.OrderByDescending(t => t.actionTime).Take(10));
+                        }
+                        else
+                        {
+                            Transactions = new ObservableCollection<Transaction>(transactions.OrderByDescending(t => t.actionTime));
+                        }
                     }
                 }
                 else

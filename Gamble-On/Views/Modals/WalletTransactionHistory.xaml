@@ -1,36 +1,49 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:model="clr-namespace:Gamble_On.Models"
+             xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:viewmodel="clr-namespace:Gamble_On.ViewModels"
+             xmlns:model="clr-namespace:Gamble_On.Models"
+             xmlns:converters="clr-namespace:Gamble_On.Converters"
              x:DataType="viewmodel:WalletTransactionHistoryViewModel"
              x:Class="Gamble_On.Views.Modals.WalletTransactionHistory"
              Title="WalletTransactionHistoryPage">
 
-    <ScrollView>
-        <VerticalStackLayout>
-            <!-- Title at the top -->
-            <Label Text="Transaction History" 
-               FontSize="Large" 
-               FontAttributes="Bold" 
-               HorizontalOptions="CenterAndExpand"/>
+    <ScrollView BackgroundColor="#84bfd1">
+        <StackLayout Spacing="10">
 
-            <!-- Existing CollectionView -->
-            <CollectionView x:Name="collectionView" ItemsSource="{Binding Transactions}">
+            <Label Text="Transaktions Historik" FontSize="Large" HorizontalOptions="Center" Margin="0,15,0,0" />
+
+            <CollectionView ItemsSource="{Binding Transactions}">
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="model:Transaction">
-                        <StackLayout Orientation="Vertical" Padding="10">
-                            <Label Text="{Binding amount, StringFormat='Amount: {0}'}" FontAttributes="Bold"/>
-                            <Label Text="{Binding actionTime, StringFormat='{0:dd/MM/yyyy HH:mm}'}"/>
-                        </StackLayout>
+                        <Frame Margin="10, 5" Padding="10" CornerRadius="10" BorderColor="#5e90c1" BackgroundColor="#c8dbda">
+                            <Grid RowSpacing="5">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Label Grid.Row="0" Text="{Binding description}"></Label>
+                                <Label Grid.Row="1" Text="{Binding actionTime, StringFormat='Date: {0:dd/MM/yyyy HH:mm}'}"/>
+                                <Label Grid.Row="2" Text="{Binding amount, StringFormat='Amount: {0}'}" />
+                            </Grid>
+                        </Frame>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
-
-            <!-- Return Button -->
-            <Button Text="Return" 
-                Command="{Binding ClosePopupCommand}" 
-                HorizontalOptions="Center"/>
-        </VerticalStackLayout>
+            <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand">               
+                <Button Text="Tilbage"
+                        Command="{Binding ClosePopupCommand}"
+                        HorizontalOptions="Center"
+                        Margin="10"
+                        WidthRequest="100"/>
+                <Button Text="Historik"
+                        Command="{Binding LoadAllTransactionsCommand}"
+                        HorizontalOptions="End"
+                        Margin="10"
+                        WidthRequest="100"/>
+            </StackLayout>
+        </StackLayout>
     </ScrollView>
 </ContentPage>
