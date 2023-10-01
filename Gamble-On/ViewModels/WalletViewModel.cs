@@ -25,17 +25,65 @@ namespace Gamble_On.ViewModels
         public WalletViewModel(IWalletService walletService)
         {
             _walletService = walletService ?? throw new ArgumentNullException(nameof(walletService));
-
-
             ShowDepositPromptCommand = new Command(async () => await ShowDepositPrompt());
-            //ShowDepositPopupCommand = new Command(async () => await ExecuteShowPopup<DepositPopupViewModel, DepositPopupPage>());
-            ShowWithdravelPopupCommand = new Command(async () => await ExecuteShowPopup<WithdrawPopupViewModel, WithdrawPopupPage>());
+            ShowWithdravelPopupCommand = new Command(async () => await ShowWithdrawalPrompt());
             ShowTransactionsPopupCommand = new Command(async () => await ExecuteShowPopup<WalletTransactionHistoryViewModel, WalletTransactionHistory>());
             ShowWalletBettingHistoryPopupPopupCommand = new Command(async () => await ExecuteShowPopup<WalletBettingHistoryViewModel, WalletBettingHistory>());
             LoadWalletData();
         }
 
+        private async Task ShowWithdrawalPrompt()
+        {
+            var result = await Shell.Current.DisplayPromptAsync(
+                title: "Withdraw",
+                message: "How much would you like to withdraw?",
+                placeholder: "Enter amount",
+                maxLength: 5, // Example length
+                keyboard: Keyboard.Numeric);
 
+            if (float.TryParse(result, out float withdrawAmount) && withdrawAmount > 0)
+            {
+                await ProcessWithdrawal(withdrawAmount);
+            }
+            else
+            {
+                await Shell.Current.DisplayAlert("Error", "Invalid amount entered. Please try again.", "OK");
+            }
+        }
+        private async Task ProcessWithdrawal(float withdrawAmount)
+        {
+            if (withdrawAmount <= 0)
+            {
+                await Shell.Current.DisplayAlert("Error", "Withdrawal amount should be positive.", "OK");
+                return;
+            }
+
+            try
+            {
+                var userIdStr = await SecureStorage.GetAsync("user_id");
+                if (int.TryParse(userIdStr, out int userId))
+                {
+                    var success = await _walletService.WithdrawAsync(userId, withdrawAmount);
+                    if (success)
+                    {
+                        LoadWalletData();
+                        await Shell.Current.DisplayAlert("Success", "Withdrawal was successful.", "OK");
+                    }
+                    else
+                    {
+                        await Shell.Current.DisplayAlert("Error", "Withdrawal failed.", "OK");
+                    }
+                }
+                else
+                {
+                    await Shell.Current.DisplayAlert("Error", "User ID is missing or incorrect.", "OK");
+                }
+            }
+            catch (Exception ex)
+            {
+                await Shell.Current.DisplayAlert("Error", $"An error occurred while processing withdrawal: {ex.Message}", "OK");
+            }
+        }
         private async Task ShowDepositPrompt()
         {
             var result = await Shell.Current.DisplayPromptAsync(
