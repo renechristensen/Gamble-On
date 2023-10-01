@@ -32,5 +32,7 @@ namespace Gamble_On.Models
 
         [JsonProperty("bettingCharacterId")]
         public int bettingCharacterId { get; set; }
+        [JsonIgnore]
+        public string gameResultSoFar { get; set; }
     }
 }

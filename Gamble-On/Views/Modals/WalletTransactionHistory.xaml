@@ -25,8 +25,8 @@
                                     <RowDefinition Height="Auto" />
                                 </Grid.RowDefinitions>
                                 <Label Grid.Row="0" Text="{Binding description}"></Label>
-                                <Label Grid.Row="1" Text="{Binding actionTime, StringFormat='Date: {0:dd/MM/yyyy HH:mm}'}"/>
-                                <Label Grid.Row="2" Text="{Binding amount, StringFormat='Amount: {0}'}" />
+                                <Label Grid.Row="1" Text="{Binding actionTime, StringFormat='Dato: {0:dd/MM/yyyy HH:mm}'}"/>
+                                <Label Grid.Row="2" Text="{Binding amount, StringFormat='Antal: {0} kr'}" />
                             </Grid>
                         </Frame>
                     </DataTemplate>

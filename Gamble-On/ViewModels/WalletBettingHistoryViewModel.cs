@@ -15,11 +15,13 @@ namespace Gamble_On.ViewModels
         private ObservableCollection<BettingHistory> _bettingHistories;
 
         public ICommand ClosePopupCommand { get; set; }
+        public ICommand LoadAllBettingHistoryCommand { get; set; }  // New command
 
         public WalletBettingHistoryViewModel(IWalletService walletService)
         {
             _walletService = walletService ?? throw new ArgumentNullException(nameof(walletService));
             ClosePopupCommand = new Command(async () => await ClosePopup());
+            LoadAllBettingHistoryCommand = new Command(async () => await LoadBettingHistory(false));  // New command initialization
             LoadBettingHistory();
         }
 
@@ -34,17 +36,39 @@ namespace Gamble_On.ViewModels
             await Shell.Current.Navigation.PopModalAsync();
         }
 
-        private async void LoadBettingHistory()
+        private async Task LoadBettingHistory(bool initialLoad = true)
         {
             try
             {
                 var userIdStr = await SecureStorage.GetAsync("user_id");
                 if (int.TryParse(userIdStr, out int userId) && userId > 0)
                 {
-                    var histories = await _walletService.GetBettingHistoryByUserIdAsync(userId);
+                    List<BettingHistory> histories = await _walletService.GetBettingHistoryByUserIdAsync(userId);
                     if (histories != null)
                     {
-                        BettingHistories = new ObservableCollection<BettingHistory>(histories.OrderBy(h => h.createdTime));
+                        foreach (BettingHistory history in histories)
+                        {
+                            if (history.outcome == null)
+                            {
+                                history.gameResultSoFar = "Spillet er forsat uafgjort";
+                            }
+                            else if ((bool)history.outcome) 
+                            {
+                                history.gameResultSoFar = "Du vandt!!";
+                            }
+                            else
+                            {
+                                history.gameResultSoFar = "Du tabte";
+                            }
+                        }
+                        if (initialLoad)
+                        {
+                            BettingHistories = new ObservableCollection<BettingHistory>(histories.OrderByDescending(h => h.createdTime).Take(10));
+                        }
+                        else
+                        {
+                            BettingHistories = new ObservableCollection<BettingHistory>(histories.OrderByDescending(h => h.createdTime));
+                        }
                     }
                 }
                 else
