@@ -15,14 +15,13 @@ namespace Gamble_On.ViewModels
     public partial class MainDashboardViewModel : ViewModelBase
     {
         private readonly IGameService _gameService;
-
         public ObservableCollection<BettingGame> BettingGames { get; private set; } = new ObservableCollection<BettingGame>();
         public ObservableCollection<BettingGame> DisplayedGames { get; private set; } = new ObservableCollection<BettingGame>();
 
         public ICommand ToggleExpandCommand { get; private set; }
         public ICommand OpenBettingGamesModalCommand { get; private set; }
 
-        public MainDashboardViewModel(IGameService gameService)
+        public MainDashboardViewModel(IGameService gameService) 
         {
             _gameService = gameService ?? throw new ArgumentNullException(nameof(gameService));
             ToggleExpandCommand = new Command<Game>(ToggleExpand);
@@ -52,12 +51,6 @@ namespace Gamble_On.ViewModels
                     if (string.IsNullOrEmpty(bettingGame.Game.desc))
                         bettingGame.Game.desc = "There is no default description for this game at the moment.";
 
-                    // Check if image URL is valid, otherwise set default image
-                    if (!await IsValidImageUrl(bettingGame.Game.gameImage))
-                    {
-                        bettingGame.Game.gameImage = "default_image.png";
-                    }
-
                     BettingGames.Add(bettingGame);
 
                     // If this game's ID hasn't been added to DisplayedGames yet, add it
@@ -84,13 +77,6 @@ namespace Gamble_On.ViewModels
             }
         }
 
-        private async Task<bool> IsValidImageUrl(string url)
-        {
-            // Placeholder for the moment, until an image server is up this will always be false
-            return false;
-        }
-
-        
         private async Task ExecuteShowPopup<TViewModel, TPage>(int gameId)
         {
             var viewModel = App.Current.MainPage.Handler.MauiContext.Services.GetService<TViewModel>();
@@ -104,7 +90,6 @@ namespace Gamble_On.ViewModels
         {
             try
             {
-
                 LoadGames();
             }
             catch (Exception ex)
@@ -114,6 +99,7 @@ namespace Gamble_On.ViewModels
         }
     }
 }
+
 
 
 
