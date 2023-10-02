@@ -19,7 +19,7 @@ namespace Gamble_On.ViewModels
         private int _phoneNumber;
         private string _address;
         private int _postalCode;
-        private DateTime _dateOfBirth;
+        private DateTime _dateOfBirth = new DateTime(1990, 1, 1);
         private readonly IUserService _userService;
 
         public ICommand RegisterCommand { get; }
