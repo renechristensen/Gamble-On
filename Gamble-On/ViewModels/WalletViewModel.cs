@@ -21,7 +21,6 @@ namespace Gamble_On.ViewModels
         public ICommand ShowWithdravelPopupCommand { get; }
         public ICommand ShowTransactionsPopupCommand { get; }
         public ICommand ShowWalletBettingHistoryPopupPopupCommand { get; }
-
         public WalletViewModel(IWalletService walletService)
         {
             _walletService = walletService ?? throw new ArgumentNullException(nameof(walletService));
@@ -31,7 +30,6 @@ namespace Gamble_On.ViewModels
             ShowWalletBettingHistoryPopupPopupCommand = new Command(async () => await ExecuteShowPopup<WalletBettingHistoryViewModel, WalletBettingHistory>());
             LoadWalletData();
         }
-
         private async Task ShowWithdrawalPrompt()
         {
             var result = await Shell.Current.DisplayPromptAsync(
@@ -39,7 +37,7 @@ namespace Gamble_On.ViewModels
                 message: "How much would you like to withdraw?",
                 placeholder: "Enter amount",
                 maxLength: 5, // Example length
-                keyboard: Keyboard.Numeric);
+                keyboard: Keyboard.Telephone);
 
             if (float.TryParse(result, out float withdrawAmount) && withdrawAmount > 0)
             {
@@ -91,7 +89,7 @@ namespace Gamble_On.ViewModels
                 message: "How much would you like to deposit?",
                 placeholder: "Enter amount",
                 maxLength: 5, // Example length
-                keyboard: Keyboard.Numeric);
+                keyboard: Keyboard.Telephone);
 
             if (float.TryParse(result, out float depositAmount) && depositAmount > 0)
             {
@@ -102,7 +100,6 @@ namespace Gamble_On.ViewModels
                 await Shell.Current.DisplayAlert("Error", "Invalid amount entered. Please try again.", "OK");
             }
         }
-
         private async Task ProcessDeposit(float depositAmount)
         {
             var userIdStr = await SecureStorage.GetAsync("user_id");
@@ -137,7 +134,6 @@ namespace Gamble_On.ViewModels
             var page = Activator.CreateInstance(typeof(TPage), viewModel);
             await Shell.Current.Navigation.PushModalAsync(page as Page);
         }
-
         private async void LoadWalletData()
         {
             try
@@ -161,7 +157,6 @@ namespace Gamble_On.ViewModels
                 await Application.Current.MainPage.DisplayAlert("Error", "An error occurred while loading wallet data: " + ex.Message, "OK");
             }
         }
-
         [RelayCommand]
         void Appearing()
         {

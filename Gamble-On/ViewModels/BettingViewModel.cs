@@ -88,7 +88,7 @@ namespace Gamble_On.ViewModels
                 message: $"How much would you like to bet on {selectedCharacter.name}?",
                 placeholder: "Enter amount",
                 maxLength: 5, // Example length
-                keyboard: Keyboard.Numeric);
+                keyboard: Keyboard.Telephone);
 
             // Check if betAmount is null or empty, this will be true if the user has hit cancel
             if (string.IsNullOrEmpty(betAmount))
