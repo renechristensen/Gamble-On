@@ -30,14 +30,14 @@
                 </Grid.ColumnDefinitions>
 
                 <!-- Wallet Saldo -->
-                <Label Grid.Row="0" Grid.ColumnSpan="2" Text="Your Wallet Balance:" HorizontalOptions="Center"/>
+                <Label Grid.Row="0" Grid.ColumnSpan="2" Text="Din Saldo:" HorizontalOptions="Center"/>
                 <Label Grid.Row="1" Grid.ColumnSpan="2" Text="{Binding Amount}" FontSize="Large" HorizontalOptions="Center"/>
 
                 <!-- Buttons -->
-                <Button Grid.Row="2" Grid.Column="0" Text="Deposit" Command="{Binding ShowDepositPromptCommand}" HorizontalOptions="Fill" Margin="10"/>
-                <Button Grid.Row="2" Grid.Column="1" Text="Withdraw" Command="{Binding ShowWithdravelPopupCommand}" HorizontalOptions="Fill" Margin="10"/>
-                <Button Grid.Row="3" Grid.Column="0" Text="Transactions" Command="{Binding ShowTransactionsPopupCommand}" HorizontalOptions="Fill" Margin="10"/>
-                <Button Grid.Row="3" Grid.Column="1" Text="Losses and Winnings" Command="{Binding ShowWalletBettingHistoryPopupPopupCommand}" HorizontalOptions="Fill" Margin="10"/>
+                <Button Grid.Row="2" Grid.Column="0" Text="Indbetaling" Command="{Binding ShowDepositPromptCommand}" HorizontalOptions="Fill" Margin="10"/>
+                <Button Grid.Row="2" Grid.Column="1" Text="Udbetaling" Command="{Binding ShowWithdravelPopupCommand}" HorizontalOptions="Fill" Margin="10"/>
+                <Button Grid.Row="3" Grid.Column="0" Text="Transaktioner" Command="{Binding ShowTransactionsPopupCommand}" HorizontalOptions="Fill" Margin="10"/>
+                <Button Grid.Row="3" Grid.Column="1" Text="Tabt og vundet" Command="{Binding ShowWalletBettingHistoryPopupPopupCommand}" HorizontalOptions="Fill" Margin="10"/>
 
             </Grid>
         </Frame>

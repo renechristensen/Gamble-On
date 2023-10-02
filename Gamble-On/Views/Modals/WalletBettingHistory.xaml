@@ -10,7 +10,7 @@
     <ScrollView BackgroundColor="#84bfd1">
         <StackLayout Spacing="10">
             <!-- Title at the top -->
-            <Label Text="Winnings and Earnings" 
+            <Label Text="Tabt og vundet" 
                    FontSize="Large"
                    HorizontalOptions="Center" 
                    Margin="0,15,0,0"/>

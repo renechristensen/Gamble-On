@@ -46,6 +46,8 @@ namespace Gamble_On.Models
         public int addressId { get; set; }
 
         [JsonProperty("address")]
+        public string address { get; set; }
+        [JsonIgnore]
         public Address Address { get; set; }
 
         [JsonProperty("userType1")]

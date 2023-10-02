@@ -95,17 +95,17 @@ namespace Gamble_On.ViewModels
                     }
                     else
                     {
-                        await Shell.Current.DisplayAlert("Error", "User data could not be loaded.", "OK");
+                        await Shell.Current.DisplayAlert("Fejl", "Vi kunne ikke finde dine brugeroplysninger, kontakt en administrator", "OK");
                     }
                 }
                 else
                 {
-                    await Shell.Current.DisplayAlert("Error", "Invalid User ID.", "OK");
+                    await Shell.Current.DisplayAlert("Fejl", "Vi kunne ikke finde dit bruger id i databasen, kontakt en administrator", "OK");
                 }
             }
             catch (Exception ex)
             {
-                await Shell.Current.DisplayAlert("Error", $"An error occurred while loading the profile: {ex.Message}", "OK");
+                await Shell.Current.DisplayAlert("Fejl", $"Der opstod desvaerre en database fejl da vi hentede din profil, kontakt en administrator med følgende besked: {ex.Message}", "OK");
             }
         }
 

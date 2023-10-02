@@ -17,7 +17,7 @@
         <StackLayout Spacing="10">
 
             <!-- Ongoing and Future Games -->
-            <Label Text="Igangværende og fremtidige spil" FontSize="Large" HorizontalOptions="Center" Margin="0,15,0,0" />
+            <Label Text="Igangvaerende og fremtidige spil" FontSize="Large" HorizontalOptions="Center" Margin="0,15,0,0" />
 
             <CollectionView ItemsSource="{Binding OngoingBets}">
                 <CollectionView.ItemTemplate>

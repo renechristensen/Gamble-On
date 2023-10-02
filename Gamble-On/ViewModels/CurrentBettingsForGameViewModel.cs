@@ -66,7 +66,7 @@ namespace Gamble_On.ViewModels
             }
             catch (Exception ex)
             {
-                await Shell.Current.DisplayAlert("Error", $"An error occurred while loading betting games: {ex.Message}", "OK");
+                await Shell.Current.DisplayAlert("Fejl", $"Der opstod desvaerre en databasefejl da vi forsøgte at hente spil listen ned, kontakt en administrator med følgende besked: {ex.Message}", "OK");
             }
         }
 

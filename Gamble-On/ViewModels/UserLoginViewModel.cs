@@ -38,7 +38,7 @@ namespace Gamble_On.ViewModels
         {
             if (string.IsNullOrEmpty(Email) || string.IsNullOrEmpty(Password))
             {
-                await Shell.Current.DisplayAlert("Error", "Email or password cannot be empty.", "OK");
+                await Shell.Current.DisplayAlert("Fejl", "Vaer venlig at udfylde kodeord- og emailfeltet", "OK");
                 return;
             }
 
@@ -58,12 +58,12 @@ namespace Gamble_On.ViewModels
                 }
                 else
                 {
-                    await Shell.Current.DisplayAlert("Login Failed", "Invalid email or password.", "OK");
+                    await Shell.Current.DisplayAlert("Login fejlede", "Du har brugt en forkert email eller password", "OK");
                 }
             }
             catch (Exception ex)
             {
-                await Shell.Current.DisplayAlert("Error", $"An error occurred while logging in: {ex.Message}", "OK");
+                await Shell.Current.DisplayAlert("Fejl", $"Der opstod desvaerre en database fejl da du forsøgte at logge ind, kontakt en administrator med følgende besked: {ex.Message}", "OK");
             }
         }
 

@@ -72,12 +72,12 @@ namespace Gamble_On.ViewModels
                 }
                 else
                 {
-                    await Shell.Current.DisplayAlert("Error", "The desired game details were not found.", "OK");
+                    await Shell.Current.DisplayAlert("Fejl", "Vi kunne ikke finde det valgte spil, kontakt en administrator.", "OK");
                 }
             }
             catch (Exception ex)
             {
-                await Shell.Current.DisplayAlert("Error", $"An error occurred while loading game details: {ex.Message}", "OK");
+                await Shell.Current.DisplayAlert("Fejl", $"Der opstod en database fejl da vi loadeded spillet, vaer venlig at kontakte en administrator med følgende besked: {ex.Message}", "OK");
             }
         }
 
@@ -107,7 +107,7 @@ namespace Gamble_On.ViewModels
                     {
                         if (amount > wallet.amount)
                         {
-                            await Shell.Current.DisplayAlert("Insufficient Funds", "You don't have enough balance in your wallet to place this bet.", "OK");
+                            await Shell.Current.DisplayAlert("Manglende midler", "Du har desvaerre for lav en saldo til at lave dette sats.", "OK");
                             return;
                         }
                         else
@@ -115,7 +115,7 @@ namespace Gamble_On.ViewModels
                             bool withdrawSuccess = await _walletService.WithdrawAsync(userId, amount);
                             if (!withdrawSuccess)
                             {
-                                await Shell.Current.DisplayAlert("Error", "Failed to withdraw amount from wallet.", "OK");
+                                await Shell.Current.DisplayAlert("Fejl", "Der har desvaerre vaeret en databasefejl der gør at din udbetaling er fejlet, kontakt en administrator", "OK");
                                 return;
                             }
                         }
@@ -136,7 +136,7 @@ namespace Gamble_On.ViewModels
                         bool isSuccess = await _bettingService.PostBettingHistoryAsync(bettingHistory);
                         if (isSuccess)
                         {
-                            await Shell.Current.DisplayAlert("Bet Placed", $"You bet {amount} on {selectedCharacter.name}!", "OK");
+                            await Shell.Current.DisplayAlert("Sats placeret", $"Du har satset {amount} paa {selectedCharacter.name}!", "OK");
                             if (Shell.Current.Navigation.ModalStack.Count > 0)
                             {
                                 await Shell.Current.Navigation.PopModalAsync();
@@ -148,22 +148,22 @@ namespace Gamble_On.ViewModels
                         }
                         else
                         {
-                            await Shell.Current.DisplayAlert("Error", "There was an issue placing your bet. Please try again.", "OK");
+                            await Shell.Current.DisplayAlert("Fejl", "Der var en fejl med dit sats, kontakt en administrator.", "OK");
                         }
                     }
                     else
                     {
-                        await Shell.Current.DisplayAlert("Error", "Failed to fetch wallet data.", "OK");
+                        await Shell.Current.DisplayAlert("Fejl", "Vi kunne ikke faa fat i dine saldo oplysninger, kontakt en administrator", "OK");
                     }
                 }
                 else
                 {
-                    await Shell.Current.DisplayAlert("Error", "User ID is not available or incorrect.", "OK");
+                    await Shell.Current.DisplayAlert("Fejl", "Dit bruger id er desvaerre ikke tilgaengeligt, kontakt en administrator", "OK");
                 }
             }
             else
             {
-                await Shell.Current.DisplayAlert("Invalid Input", "Please enter a valid bet amount.", "OK");
+                await Shell.Current.DisplayAlert("Forkert indput", "Vaer venlig at skrive et tal ind i feltet", "OK");
             }
         }
     }

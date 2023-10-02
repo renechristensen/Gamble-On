@@ -29,7 +29,7 @@
     <TabBar>
         <Tab Title="Spil">
             <ShellContent
-                Title="Igangværende spil"
+                Title="Igangvaerende spil"
                 ContentTemplate="{DataTemplate local2:Dashboard}"
                 Route="Dashboard" />
         </Tab>

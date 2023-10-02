@@ -64,7 +64,9 @@ namespace Gamble_On.Services
             if (response.IsSuccessStatusCode)
             {
                 var jsonResponse = await response.Content.ReadAsStringAsync();
-                return JsonConvert.DeserializeObject<User>(jsonResponse);
+                User getUser = JsonConvert.DeserializeObject<User>(jsonResponse);
+                int count = 0;
+                return getUser;
             }
             else
             {

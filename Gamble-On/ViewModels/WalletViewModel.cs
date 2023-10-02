@@ -33,26 +33,29 @@ namespace Gamble_On.ViewModels
         private async Task ShowWithdrawalPrompt()
         {
             var result = await Shell.Current.DisplayPromptAsync(
-                title: "Withdraw",
-                message: "How much would you like to withdraw?",
-                placeholder: "Enter amount",
+                title: "Udbetaling",
+                message: "Hvor meget vil du gerne have udbetalt?",
+                placeholder: "Antal:",
                 maxLength: 5, // Example length
                 keyboard: Keyboard.Telephone);
-
+            if (string.IsNullOrEmpty(result))
+            {
+                return;
+            }
             if (float.TryParse(result, out float withdrawAmount) && withdrawAmount > 0)
             {
                 await ProcessWithdrawal(withdrawAmount);
             }
             else
             {
-                await Shell.Current.DisplayAlert("Error", "Invalid amount entered. Please try again.", "OK");
+                await Shell.Current.DisplayAlert("Fejl", "Du har ikke skrevet et lovligt beløb ind, prøv igen.", "OK");
             }
         }
         private async Task ProcessWithdrawal(float withdrawAmount)
         {
             if (withdrawAmount <= 0)
             {
-                await Shell.Current.DisplayAlert("Error", "Withdrawal amount should be positive.", "OK");
+                await Shell.Current.DisplayAlert("Fejl", "Du kan ikke indbetale et negativt beløb.", "OK");
                 return;
             }
 
@@ -65,39 +68,42 @@ namespace Gamble_On.ViewModels
                     if (success)
                     {
                         LoadWalletData();
-                        await Shell.Current.DisplayAlert("Success", "Withdrawal was successful.", "OK");
+                        await Shell.Current.DisplayAlert("Succes", "Udbetalingen er gennemført", "OK");
                     }
                     else
                     {
-                        await Shell.Current.DisplayAlert("Error", "Withdrawal failed.", "OK");
+                        await Shell.Current.DisplayAlert("Fejl", "Der var desvaerre en fejl med din udbetaling, kontakt vores service afdeling.", "OK");
                     }
                 }
                 else
                 {
-                    await Shell.Current.DisplayAlert("Error", "User ID is missing or incorrect.", "OK");
+                    await Shell.Current.DisplayAlert("Fejl", "Dit bruger id blev ikke fundet, kontakt en administrator.", "OK");
                 }
             }
             catch (Exception ex)
             {
-                await Shell.Current.DisplayAlert("Error", $"An error occurred while processing withdrawal: {ex.Message}", "OK");
+                await Shell.Current.DisplayAlert("Fejl", $"Der opstod en databasefejl med din udbetaling, kontakt en administrator: {ex.Message}", "OK");
             }
         }
         private async Task ShowDepositPrompt()
         {
             var result = await Shell.Current.DisplayPromptAsync(
-                title: "Deposit",
-                message: "How much would you like to deposit?",
-                placeholder: "Enter amount",
+                title: "Indbetaling",
+                message: "Hvor meget vil du gerne have udbetalt?",
+                placeholder: "Antal:",
                 maxLength: 5, // Example length
                 keyboard: Keyboard.Telephone);
-
+            if (string.IsNullOrEmpty(result))
+            {
+                return;
+            }
             if (float.TryParse(result, out float depositAmount) && depositAmount > 0)
             {
                 await ProcessDeposit(depositAmount);
             }
             else
             {
-                await Shell.Current.DisplayAlert("Error", "Invalid amount entered. Please try again.", "OK");
+                await Shell.Current.DisplayAlert("Fejl", "Du har ikke skrevet et tal ind", "OK");
             }
         }
         private async Task ProcessDeposit(float depositAmount)
@@ -111,21 +117,21 @@ namespace Gamble_On.ViewModels
                     if (success)
                     {
                         LoadWalletData();
-                        await Shell.Current.DisplayAlert("Success", "Deposit successfully processed.", "OK");
+                        await Shell.Current.DisplayAlert("Succes", "Indbetaling var en succes.", "OK");
                     }
                     else
                     {
-                        await Shell.Current.DisplayAlert("Failure", "Failed to process deposit.", "OK");
+                        await Shell.Current.DisplayAlert("Fejl", "Indbetalingen fejlede.", "OK");
                     }
                 }
                 catch (Exception ex)
                 {
-                    await Shell.Current.DisplayAlert("Error", $"An error occurred: {ex.Message}", "OK");
+                    await Shell.Current.DisplayAlert("Fejl", $"Der er sket en fejl paa databasen: {ex.Message}", "OK");
                 }
             }
             else
             {
-                await Shell.Current.DisplayAlert("Error", "There has been an error with your login. Logging off", "OK");
+                await Shell.Current.DisplayAlert("Fejl", "Der er en fejl med dit login. Logger af", "OK");
             }
         }
         private async Task ExecuteShowPopup<TViewModel, TPage>()
@@ -149,12 +155,12 @@ namespace Gamble_On.ViewModels
                 }
                 else
                 {
-                    await Application.Current.MainPage.DisplayAlert("Error", "User ID is not available or incorrect.", "OK");
+                    await Application.Current.MainPage.DisplayAlert("Fejl", "Dit bruger Id er blevet afvist.", "OK");
                 }
             }
             catch (Exception ex)
             {
-                await Application.Current.MainPage.DisplayAlert("Error", "An error occurred while loading wallet data: " + ex.Message, "OK");
+                await Application.Current.MainPage.DisplayAlert("Fejl", "Der er desvaerre sket en fejl mens vi hentede dinne saldo data: " + ex.Message, "OK");
             }
         }
         [RelayCommand]

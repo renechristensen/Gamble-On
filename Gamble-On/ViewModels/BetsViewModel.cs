@@ -43,12 +43,12 @@ namespace Gamble_On.ViewModels
                         await _walletService.DepositAsync(userId, betToRemove.bettingAmount);
                     }
 
-                    await Shell.Current.DisplayAlert("Success", "Bet removed and tokens returned successfully.", "OK");
+                    await Shell.Current.DisplayAlert("Succes", "Sats er fjernet og dine penge er blevet returneret.", "OK");
                 }
             }
             catch (Exception ex)
             {
-                await Shell.Current.DisplayAlert("Error", $"An error occurred while removing the bet: {ex.Message}", "OK");
+                await Shell.Current.DisplayAlert("Fejl", $"Der skete en fejl da vi forsøgte at fjerne dit sat, kontakt en administrator med følgende besked: {ex.Message}", "OK");
             }
         }
 
@@ -101,12 +101,12 @@ namespace Gamble_On.ViewModels
                 }
                 else
                 {
-                    await Shell.Current.DisplayAlert("Error", "User ID is not available or incorrect.", "OK");
+                    await Shell.Current.DisplayAlert("Fejl", "Dit bruger id blev ikke fundet, kontakt en administrator", "OK");
                 }
             }
             catch (Exception ex)
             {
-                await Shell.Current.DisplayAlert("Error", $"An error occurred while loading betting histories: {ex.Message}", "OK");
+                await Shell.Current.DisplayAlert("Fejl", $"Der skete en database fejl da vi forsøgte at indlaese dine sats, kontakt en administrator med følgende besked: {ex.Message}", "OK");
             }
         }
 
