@@ -22,104 +22,95 @@
             <Frame Grid.Row="1" CornerRadius="31" TranslationY="-23" BorderColor="Transparent">
                 <Grid Padding="20">
                     <Grid.RowDefinitions>
-                        <!-- Title Label -->
-                        <RowDefinition Height="Auto" />
-                        <!-- Subtitle Label -->
-                        <RowDefinition Height="Auto" />
-                        <!-- First Name Label and Entry -->
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
-                        <!-- Last Name Label and Entry -->
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
-                        <!-- Username Label and Entry -->
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
-                        <!-- Email Label and Entry -->
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
-                        <!-- Password Label and Entry -->
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" /> 
-                        <!-- Phone number Label and Entry -->
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
-                        <!-- Address Label and Entry -->
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
-                        <!-- Dateofbirth Label and Entry -->
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
-                        <!-- Poastal number Label and Entry -->
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
-                        <!-- Poastal number Label and Entry -->
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
-                        <!-- Button -->
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
 
                     <!-- Title Label -->
-                    <Label Grid.Row="0" Text="Gamble On" FontSize="23" HorizontalTextAlignment="Center"/>
+                    <Label Grid.Row="0" Text="Gamble On" FontSize="23" HorizontalTextAlignment="Center" TextColor="Black"/>
                     <!-- Subtitle Label -->
                     <Label Grid.Row="1" Text="Er du klar til at vinde store penge?" Margin="0,0,0,18" TextColor="#63909c" HorizontalTextAlignment="Center"/>
 
                     <!-- Firstname -->
-                    <Label Grid.Row="2" Text="Fornavn" FontSize="16" FontAttributes="Bold"/>
+                    <Label Grid.Row="2" Text="Fornavn" FontSize="16" FontAttributes="Bold" TextColor="Black"/>
                     <Border Grid.Row="3" StrokeShape="RoundRectangle 20,20,20,20">
                         <Entry BackgroundColor="#c8dbda" Text="{Binding FirstName}" TextColor="#578794" HeightRequest="50"/>
                     </Border>
 
                     <!-- Lastname -->
-                    <Label Grid.Row="4" Text="Efternavn" FontSize="16" FontAttributes="Bold"/>
+                    <Label Grid.Row="4" Text="Efternavn" FontSize="16" FontAttributes="Bold" TextColor="Black"/>
                     <Border Grid.Row="5" StrokeShape="RoundRectangle 20,20,20,20">
                         <Entry BackgroundColor="#c8dbda" Text="{Binding LastName}" TextColor="#578794" HeightRequest="50"/>
                     </Border>
 
-                    <!-- Username -->
-                    <Label Grid.Row="6" Text="Brugernavn" FontSize="16" FontAttributes="Bold"/>
-                    <Border Grid.Row="7" StrokeShape="RoundRectangle 20,20,20,20">
-                        <Entry BackgroundColor="#c8dbda" Text="{Binding Username}" TextColor="#578794" HeightRequest="50"/>
-                    </Border>
-
                     <!-- Email -->
-                    <Label Grid.Row="8" Text="Email" FontSize="16" FontAttributes="Bold"/>
-                    <Border Grid.Row="9" StrokeShape="RoundRectangle 20,20,20,20">
+                    <Label Grid.Row="6" Text="Email" FontSize="16" FontAttributes="Bold" TextColor="Black"/>
+                    <Border Grid.Row="7" StrokeShape="RoundRectangle 20,20,20,20">
                         <Entry BackgroundColor="#c8dbda" Text="{Binding Email}" TextColor="#578794" HeightRequest="50"/>
                     </Border>
 
-                    <!-- Password -->
-                    <Label Grid.Row="10" Text="Kodeord" FontSize="16" FontAttributes="Bold"/>
-                    <Border Grid.Row="11" StrokeShape="RoundRectangle 20,20,20,20">
-                        <Entry BackgroundColor="#c8dbda" Text="{Binding Password}" TextColor="#578794" IsPassword="True" HeightRequest="50"/>
-                    </Border>
-
                     <!-- Phone number-->
-                    <Label Grid.Row="12" Text="Telefonnummer" FontSize="16" FontAttributes="Bold"/>
-                    <Border Grid.Row="13" StrokeShape="RoundRectangle 20,20,20,20">
+                    <Label Grid.Row="8" Text="Telefonnummer" FontSize="16" FontAttributes="Bold" TextColor="Black"/>
+                    <Border Grid.Row="9" StrokeShape="RoundRectangle 20,20,20,20">
                         <Entry BackgroundColor="#c8dbda" Text="{Binding PhoneNumber}" Keyboard="Numeric" TextColor="#578794" IsPassword="True" HeightRequest="50"/>
                     </Border>
 
                     <!-- Address-->
-                    <Label Grid.Row="14" Text="Addresse" FontSize="16" FontAttributes="Bold"/>
-                    <Border Grid.Row="15" StrokeShape="RoundRectangle 20,20,20,20">
+                    <Label Grid.Row="10" Text="Addresse" FontSize="16" FontAttributes="Bold" TextColor="Black"/>
+                    <Border Grid.Row="11" StrokeShape="RoundRectangle 20,20,20,20">
                         <Entry BackgroundColor="#c8dbda" Text="{Binding Address1}" TextColor="#578794" IsPassword="True" HeightRequest="50"/>
                     </Border>
 
                     <!-- DateOfBirth-->
-                    <Label Grid.Row="16" Text="Fødselsdag" FontSize="16" FontAttributes="Bold"/>
+                    <Label Grid.Row="12" Text="Fødselsdag" FontSize="16" FontAttributes="Bold" TextColor="Black"/>
 
-                    <DatePicker Grid.Row="17" Date="{Binding DateOfBirth}" BackgroundColor="#c8dbda" TextColor="#578794" HeightRequest="50"/>
-                    
-                     <!-- Address-->
-                    <Label Grid.Row="19" Text="Post nr:" FontSize="16" FontAttributes="Bold"/>
-                    <Border Grid.Row="20" StrokeShape="RoundRectangle 20,20,20,20">
+                    <Border Grid.Row="13" StrokeShape="RoundRectangle 20,20,20,20">
+                        <DatePicker Grid.Row="17" Date="{Binding DateOfBirth}" BackgroundColor="#c8dbda" TextColor="#578794" HeightRequest="50"/>
+                    </Border>
+
+                    <!-- Address-->
+                    <Label Grid.Row="14" Text="Post nr:" FontSize="16" FontAttributes="Bold" TextColor="Black"/>
+                    <Border Grid.Row="15" StrokeShape="RoundRectangle 20,20,20,20">
                         <Entry BackgroundColor="#c8dbda" Text="{Binding PostalCode}" TextColor="#578794" IsPassword="True" HeightRequest="50"/>
                     </Border>
-                    <!-- Button -->
-                    <Button Grid.Row="21 " Text="Registrer bruger" Command="{Binding RegisterCommand}" FontAttributes="Bold" TextColor="White" Margin="0,20" HeightRequest="50" CornerRadius="10" BackgroundColor="#5e90c1"/>
+                    <!-- Username -->
+                    <Label Grid.Row="16" Text="Brugernavn" FontSize="16" FontAttributes="Bold" TextColor="Black"/>
+                    <Border Grid.Row="17" StrokeShape="RoundRectangle 20,20,20,20">
+                        <Entry BackgroundColor="#c8dbda" Text="{Binding Username}" TextColor="#578794" HeightRequest="50"/>
+                    </Border>
 
+                    <!-- Password -->
+                    <Label Grid.Row="18" Text="Kodeord" FontSize="16" FontAttributes="Bold" TextColor="Black"/>
+                    <Border Grid.Row="19" StrokeShape="RoundRectangle 20,20,20,20">
+                        <Entry BackgroundColor="#c8dbda" Text="{Binding Password}" TextColor="#578794" IsPassword="True" HeightRequest="50"/>
+                    </Border>
+                    <Label Grid.Row="20" Text="Gentag Kodeord" FontSize="16" FontAttributes="Bold" TextColor="Black"/>
+                    <Border Grid.Row="21" StrokeShape="RoundRectangle 20,20,20,20">
+                        <Entry BackgroundColor="#c8dbda" Text="{Binding GentagPassword}" TextColor="#578794" IsPassword="True" HeightRequest="50"/>
+                    </Border>
+                    <!-- Button -->
+                    <Button Grid.Row="22 " Text="Registrer bruger" Command="{Binding RegisterCommand}" FontAttributes="Bold" TextColor="White" Margin="0,20" HeightRequest="50" CornerRadius="10" BackgroundColor="#5e90c1"/>
 
                 </Grid>
             </Frame>

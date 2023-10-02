@@ -14,6 +14,7 @@ namespace Gamble_On.ViewModels
         private string _lastName;
         private string _username;
         private string _password;
+        private string _gentagPassword;
         private string _email;
         private int _phoneNumber;
         private string _address;
@@ -52,7 +53,11 @@ namespace Gamble_On.ViewModels
             get => _password;
             set => Set(ref _password, value);
         }
-
+        public string GentagPassword
+        {
+            get => _gentagPassword;
+            set => Set(ref _gentagPassword, value);
+        }
         public string Email
         {
             get => _email;
@@ -106,6 +111,12 @@ namespace Gamble_On.ViewModels
                   hasLowerChar.IsMatch(Password)))
             {
                 await Application.Current.MainPage.DisplayAlert("Validation Error", "Password should be a minimum of 8 characters, contain at least one uppercase letter, one lowercase letter, and one number.", "OK");
+                return;
+            }
+
+            if (Password != GentagPassword)
+            {
+                await Application.Current.MainPage.DisplayAlert("Error", "Passwords do not match.", "OK");
                 return;
             }
 
